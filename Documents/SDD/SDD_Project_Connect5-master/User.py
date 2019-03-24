@@ -1,12 +1,12 @@
 import requests
 
 steam_id = '76561197960434622'
-steam_token = '7C8A11057FBAB292E6E6B0AF1F6E9D19'
 
 class User:
     
-    def __init__(self, steamID):
+    def __init__(self, steamID, token='7C8A11057FBAB292E6E6B0AF1F6E9D19'):
         self.steamID = steamID
+        self.steam_token = token
         self.name = ''
         self.desiredGames = []
         self.playedGames = []
@@ -32,19 +32,23 @@ class User:
     def getName(self):
         return self.name
     
-    def setName(self):
-        summary_url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+steam_token+"&steamids="+steamID
+    def loadName(self):
+        summary_url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+self.steam_token+"&steamids="+self.steamID
         player = requests.get(summary_url).json()
         try:
             player = player['response']
             player = player['players'][0]
             player = player['personaname']
             self.name = player
+            return True
         except:
-            return "Error: Player Name No Response"
+            return False
+
+    def getPlayedGames(self):
+        return self.playedGames
      
-    def getPlayedGames(steamID):
-        recent_games_url = "http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key="+steam_token+"&steamid="+steamID+"&format=json"
+    def loadPlayedGames(self, playMinutesThreshold=0):
+        recent_games_url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+self.steam_token+"&steamid="+self.steamID+"&format=json"
         games = requests.get(recent_games_url).json()
         try:
             games = games['response']
@@ -52,13 +56,14 @@ class User:
             games_list = []
             for game in games:
                 game_id = game['appid']
-                game_name = game['name']
-                play_time = game['playtime_2weeks']
-                game_info = game_id,game_name,play_time
-                games_list.append(game_info)
-            return games_list
+                play_time = game['playtime_forever']
+                game_info = game_id,play_time
+                if play_time >= playMinutesThreshold:
+                    games_list.append(game_info)
+            self.playedGames = games_list
+            return True
         except:
-            return []
+            return False
     
     def getTags(self):
         return gameTags
@@ -69,46 +74,6 @@ class User:
     def deleteTag(self, tag):
         if(tag in gameTags):
             t = gameTags.index(tag)
-            del desiredGames[t]    
-    
-    def getGenre(gameID):
-        genre_url = "https://steamspy.com/api.php?request=appdetails&appid="+str(gameID)
-        genre = requests.get(genre_url).json()
-        try:
-            genre = genre['genre']
-            genre_list = [x.strip() for x in genre.split(',')]
-            return genre_list            
-        except:
-            return []        
+            del desiredGames[t]
 
-def getPlayedGames(steamID):
-    recent_games_url = "http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key="+steam_token+"&steamid="+steamID+"&format=json"
-    games = requests.get(recent_games_url).json()
-    try:
-        games = games['response']
-        games = games['games']
-        games_list = []
-        for game in games:
-            game_id = game['appid']
-            game_name = game['name']
-            play_time = game['playtime_2weeks']
-            game_info = game_id,game_name,play_time
-            games_list.append(game_info)
-        return games_list
-    except:
-        return []
-    
-def getGenre(gameID):
-    genre_url = "https://steamspy.com/api.php?request=appdetails&appid="+str(gameID)
-    genre = requests.get(genre_url).json()
-    try:
-        genre = genre['genre']
-        genre_list = [x.strip() for x in genre.split(',')]
-        genre_list = map(str,genre_list)
-        return genre_list            
-    except:
-        return []
-
-print (getGenre(730))
-print (getPlayedGames(steam_id))
        
