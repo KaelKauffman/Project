@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
+from SteamSpy_API_Calls import SteamSpy_API_Caller
+from ITAD_API_Calls import ITAD_API_Caller
+
 import os
 import Search
 
@@ -151,3 +154,4 @@ def command(text):
 Search.SearchBox(root, command=command, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
+

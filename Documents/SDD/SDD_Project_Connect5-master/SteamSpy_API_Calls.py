@@ -147,6 +147,17 @@ class SteamSpy_API_Caller:
 
         return self.app_data_cache[str(gameID)]['name']
 
+    def get_steam_price(self, gameID):
+        if str(gameID) not in self.app_data_cache:
+            isRealID = self.load_game_data(gameID)
+            if not isRealID:
+                return []
+            
+        currentPrice = self.app_data_cache[str(gameID)]['price']
+        normalPrice = self.app_data_cache[str(gameID)]['initialprice']
+        currentDiscount = [self.app_data_cache[str(gameID)]['discount']
+
+        return [currentPrice, normalPrice, currentDiscount]
     
     def recommend_similar_games(self, gameID, cutoff=20, ratePower=2):
         if not str(gameID).isdigit():
