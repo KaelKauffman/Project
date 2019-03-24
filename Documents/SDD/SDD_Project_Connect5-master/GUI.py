@@ -8,9 +8,13 @@ import Search
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Connect to Steam.")
-	filewin.geometry("400x300")
+	# filewin.geometry("400x300")
+	filewin.geometry(geom)
 
 	Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
 	Button(filewin, text= "Login here").pack()
@@ -19,8 +23,12 @@ def connect_to_steam():
 ## Want to implement a dropdown menu for users to get rid of password authentication;
 ## Not sure about security for that choice.
 def switch_user():
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Change User")
+	filewin.geometry(geom)
 
 	#Username and password labels
 	Label(filewin, text='Username').grid(row=0)
@@ -34,6 +42,23 @@ def switch_user():
 	Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
 	#Submit
 	Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
+	
+
+	# Attempts to make a drop down list for login, currently not working.
+
+	# Label(filewin, text='Select from available accounts below.').pack(padx=30, pady=30)
+	# mainframe = Frame(filewin)
+	# mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
+	# mainframe.columnconfigure(0, weight = 1)
+	# mainframe.rowconfigure(0, weight = 1)
+	# mainframe.pack(pady = 100, padx = 100)
+
+	# tkvar = StringVar(filewin)
+	# choices = { " ----- ", "Michelle Zhou", "Yaoyu Cheng"}
+	# tkvar.set(" ----- ")
+
+	# dropdown = OptionMenu(mainframe, tkvar, *choices)
+	# dropdown.grid(row=2, column=1)
 
 ## Module to generate game recommendations based on 2 parameters, by type or by name.
 def generate_recommendation():
@@ -41,8 +66,12 @@ def generate_recommendation():
 		 'Sports', 'Strategy']
 	## Module to generate game recommendations by type.
 	def by_types():
-		filewin1 = Toplevel(filewin)
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
+		geom="+%d+%d" % (x,y)
+		filewin1 = Toplevel(root)
 		filewin1.title("Recommend by Types")
+		filewin1.geometry(geom)
 		#Obtain user input types.
 		vars=[]
 		checks=[]
@@ -77,8 +106,12 @@ def generate_recommendation():
 		os.system('python3 Search.py')
 		
 	## User game recommendation method selection: by type or by name.	
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
-	filewin.title("Game Recommendations")
+	filewin.title("Game Recommendation")
+	filewin.geometry(geom)
 	type_button = Button(filewin, text="Recommend by Types", width=20, command=by_types)
 	type_button.grid(row=0,column=0)
 	name_button = Button(filewin, text="Recommend by Names", width=20, command=by_names)
@@ -90,12 +123,7 @@ def wishlist():
 
 ## Module to check price of one game.
 def pricecheck():
-	filewin = Toplevel(root)
-	filewin.title("Price Check")
-
-	def command_2(text):
-		messagebox.showinfo("Search Results", "Searching: %s"%text)
-	Search.SearchBox(filewin, command=command_2, placeholder="Enter game name").pack(pady=6, padx=3)
+	os.System("pyhon3 Search.py")
 
 ## See rankings by account value.
 def rank_by_account_value():
@@ -150,7 +178,7 @@ make_menus()
 #Show welcome message and home page graphics.
 steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
-Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='black', fg='white').pack()
+Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black', fg='white').pack()
 
 #text represents the user's input.
 def command(text):
