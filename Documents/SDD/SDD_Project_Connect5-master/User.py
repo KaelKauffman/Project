@@ -38,6 +38,7 @@ class User:
     def load_user_data(self):
         user = self.user_data_cache['users'][0]
         self.steamID = user['user_id']
+        self.name = user['user_name']
         self.desiredGames = user['desired_games']
         self.gameTags = user['game_tags']
         self.playedGames = user['played_games']
@@ -130,8 +131,10 @@ class User:
         return self.steamAccountWorth    
     
 '''
-Andrew  = User("4","","user_data_test.txt","")
+Andrew  = User("","","user_data_test.txt","")
 Andrew.save_user_data_to_cache()
 Andrew.load_user_data()
-print Andrew.desiredGames
+
+print Andrew.name
+print Andrew.steamID
 '''
