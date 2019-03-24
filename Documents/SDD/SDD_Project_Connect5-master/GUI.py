@@ -8,9 +8,13 @@ import Search
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Connect to Steam.")
-	filewin.geometry("400x300")
+	# filewin.geometry("400x300")
+	filewin.geometry(geom)
 
 	Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
 	Button(filewin, text= "Login here").pack()
@@ -19,8 +23,12 @@ def connect_to_steam():
 ## Want to implement a dropdown menu for users to get rid of password authentication;
 ## Not sure about security for that choice.
 def switch_user():
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Change User")
+	filewin.geometry(geom)
 
 	#Username and password labels
 	Label(filewin, text='Username').grid(row=0)
@@ -56,13 +64,17 @@ def switch_user():
 def generate_recommendation():
 	TYPES = ['Action', 'Adventure', 'Casual', 'Indie', 'Massively Multiplayer', 'Racing', 'RPG', 'Simulation', 
 		 'Sports', 'Strategy']
-			
 	## Module to generate game recommendations by type.
 	def by_types():
-		filewin1 = Toplevel(filewin)
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
+		geom="+%d+%d" % (x,y)
+		filewin1 = Toplevel(root)
 		filewin1.title("Recommend by Types")
+		filewin1.geometry(geom)
 		#Obtain user input types.
 		vars=[]
+		checks=[]
 		row_num=1
 		#Output checkboxes in column format.
 		for type in TYPES:
@@ -71,20 +83,35 @@ def generate_recommendation():
 			chk.grid(row=row_num, sticky=W)
 			row_num+=1
 			vars.append(var)
-		
-		def submit(): print("Selection submitted")
-		def clear(): print("Selection cleared")
+		def submit():
+			checks.clear()
+			count=0
+			for i in vars:
+				if i.get() == 1 and TYPES[count] not in checks:
+					checks.append(TYPES[count])
+				count+=1
+			print(checks)
+
+		def clear_checkbox():
+			for i in vars:
+				i.set(0)
+			checks.clear()
+			print(checks)
 		
 		Button(filewin1, text="Submit", activebackground='pink1', command=submit).grid(row=row_num, pady=3)
-		Button(filewin1, text="Clear", activebackground='pink1', command=clear).grid(row=row_num+1)
+		Button(filewin1, text="Clear", activebackground='pink1', command=clear_checkbox).grid(row=row_num+1)
 
 	## Module to generate game recommendations by game names. Incomplete.
 	def by_names():
 		os.system('python3 Search.py')
 		
 	## User game recommendation method selection: by type or by name.	
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
-	filewin.title("Game Recommendations")
+	filewin.title("Game Recommendation")
+	filewin.geometry(geom)
 	type_button = Button(filewin, text="Recommend by Types", width=20, command=by_types)
 	type_button.grid(row=0,column=0)
 	name_button = Button(filewin, text="Recommend by Names", width=20, command=by_names)
