@@ -109,19 +109,21 @@ class User:
             return ""
         return parsed_result['data']['plain']   
     
-    def get_Steam_Worth(itad_game_plain):
-        if itad_game_plain == "":
-            return []
+    def get_Steam_Worth():
+        for game in self.playedGames:
+            app_plain = get_plain(game[0])
+            if app_plain == "":
+                return []
     
-        api_call_url = "https://api.isthereanydeal.com/v01/game/prices/?key=" + self.ITAD_Key + "&plains=" + itad_game_plain + "&country=US"
-        parsed_result = requests.get(api_call_url).json()
-        price_list = parsed_result['data'][itad_game_plain]['list']
-        return_list =[]
-        for p in price_list:
-            shop = p['shop']
-            if shop['id'] == "steam":
-                self.steamAccountWorth+=p['price_new']
-        return accountWorth    
+            api_call_url = "https://api.isthereanydeal.com/v01/game/prices/?key=" + self.ITAD_Key + "&plains=" + app_plain + "&country=US"
+            parsed_result = requests.get(api_call_url).json()
+            price_list = parsed_result['data'][itad_game_plain]['list']
+            return_list =[]
+            for p in price_list:
+                shop = p['shop']
+                if shop['id'] == "steam":
+                    self.steamAccountWorth+=p['price_new']
+        return self.steamAccountWorth    
     
     
 
