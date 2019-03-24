@@ -61,6 +61,7 @@ def generate_recommendation():
 		filewin1 = Toplevel(filewin)
 		filewin1.title("Recommend by Types")
 		#Obtain user input types.
+		checks=[]
 		vars=[]
 		row_num=1
 		#Output checkboxes in column format.
@@ -71,7 +72,6 @@ def generate_recommendation():
 			row_num+=1
 			vars.append(var)
 		def submit():
-			checks=[]
 			count=0
 			for i in vars:
 				if i.get() == 1:
