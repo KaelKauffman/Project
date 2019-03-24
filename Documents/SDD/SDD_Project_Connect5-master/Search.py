@@ -1,9 +1,5 @@
-try:
-    from Tkinter import Entry, Frame, Label, StringVar
-    from Tkconstants import *
-except ImportError:
-    from tkinter import Entry, Frame, Label, StringVar
-    from tkinter.constants import *
+from tkinter import *
+from tkinter import messagebox
 
 def hex2rgb(str_rgb):
     try:
@@ -145,15 +141,9 @@ class SearchBox(Frame):
         self.button_label.configure(background=self._button_activebackground)
         
 if __name__ == "__main__":
-    try:
-        from Tkinter import Tk
-        from tkMessageBox import showinfo
-    except ImportError:
-        from tkinter import Tk
-        from tkinter.messagebox import showinfo
 
     def command(text):
-        showinfo("search command", "searching:%s"%text)
+        messagebox.showinfo("search command", "searching:%s"%text)
 
     root = Tk()
     root.title("Game Search")
