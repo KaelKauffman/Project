@@ -115,6 +115,17 @@ class SteamSpy_API_Caller:
         tag_list = list(tags.keys())
         return tag_list
 
+    def get_tags_and_values(self, gameID):
+        if str(gameID) not in self.app_data_cache:
+            isRealID = self.load_game_data(gameID)
+            if not isRealID:
+                return []
+            
+        tags = self.app_data_cache[str(gameID)]['tags']
+        tag_list = list(tags.items())
+        return tag_list
+    
+
     def get_rating(self, gameID):
         if str(gameID) not in self.app_data_cache:
             isRealID = self.load_game_data(gameID)
@@ -159,11 +170,13 @@ class SteamSpy_API_Caller:
 
         return [currentPrice, normalPrice, currentDiscount]
     
-    def recommend_similar_games(self, gameID, matchRate=0.7, cutoff=10, ratePower=2):
+    def recommend_similar_games(self, gameID, matchRate=0.7, cutoff=10, ratePower=2, confPower=2):
         if not str(gameID).isdigit():
             return []
 
         tags = self.get_tags(gameID)
+        refRate = self.get_rating(gameID)
+        refConf = (1-1/float(math.log(refRate[1], 10)))
         
         #Take all tags of given game, add all games with those tags into a list
         total_combined_tag_lists = []
@@ -191,10 +204,14 @@ class SteamSpy_API_Caller:
         results = []
         for game in final:
             g_id = game[0]
-            same_tags = game[1]
+            similarity = game[1]/float(len(tags))
             g_name = self.get_name(g_id)
-            rate = self.get_rating(g_id)[0]
-            score = same_tags*math.pow(rate, ratePower)
+            rate = self.get_rating(g_id)
+            conf = (1-1/float(math.log(rate[1], 10)))
+            conf = conf/float(refConf)
+            revisedRate = 0.5 + (rate[0]-0.5)*math.pow(conf, confPower)
+            print([g_name, similarity, rate, conf, revisedRate])
+            score = similarity*math.pow(revisedRate, ratePower)
             results.append([g_id, g_name, score])
             
         #Sort final results by score 

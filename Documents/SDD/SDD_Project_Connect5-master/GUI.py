@@ -159,7 +159,8 @@ def command(text):
         global itad_api
         appID = steam_api.get_game_id_from_steam(text)
         prices = itad_api.get_prices(itad_api.get_plain(appID))
-        recommend = steam_api.recommend_similar_games(appID, matchRate=0.6, cutoff=10, ratePower=1)
+        recommend = steam_api.recommend_similar_games(appID, matchRate=0.5, cutoff=10, ratePower=0)
+        #check = steam_api.save_game_data_to_cache()
         resultString = ""
         resultString += "Lowest Price in History: " + str(prices[0]) + "\n"
         resultString += "Current Prices: " + str(prices[1:]) + "\n\n"
