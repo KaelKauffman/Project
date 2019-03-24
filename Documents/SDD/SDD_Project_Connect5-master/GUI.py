@@ -145,6 +145,7 @@ steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
 Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black', fg='white').pack()
 
+#text represents the user's input.
 def command(text):
 	messagebox.showinfo("search command", "searching:%s"%text)
 Search.SearchBox(root, command=command, placeholder="Search for a game here").pack(pady=6, padx=3)
