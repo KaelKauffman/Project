@@ -1,7 +1,7 @@
 from lxml import html
 import requests
 import json
-
+from time import sleep
 
 class SteamSpy_API_Caller:
 
@@ -62,21 +62,28 @@ class SteamSpy_API_Caller:
         return "999999999"
 
     def load_game_data(self, gameID):
+        if not str(gameID).isdigit() or str(gameID) == "999999999":
+            return False
         api_call_url = "https://steamspy.com/api.php?request=appdetails&appid=" + str(gameID)
+        sleep(0.2)
         parsed_result = requests.get(api_call_url).json()
-        if parsed_result["developer"] == "":
+        if parsed_result["name"] == None:
             return False
         self.app_data_cache[str(gameID)] = parsed_result
         return True
 
     def load_tagged_games(self, tag_name):
         api_call_url = "https://steamspy.com/api.php?request=tag&tag=" + tag_name.replace(" ", "+")
+        sleep(0.2)
         parsed_result = requests.get(api_call_url).json()
         if len(parsed_result) == 0:
             return False
         tag_entry = dict()
         for game in parsed_result:
-            tag_entry[game] = True
+            owned = parsed_result[game]['owners']
+            owned = [int(x.strip().replace(",", "")) for x in owned.split("..")]
+            if len(owned) > 0 and owned[0] >= 200000:
+                tag_entry[game] = True
         self.tag_data_cache[tag_name] = tag_entry
         return True
 
@@ -140,7 +147,42 @@ class SteamSpy_API_Caller:
         return self.app_data_cache[str(gameID)]['name']
 
     
+    def recommend_similar_games(self, gameID, cutoff=20):
+        if not str(gameID).isdigit():
+            return []
 
+        tags = self.get_tags(gameID)
+        
+        #Take all tags of given game, add all games with those tags into a list
+        total_combined_tag_lists = []
+        for tag in tags:
+            gameList = self.get_games_with_tag(tag)
+            total_combined_tag_lists += list(gameList.keys())
 
+        #Make a set of pairs of game ID's and how many tags they share with given game
+        frequency_list = {}
+        for item in total_combined_tag_lists:
+            frequency_list[item] = frequency_list.get(item, 0) + 1
 
+        #Sort list by greatest number of tags in common and cut off at only the top items. 
+        final = sorted(frequency_list.items(), key=lambda x: x[1], reverse=True)
+        if len(final) > cutoff:
+            final = final[0:cutoff]
+
+        #Get the id, and name for each game in the cutoff
+        #Compute a score using the number of tags in common and the player rating
+        results = []
+        for game in final:
+            g_id = game[0]
+            same_tags = game[1]
+            g_name = self.get_name(g_id)
+            rate = self.get_rating(g_id)[0]
+            score = same_tags*rate*rate
+            results.append([g_id, g_name, score])
+            
+        #Sort final results by score 
+        results = sorted(results, key=lambda x: x[2], reverse=True)
+        
+        return results
+            
         
