@@ -49,7 +49,8 @@ def switch_user():
 
 ## Module to generate game recommendations based on 2 parameters, by type or by name.
 def generate_recommendation():
-	TYPES = ['Action', 'Adventure', 'Casual', 'Indie', 'Massively Multiplayer', 'Racing', 'RPG', 'Simulation', 'Sports', 'Strategy']
+	TYPES = ['Action', 'Adventure', 'Casual', 'Indie', 'Massively Multiplayer', 'Racing', 'RPG', 'Simulation', 
+		 'Sports', 'Strategy']
 			
 	## Module to generate game recommendations by type.
 	def by_types():
@@ -57,17 +58,20 @@ def generate_recommendation():
 		filewin1.title("Recommend by Types")
 		#Obtain user input types.
 		vars=[]
+		row_num=1
+		#Output checkboxes in column format.
 		for type in TYPES:
 			var = IntVar()
 			chk = Checkbutton(filewin1, text=type, variable=var)
-			chk.pack(side=LEFT, anchor=W, expand=YES)
+			chk.grid(row=row_num, sticky=W)
+			row_num+=1
 			vars.append(var)
 		
 		def submit(): print("Selection submitted")
 		def clear(): print("Selection cleared")
 		
-		Button(filewin1, text="Submit", command=submit).pack(side=RIGHT)
-		Button(filewin1, text="Clear", command=clear).pack(side=RIGHT)
+		Button(filewin1, text="Submit", activebackground='pink1', command=submit).grid(row=row_num, pady=3)
+		Button(filewin1, text="Clear", activebackground='pink1', command=clear).grid(row=row_num+1)
 
 	## Module to generate game recommendations by game names. Incomplete.
 	def by_names():
