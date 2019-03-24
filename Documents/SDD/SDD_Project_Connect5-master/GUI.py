@@ -56,7 +56,6 @@ def switch_user():
 def generate_recommendation():
 	TYPES = ['Action', 'Adventure', 'Casual', 'Indie', 'Massively Multiplayer', 'Racing', 'RPG', 'Simulation', 
 		 'Sports', 'Strategy']
-			
 	## Module to generate game recommendations by type.
 	def by_types():
 		filewin1 = Toplevel(filewin)
@@ -71,8 +70,15 @@ def generate_recommendation():
 			chk.grid(row=row_num, sticky=W)
 			row_num+=1
 			vars.append(var)
-		
-		def submit(): print("Selection submitted")
+		def submit():
+			checks=[]
+			count=0
+			for i in vars:
+				if i.get() == 1:
+					checks.append(TYPES[count])
+				count+=1
+			print(checks)
+			
 		def clear(): print("Selection cleared")
 		
 		Button(filewin1, text="Submit", activebackground='pink1', command=submit).grid(row=row_num, pady=3)
