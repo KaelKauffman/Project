@@ -136,6 +136,11 @@ def make_menus():
 	ranking_menu.add_command(label="By account level", command=rank_by_account_level)
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
+
+#API Call objects
+steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
+itad_api = ITAD_API_Caller()
+
 #Create initial window.
 root = Tk()
 root.title("SteamRush")
@@ -150,7 +155,19 @@ Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black'
 
 #text represents the user's input.
 def command(text):
-	messagebox.showinfo("search command", "searching:%s"%text)
+        global steam_api
+        global itad_api
+        appID = steam_api.get_game_id_from_steam(text)
+        prices = itad_api.get_prices(itad_api.get_plain(appID))
+        recommend = steam_api.recommend_similar_games(appID, matchRate=0.6, cutoff=10, ratePower=1)
+        resultString = ""
+        resultString += "Lowest Price in History: " + str(prices[0]) + "\n"
+        resultString += "Current Prices: " + str(prices[1:]) + "\n\n"
+        resultString += "Recommendations:  [ id, name, score ]\n"
+        for r in recommend:
+                resultString += str(r) + "\n"
+        messagebox.showinfo("search command", resultString)
+        
 Search.SearchBox(root, command=command, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()

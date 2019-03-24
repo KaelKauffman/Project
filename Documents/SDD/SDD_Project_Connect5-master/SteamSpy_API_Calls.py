@@ -155,11 +155,11 @@ class SteamSpy_API_Caller:
             
         currentPrice = self.app_data_cache[str(gameID)]['price']
         normalPrice = self.app_data_cache[str(gameID)]['initialprice']
-        currentDiscount = [self.app_data_cache[str(gameID)]['discount']
+        currentDiscount = self.app_data_cache[str(gameID)]['discount']
 
         return [currentPrice, normalPrice, currentDiscount]
     
-    def recommend_similar_games(self, gameID, cutoff=20, ratePower=2):
+    def recommend_similar_games(self, gameID, matchRate=0.7, cutoff=10, ratePower=2):
         if not str(gameID).isdigit():
             return []
 
@@ -178,8 +178,13 @@ class SteamSpy_API_Caller:
 
         #Sort list by greatest number of tags in common and cut off at only the top items. 
         final = sorted(frequency_list.items(), key=lambda x: x[1], reverse=True)
-        if len(final) > cutoff:
-            final = final[0:cutoff]
+        catch = 0
+        for i in range(len(final)):
+            if final[i][1]/float(len(tags)) < matchRate:
+                catch = i
+                break
+            
+        final = final[0:catch]
 
         #Get the id, and name for each game in the cutoff
         #Compute a score using the number of tags in common and the player rating
@@ -194,6 +199,9 @@ class SteamSpy_API_Caller:
             
         #Sort final results by score 
         results = sorted(results, key=lambda x: x[2], reverse=True)
+
+        if len(results) > cutoff:
+            results = results[0:cutoff]
         
         return results
             
