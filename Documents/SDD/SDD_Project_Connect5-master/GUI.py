@@ -137,15 +137,16 @@ def make_menus():
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
 #Create initial window.
+#Create initial window.
 root = Tk()
 root.title("SteamRush")
-root.geometry("400x300")
-root.configure(background='white')
+root.geometry("800x600")
+root.configure(background='black')
 make_menus()
 
 #Show welcome message and home page graphics.
 steam_icon = PhotoImage(file= "images/steam_icon.gif")
-Label(root, bg='white', image=steam_icon).pack()
-Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='white').pack()
+Label(root, bg='black', image=steam_icon).pack()
+Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black', fg='white').pack()
 
 root.mainloop()
