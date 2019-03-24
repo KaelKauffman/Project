@@ -8,7 +8,7 @@ class User:
     def __init__(self, steamID, token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):
         self.steamID = steamID
         self.steam_token = token
-        self.ITAD_Key = itad_key
+        self.ITAD_Key = ITAD_key
         self.name = ''
         self.desiredGames = []
         self.playedGames = []
@@ -16,6 +16,7 @@ class User:
         self.userFileName = userFile
         self.user_data_cache = dict()
         self.steamAccountWorth = 0
+        
         if userFile !="":
             try:
                 userCache = open(self.userFileName)
@@ -33,11 +34,14 @@ class User:
                 return True
             except:
                 return False
-    '''
+
     def load_user_data(self):
-        self.app
+        user = self.user_data_cache['users'][0]
+        self.steamID = user['user_id']
+        self.desiredGames = user['desired_games']
+        self.gameTags = user['game_tags']
+        self.playedGames = user['played_games']
         
-    '''
     def getSteamID(self):
         return self.steamID
     
@@ -125,11 +129,9 @@ class User:
                     self.steamAccountWorth+=p['price_new']
         return self.steamAccountWorth    
     
-    
-
-
 '''
-print get_plain('954870')
-x = get_plain('954870')
-print get_prices(x,0)
+Andrew  = User("4","","user_data_test.txt","")
+Andrew.save_user_data_to_cache()
+Andrew.load_user_data()
+print Andrew.desiredGames
 '''
