@@ -139,14 +139,3 @@ class SearchBox(Frame):
 
     def _state_active(self, event):
         self.button_label.configure(background=self._button_activebackground)
-        
-if __name__ == "__main__":
-
-    def command(text):
-        messagebox.showinfo("search command", "searching:%s"%text)
-
-    root = Tk()
-    root.title("Game Search")
-    SearchBox(root, command=command, placeholder="Type and press enter", entry_highlightthickness=0).pack(pady=6, padx=3)
-
-    root.mainloop()
