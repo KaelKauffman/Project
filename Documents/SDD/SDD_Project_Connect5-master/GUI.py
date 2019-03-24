@@ -34,23 +34,6 @@ def switch_user():
 	Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
 	#Submit
 	Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
-	
-
-	# Attempts to make a drop down list for login, currently not working.
-
-	# Label(filewin, text='Select from available accounts below.').pack(padx=30, pady=30)
-	# mainframe = Frame(filewin)
-	# mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
-	# mainframe.columnconfigure(0, weight = 1)
-	# mainframe.rowconfigure(0, weight = 1)
-	# mainframe.pack(pady = 100, padx = 100)
-
-	# tkvar = StringVar(filewin)
-	# choices = { " ----- ", "Michelle Zhou", "Yaoyu Cheng"}
-	# tkvar.set(" ----- ")
-
-	# dropdown = OptionMenu(mainframe, tkvar, *choices)
-	# dropdown.grid(row=2, column=1)
 
 ## Module to generate game recommendations based on 2 parameters, by type or by name.
 def generate_recommendation():
@@ -107,7 +90,12 @@ def wishlist():
 
 ## Module to check price of one game.
 def pricecheck():
-	os.System("pyhon3 Search.py")
+	filewin = Toplevel(root)
+	filewin.title("Price Check")
+
+	def command_2(text):
+		messagebox.showinfo("Search Results", "Searching: %s"%text)
+	Search.SearchBox(filewin, command=command_2, placeholder="Enter game name").pack(pady=6, padx=3)
 
 ## See rankings by account value.
 def rank_by_account_value():
@@ -162,7 +150,7 @@ make_menus()
 #Show welcome message and home page graphics.
 steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
-Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black', fg='white').pack()
+Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='black', fg='white').pack()
 
 #text represents the user's input.
 def command(text):
