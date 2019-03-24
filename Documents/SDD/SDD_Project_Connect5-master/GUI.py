@@ -73,7 +73,7 @@ def generate_recommendation():
 	def by_names():
 		os.system('python3 Search.py')
 		
-		
+	## User game recommendation method selection: by type or by name.	
 	filewin = Toplevel(root)
 	filewin.title("Game Recommendations")
 	type_button = Button(filewin, text="Recommend by Types", width=20, command=by_types)
@@ -101,10 +101,12 @@ def rank_by_account_value():
 def rank_by_account_level():
 	Label(root, text="See rankings by account level").pack()
 
+## Helper function to create menu bar and corresponding cascading options.
 def make_menus():
 	menu = Menu(root)
 	root.config(menu=menu)
 
+	#User menu
 	user_menu = Menu(menu, tearoff=0)
 	user_menu.add_command(label="Connect to Steam", command=connect_to_steam)
 	user_menu.add_command(label="Change local user", command=switch_user)
@@ -112,28 +114,34 @@ def make_menus():
 	user_menu.add_command(label="Quit", command=root.quit)
 	menu.add_cascade(label="User", menu=user_menu)
 
+	#Game menu
 	gamerec_menu = Menu(menu, tearoff=0)
-	menu.add_cascade(label="Game", menu=gamerec_menu)
 	gamerec_menu.add_command(label="Recommendation", command=generate_recommendation)
 	gamerec_menu.add_command(label="Search", command=search_game)
+	menu.add_cascade(label="Game", menu=gamerec_menu)
 
-	pricewarch_menu = Menu(menu, tearoff=0)
-	menu.add_cascade(label="PriceWatch", menu=pricewarch_menu)
-	pricewarch_menu.add_command(label="Wishlist", command=wishlist)
-	pricewarch_menu.add_command(label="Price Check", command=pricecheck)
+	#Price watching menu
+	pricewatch_menu = Menu(menu, tearoff=0)	
+	pricewatch_menu.add_command(label="View Wishlist", command=wishlist)
+	pricewatch_menu.add_command(label="Price Check", command=pricecheck)
+	menu.add_cascade(label="Price Watch", menu=pricewatch_menu)
 
+	#Ranking menu
 	ranking_menu = Menu(menu, tearoff=0)
-	menu.add_cascade(label="Ranking", menu=ranking_menu)
 	ranking_menu.add_command(label="By account value", command=rank_by_account_value)
 	ranking_menu.add_command(label="By account level", command=rank_by_account_level)
+	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
-
+#Create initial window.
 root = Tk()
 root.title("SteamRush")
 root.geometry("400x300")
 root.configure(background='white')
 make_menus()
+
+#Show welcome message and home page graphics.
 steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='white', image=steam_icon).pack()
 Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='white').pack()
+
 root.mainloop()
