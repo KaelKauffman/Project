@@ -61,8 +61,8 @@ def generate_recommendation():
 		filewin1 = Toplevel(filewin)
 		filewin1.title("Recommend by Types")
 		#Obtain user input types.
-		checks=[]
 		vars=[]
+		checks=[]
 		row_num=1
 		#Output checkboxes in column format.
 		for type in TYPES:
@@ -72,17 +72,22 @@ def generate_recommendation():
 			row_num+=1
 			vars.append(var)
 		def submit():
+			checks.clear()
 			count=0
 			for i in vars:
-				if i.get() == 1:
+				if i.get() == 1 and TYPES[count] not in checks:
 					checks.append(TYPES[count])
 				count+=1
 			print(checks)
-			
-		def clear(): print("Selection cleared")
+
+		def clear_checkbox():
+			for i in vars:
+				i.set(0)
+			checks.clear()
+			print(checks)
 		
 		Button(filewin1, text="Submit", activebackground='pink1', command=submit).grid(row=row_num, pady=3)
-		Button(filewin1, text="Clear", activebackground='pink1', command=clear).grid(row=row_num+1)
+		Button(filewin1, text="Clear", activebackground='pink1', command=clear_checkbox).grid(row=row_num+1)
 
 	## Module to generate game recommendations by game names. Incomplete.
 	def by_names():
