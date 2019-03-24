@@ -1,6 +1,7 @@
 from lxml import html
 import requests
 import json
+import math
 from time import sleep
 
 class SteamSpy_API_Caller:
@@ -147,7 +148,7 @@ class SteamSpy_API_Caller:
         return self.app_data_cache[str(gameID)]['name']
 
     
-    def recommend_similar_games(self, gameID, cutoff=20):
+    def recommend_similar_games(self, gameID, cutoff=20, ratePower=2):
         if not str(gameID).isdigit():
             return []
 
@@ -177,7 +178,7 @@ class SteamSpy_API_Caller:
             same_tags = game[1]
             g_name = self.get_name(g_id)
             rate = self.get_rating(g_id)[0]
-            score = same_tags*rate*rate
+            score = same_tags*math.pow(rate, ratePower)
             results.append([g_id, g_name, score])
             
         #Sort final results by score 

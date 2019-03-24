@@ -4,7 +4,7 @@ from ITAD_API_Calls import ITAD_API_Caller
 steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
 itad_api = ITAD_API_Caller()
 
-game_title_to_search = "Factorio"
+game_title_to_search = "Subnautica"
 
 #If the appID is already known, it can be entered here directly.
 #appID = 000000
@@ -30,7 +30,7 @@ print("Current Prices: " + str(prices[1:]))
 print()
 
 print("Loading Recommender... May take 30 seconds or more if tags are not cached.")
-recommend = steam_api.recommend_similar_games(appID)
+recommend = steam_api.recommend_similar_games(appID, cutoff=20, ratePower=1)
 print("Done.")
 print()
 
