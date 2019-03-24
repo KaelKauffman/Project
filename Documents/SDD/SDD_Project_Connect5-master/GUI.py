@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter import messagebox
 import os
+import Search
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
@@ -85,10 +87,6 @@ def generate_recommendation():
 	name_button = Button(filewin, text="Recommend by Names", width=20, command=by_names)
 	name_button.grid(row=0, column=1)
 
-## Module to conduct game search and bring user to the specified game page.
-def search_game():
-	os.system('python3 Search.py')
-
 ## Module to view user's wishlist.
 def wishlist():
 	Label(root, text="See wishlist").pack()
@@ -121,7 +119,6 @@ def make_menus():
 	#Game menu
 	gamerec_menu = Menu(menu, tearoff=0)
 	gamerec_menu.add_command(label="Recommendation", command=generate_recommendation)
-	gamerec_menu.add_command(label="Search", command=search_game)
 	menu.add_cascade(label="Game", menu=gamerec_menu)
 
 	#Price watching menu
@@ -137,7 +134,6 @@ def make_menus():
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
 #Create initial window.
-#Create initial window.
 root = Tk()
 root.title("SteamRush")
 root.geometry("800x600")
@@ -148,5 +144,9 @@ make_menus()
 steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
 Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black', fg='white').pack()
+
+def command(text):
+	messagebox.showinfo("search command", "searching:%s"%text)
+Search.SearchBox(root, command=command, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
