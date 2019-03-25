@@ -44,15 +44,18 @@ def switch_user():
 	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
+
 	#Suppose every account that ever login is stored in users
 	users=["Andrew", "Kael", "Michelle", "Yao", "Yiwei"]
 	row_num=1
 	var=IntVar()
 	var.set(1)
 	for user in users:
-		r = Radiobutton(filewin, text=user, variable=var, value=row_num)
+		r = Radiobutton(filewin, text=user, variable=var, value=row_num, padx=10, pady=1)
 		r.pack(anchor=W)
 		row_num+=1
+
+	print(var.get())
 	# #Username and password labels
 	# Label(filewin, text='Username').grid(row=0)
 	# Label(filewin, text='Password').grid(row=1)
@@ -225,8 +228,18 @@ def make_menus():
 	ranking_menu.add_command(label="By account level", command=rank_by_account_level)
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
+## 
 def see_game_info(text_):
-	messagebox.showinfo("Search Results", text_)
+	filewin = Toplevel(root)
+	filewin.title(text_)
+
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
+
+	Label(filewin, text="See game info here")
+	# messagebox.showinfo("Search Results", text_)
 
 
 
@@ -245,8 +258,6 @@ steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
 Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='black', fg='white').pack()
 
-
-        
 Search.SearchBox(root, command=see_game_info, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
