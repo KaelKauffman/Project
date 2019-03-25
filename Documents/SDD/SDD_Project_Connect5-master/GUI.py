@@ -20,8 +20,8 @@ def connect_to_steam():
 	filewin.title("Connect to Steam.")
 	
 	#Have popup window follow parent object placement.
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -35,8 +35,8 @@ def switch_user():
 	filewin = Toplevel(root)
 	filewin.title("Change User")
 	
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -59,8 +59,8 @@ def generate_recommendation():
 		 'Sports', 'Strategy']
 	## Module to generate game recommendations by type.
 	def by_types():
-		x=root.winfo_rootx()
-		y=root.winfo_rooty()
+		x=root.winfo_rootx()*(1.05)
+		y=root.winfo_rooty()*(1.1)
 		geom="+%d+%d" % (x,y)
 		filewin1 = Toplevel(root)
 		filewin1.title("Recommend by Types")
@@ -99,8 +99,8 @@ def generate_recommendation():
 		filewin2 = Toplevel(root)
 		filewin2.title("Recommend by Names")
 
-		x=root.winfo_rootx()
-		y=root.winfo_rooty()
+		x=root.winfo_rootx()*(1.05)
+		y=root.winfo_rooty()*(1.1)
 		geom="+%d+%d" % (x,y)
 		filewin2.geometry(geom)
 
@@ -109,8 +109,8 @@ def generate_recommendation():
 		Search.SearchBox(filewin2, command=command_temp, placeholder="Enter game name").pack(pady=6, padx=3)
 		
 	## User game recommendation method selection: by type or by name.	
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
 	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Game Recommendation")
@@ -123,8 +123,14 @@ def generate_recommendation():
 ## Module to view user's wishlist.
 def wishlist():
 	wishlist = ["Cuphead", "Overcooked", "Overcooked 2", "DOTA 2"]
+
 	filewin = Toplevel(root)
 	filewin.title("Wishlist")
+
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
 
 	Label(filewin, text="Your wishlist is displayed below.", font=("", 10, "italic")).grid(pady=3, columnspan=4)
 	row_num = 2
@@ -141,6 +147,12 @@ def wishlist():
 def pricecheck():
 	filewin = Toplevel(root)
 	filewin.title("Price Check")
+
+	x=root.winfo_rootx()*(1.5)
+	y=root.winfo_rooty()*(1.5)
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
+
 	def command(text):
 		messagebox.showinfo("Search Results", "Searching for: %s"%text)
 	Search.SearchBox(filewin, command=command, placeholder="Enter game name").pack(pady=6, padx=3)
@@ -189,7 +201,10 @@ def make_menus():
 #Create initial window.
 root = Tk()
 root.title("SteamRush")
-root.geometry("800x600+500+300")
+root.geometry("800x600")
+posRight = int(root.winfo_screenwidth()/2 - 800/2)
+posDown = int(root.winfo_screenheight()/2 - 600/2)
+root.geometry("+{}+{}".format(posRight, posDown))
 root.configure(background='black')
 make_menus()
 
