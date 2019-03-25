@@ -12,7 +12,7 @@ steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="Steam
 itad_api = ITAD_API_Caller()
 
 #User object
-steam_user = User()
+#steam_user = User()
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
