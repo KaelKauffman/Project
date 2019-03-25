@@ -38,34 +38,37 @@ def connect_to_steam():
 ## Want to implement a dropdown menu for users to get rid of password authentication;
 ## Not sure about security for that choice.
 def switch_user():
-        filewin = Toplevel(root)
-        filewin.title("Users")
-        
-        x=root.winfo_rootx()
-        y=root.winfo_rooty()
-        geom="+%d+%d" % (x,y)
-        filewin.geometry(geom)
-        #Suppose every account that ever login is stored in users
-        users=["Andrew", "Kael", "Michelle", "Yao", "Yiwei"]
-        row_num=1
-        var=IntVar()
-        var.set(1)
-        for user in users:
-                r = Radiobutton(filewin, text=user, variable=var, value=row_num)
-                r.pack(anchor=W)
-                row_num+=1
-        # #Username and password labels
-        # Label(filewin, text='Username').grid(row=0)
-        # Label(filewin, text='Password').grid(row=1)
+	filewin = Toplevel(root)
+	filewin.title("Users")
+	
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
+	#Suppose every account that ever login is stored in users
+	users=["1","Kael","Michelle","Asshole","GLOBAL ASSHOLE"]
+	def selection():
+		print(users[var.get()])
+	Label(filewin, text='Choose Your Account Below').pack()
+	var=IntVar()
+	var.set(1)
+	row_num=0
+	for user in users:
+		r = Radiobutton(filewin, text=user, variable=var, value=row_num, command=selection)
+		r.pack(anchor=W)
+		row_num+=1
+	# #Username and password labels
+	# Label(filewin, text='Username').grid(row=0)
+	# Label(filewin, text='Password').grid(row=1)
 
-        # #Entry fields for username, password
-        # e1 = Entry(filewin).grid(row=0,column=1, padx=3)
-        # e2 = Entry(filewin, show='*').grid(row=1, column=1, padx=3)
-        
-        # #Keep user logged in
-        # Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
-        # #Submit
-        # Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
+	# #Entry fields for username, password
+	# e1 = Entry(filewin).grid(row=0,column=1, padx=3)
+	# e2 = Entry(filewin, show='*').grid(row=1, column=1, padx=3)
+	
+	# #Keep user logged in
+	# Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
+	# #Submit
+	# Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
 
 
 # Return popup window of game recommendations given a game.
