@@ -8,12 +8,13 @@ import Search
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
+	filewin = Toplevel(root)
+	filewin.title("Connect to Steam.")
+	
+	#Have popup window follow parent object placement.
 	x=root.winfo_rootx()
 	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
-	filewin = Toplevel(root)
-	filewin.title("Connect to Steam.")
-	# filewin.geometry("400x300")
 	filewin.geometry(geom)
 
 	Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
@@ -23,11 +24,12 @@ def connect_to_steam():
 ## Want to implement a dropdown menu for users to get rid of password authentication;
 ## Not sure about security for that choice.
 def switch_user():
+	filewin = Toplevel(root)
+	filewin.title("Change User")
+	
 	x=root.winfo_rootx()
 	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
-	filewin = Toplevel(root)
-	filewin.title("Change User")
 	filewin.geometry(geom)
 
 	#Username and password labels
@@ -86,7 +88,12 @@ def generate_recommendation():
 
 	## Module to generate game recommendations by game names. Incomplete.
 	def by_names():
-		os.system('python3 Search.py')
+		filewin2 = Toplevel(root)
+		filewin2.title("Recommend by Names")
+
+		def command_temp(text):
+			messagebox.showinfo("Search Results", "Searching for: %s"%text)
+		Search.SearchBox(filewin2, command=command_temp, placeholder="Enter game name").pack(pady=6, padx=3)
 		
 	## User game recommendation method selection: by type or by name.	
 	x=root.winfo_rootx()
@@ -102,11 +109,28 @@ def generate_recommendation():
 
 ## Module to view user's wishlist.
 def wishlist():
-	Label(root, text="See wishlist").pack()
+	wishlist = ["Cuphead", "Overcooked", "Overcooked 2", "DOTA 2"]
+	filewin = Toplevel(root)
+	filewin.title("Wishlist")
+
+	Label(filewin, text="Your wishlist is displayed below.", font=("", 10, "italic")).grid(pady=3, columnspan=4)
+	row_num = 2
+	for game in wishlist:
+		#Game name, price information, and current rating are displayed. Rating is optional.
+		Label(filewin, text=game, font="fixedsys 12 bold").grid(row=row_num, sticky=W, columnspan=4)
+		Label(filewin, text="Current Price: $9.99").grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
+		Label(filewin, text="Rating: 7.9/10").grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
+		Label(filewin, text="").grid(row=row_num+3, columnspan=4)
+
+		row_num += 4
 
 ## Module to check price of one game.
 def pricecheck():
-	os.System("pyhon3 Search.py")
+	filewin = Toplevel(root)
+	filewin.title("Price Check")
+	def command(text):
+		messagebox.showinfo("Search Results", "Searching for: %s"%text)
+	Search.SearchBox(filewin, command=command, placeholder="Enter game name").pack(pady=6, padx=3)
 
 ## See rankings by account value.
 def rank_by_account_value():
@@ -161,10 +185,10 @@ make_menus()
 #Show welcome message and home page graphics.
 steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
-Label(root, text="Welcome to SteamRush!", font=("TKHeadingFont", 26), bg='black', fg='white').pack()
+Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='black', fg='white').pack()
 
 #text represents the user's input.
-def command(text):
+def get_game_rec(text):
         global steam_api
         global itad_api
         appID = steam_api.get_game_id_from_steam(text)
@@ -179,7 +203,7 @@ def command(text):
                 resultString += str(r) + "\n"
         messagebox.showinfo("search command", resultString)
         
-Search.SearchBox(root, command=command, placeholder="Search for a game here").pack(pady=6, padx=3)
+Search.SearchBox(root, command=get_game_rec, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
 
