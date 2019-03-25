@@ -21,7 +21,7 @@ all_the_things = [ steam_user.getName(), steam_user.getPlayedGames(), steam_user
 print(all_the_things)
 print(steam_user.getDesiredGames())
 for g in game_ids:
-    steam_user.addDesiredGame(game_ids[0])
+    steam_user.addDesiredGame(g)
 print(steam_user.getDesiredGames())
 print(steam_user.getRecommendGames())
 for g in game_ids:
