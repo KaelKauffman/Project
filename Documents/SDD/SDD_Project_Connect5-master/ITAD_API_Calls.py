@@ -24,19 +24,29 @@ class ITAD_API_Caller:
     def get_prices(self, itad_game_plain):
         if itad_game_plain == "":
             return []
-        
-        api_call_url = "https://api.isthereanydeal.com/v01/game/prices/?key=" + self.ITAD_KEY + "&plains=" + itad_game_plain + "&country=US"
-        parsed_result = requests.get(api_call_url).json()
-        price_list = parsed_result['data'][itad_game_plain]['list']
-        if len(price_list) == 0:
-            return []
 
-        api_call_url = "https://api.isthereanydeal.com/v01/game/lowest/?key=" + self.ITAD_KEY + "&plains=" + itad_game_plain + "&country=US"
-        parsed_result = requests.get(api_call_url).json()
-        lowest_price = [parsed_result['data'][itad_game_plain]['shop']['name'], parsed_result['data'][itad_game_plain]['price']]
-        
+        try:
+            api_call_url = "https://api.isthereanydeal.com/v01/game/prices/?key=" + self.ITAD_KEY + "&plains=" + itad_game_plain + "&country=US"
+            parsed_result = requests.get(api_call_url).json()
+            price_list = parsed_result['data'][itad_game_plain]['list']
+            if len(price_list) == 0:
+                return []
+        except:
+            price_list = []
+
+        try:
+            api_call_url = "https://api.isthereanydeal.com/v01/game/lowest/?key=" + self.ITAD_KEY + "&plains=" + itad_game_plain + "&country=US"
+            parsed_result = requests.get(api_call_url).json()
+            lowest_price = [parsed_result['data'][itad_game_plain]['shop']['name'], parsed_result['data'][itad_game_plain]['price']]
+        except:
+            lowest_price = ["???", 999]
+
         results = []
         results.append(lowest_price)
         for price in price_list:
             results.append([price['shop']['name'], price['price_new'], price['price_cut']])
+        for i in range(len(results)):
+            if results[i][1] < results[0][1]:
+                results[0][0] = results[i][0]
+                results[0][1] = results[i][1]
         return results
