@@ -88,11 +88,12 @@ def get_game_rec(text):
         resultString += "Cross-Recommendation Results:\n"
         for r in all_results[0]:
             resultString += str(r) + "\n"
-
+        resultString += "\n"
         for results in all_results[1]:
             resultString += "Recommendations from " + results[1] + " (" + results[0] + "):\n"
             for r in results[2]:
                 resultString += str(r) + "\n"
+            resultString += "\n"
             
         messagebox.showinfo("search command", resultString)
 
@@ -263,15 +264,17 @@ def see_game_info(text_):
         geom="+%d+%d" % (x,y)
         filewin.geometry(geom)
 
-	Label(filewin, text=text_, font=("fixedsys", 26, "bold")).grid(padx=5, pady=3)
-	Label(filewin, text="Game image here", fg='white', bg='black').grid(row=1,column=1, rowspan=5, padx=5, pady=2, ipady=40, sticky=W)
-	Label(filewin, text="Steam Price: {}".format(0.00)).grid(row=1, sticky=W)
-	Label(filewin, text="Avg Hours Played: {}".format(5)).grid(row=2, sticky=W)
-	Label(filewin, text="Positive Reviews: {}%".format(78)).grid(row=3, sticky=W)
-	Label(filewin, text="Total Reviews: {}%".format(100)).grid(row=4, sticky=W)
-	Label(filewin, text="Genres: {}".format("Adventure, RPG")).grid(row=5, sticky=W)
-	Label(filewin, text="Tags: {}".format("aaa, bbb, ccc")).grid(row=6, sticky=W)
-	Label(filewin, text="").grid(row=7)
+        Label(filewin, text=text_, font=("fixedsys", 26, "bold")).grid(padx=5, pady=3) 
+        Label(filewin, text="Game image here", fg='white', bg='black').grid(row=1,column=1, rowspan=5, padx=5, pady=2, ipady=40, sticky=W)
+        Label(filewin, text="Steam Price: {}".format(0.00)).grid(row=1, sticky=W)
+        Label(filewin, text="Avg Hours Played: {}".format(5)).grid(row=2, sticky=W)
+        Label(filewin, text="Positive Reviews: {}%".format(78)).grid(row=3, sticky=W)
+        Label(filewin, text="Total Reviews: {}%".format(100)).grid(row=4, sticky=W)
+        Label(filewin, text="Genres: {}".format("Adventure, RPG")).grid(row=5, sticky=W)
+        Label(filewin, text="Tags: {}".format("aaa, bbb, ccc")).grid(row=6, sticky=W)
+        Label(filewin, text="").grid(row=7)
+
+        
 
 
 
