@@ -34,9 +34,7 @@ def connect_to_steam():
 
         Button(filewin, text= "Login here", command=log_in).pack()
 
-## Module to switch current user. Currently uses a username/password system. 
-## Want to implement a dropdown menu for users to get rid of password authentication;
-## Not sure about security for that choice.
+## Module to switch current user. 
 def switch_user():
         filewin = Toplevel(root)
         filewin.title("Users")
@@ -212,7 +210,21 @@ def pricecheck():
         filewin.geometry(geom)
 
         def command(text):
-                messagebox.showinfo("Search Results", "Searching for: %s"%text)
+                app_id = steam_api.get_game_id_from_steam(text)
+                prices = itad_api.get_prices(itad_api.get_plain(app_id))
+                if len(prices) == 0:
+                      resultString = "Game not found."
+                else:            
+                        resultString = "Prices for: " + text + "\n\n"
+                        resultString += "Lowest Price in History:\n"
+                        resultString += str(prices[0]) + "\n\n"
+                        resultString += "Current Prices: \n"
+                        for p in prices[1:]:
+                             resultString += str(p) + "\n"
+                             
+                messagebox.showinfo("Search Results", resultString )
+
+                
         Search.SearchBox(filewin, command=command, placeholder="Enter game name").pack(pady=6, padx=3)
 
 ## See rankings by account value.
@@ -255,6 +267,14 @@ def make_menus():
 
 ## View a game's information.
 def see_game_info(text_):
+        app_id = steam_api.get_game_id_from_steam(text_)
+        hours = steam_api.get_playtime(app_id)[0]
+        reviews = steam_api.get_rating(app_id)
+        genres = steam_api.get_genres(app_id)
+        tags = steam_api.get_tags(app_id)
+        if len(tags) > 3:
+                tags = tags[0:3]
+        
         filewin = Toplevel(root)
         filewin.title(text_)
 
@@ -263,15 +283,14 @@ def see_game_info(text_):
         geom="+%d+%d" % (x,y)
         filewin.geometry(geom)
 
-	Label(filewin, text=text_, font=("fixedsys", 26, "bold")).grid(padx=5, pady=3)
-	Label(filewin, text="Game image here", fg='white', bg='black').grid(row=1,column=1, rowspan=5, padx=5, pady=2, ipady=40, sticky=W)
-	Label(filewin, text="Steam Price: {}".format(0.00)).grid(row=1, sticky=W)
-	Label(filewin, text="Avg Hours Played: {}".format(5)).grid(row=2, sticky=W)
-	Label(filewin, text="Positive Reviews: {}%".format(78)).grid(row=3, sticky=W)
-	Label(filewin, text="Total Reviews: {}%".format(100)).grid(row=4, sticky=W)
-	Label(filewin, text="Genres: {}".format("Adventure, RPG")).grid(row=5, sticky=W)
-	Label(filewin, text="Tags: {}".format("aaa, bbb, ccc")).grid(row=6, sticky=W)
-	Label(filewin, text="").grid(row=7)
+        Label(filewin, text=text_, font=("fixedsys", 26, "bold")).grid(padx=5, pady=3)
+        Label(filewin, text="Game image here", fg='white', bg='black').grid(row=1,column=1, rowspan=5, padx=5, pady=2, ipady=40, sticky=W)
+        Label(filewin, text="Avg Hours Played: {0:.2f}".format(hours)).grid(row=1, sticky=W)
+        Label(filewin, text="Percentage Positive Reviews: {0:.2f}%".format(100*reviews[0])).grid(row=2, sticky=W)
+        Label(filewin, text="Total Reviews: {}".format(reviews[1])).grid(row=3, sticky=W)
+        Label(filewin, text="Genres: {}".format(str(genres))).grid(row=4, sticky=W)
+        Label(filewin, text="Tags: {}".format(str(tags))).grid(row=5, sticky=W)
+        Label(filewin, text="").grid(row=6)
 
 
 
