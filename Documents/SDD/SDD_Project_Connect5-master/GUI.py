@@ -46,7 +46,7 @@ def switch_user():
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 	#Suppose every account that ever login is stored in users
-	users=["1","Kael","Michelle","Asshole","GLOBAL ASSHOLE"]
+	users=["Andrew", "Kael", "Michelle", "Yao", "Yiwei"]
 	row_num=1
 	var=IntVar()
 	var.set(1)
@@ -91,8 +91,8 @@ def generate_recommendation():
 		 'Sports', 'Strategy']
 	## Module to generate game recommendations by type.
 	def by_types():
-		x=root.winfo_rootx()*(1.05)
-		y=root.winfo_rooty()*(1.1)
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
 		geom="+%d+%d" % (x,y)
 		filewin1 = Toplevel(root)
 		filewin1.title("Recommend by Types")
@@ -131,16 +131,16 @@ def generate_recommendation():
 		filewin2 = Toplevel(root)
 		filewin2.title("Recommend by Names")
 
-		x=root.winfo_rootx()*(1.05)
-		y=root.winfo_rooty()*(1.1)
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
 		geom="+%d+%d" % (x,y)
 		filewin2.geometry(geom)
 
 		Search.SearchBox(filewin2, command=get_game_rec, placeholder="Enter game name").pack(pady=6, padx=3)
 		
 	## User game recommendation method selection: by type or by name.	
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Game Recommendation")
@@ -171,8 +171,8 @@ def wishlist():
 	filewin = Toplevel(root)
 	filewin.title("Wishlist")
 
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -181,19 +181,20 @@ def wishlist():
 	for game in wishlist:
 		#Game name, price information, and current rating are displayed. Rating is optional.
 		Label(filewin, text=game, font="fixedsys 12 bold").grid(row=row_num, sticky=W, columnspan=4)
-		Label(filewin, text="Current Price: $9.99").grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
-		Label(filewin, text="Rating: 7.9/10").grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
-		Label(filewin, text="").grid(row=row_num+3, columnspan=4)
+		Label(filewin, text="Current Price: {}".format(9.99)).grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
+		Label(filewin, text="Lowest Price: {}".format(9.99)).grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
+		Label(filewin, text="Vendor: {}".format("Humble")).grid(row=row_num+3, columnspan=2, sticky=W, padx=12)
+		Label(filewin, text="").grid(row=row_num+4, columnspan=4)
 
-		row_num += 4
+		row_num += 5
 
 ## Module to check price of one game.
 def pricecheck():
 	filewin = Toplevel(root)
 	filewin.title("Price Check")
 
-	x=root.winfo_rootx()*(1.5)
-	y=root.winfo_rooty()*(1.5)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -239,6 +240,8 @@ def make_menus():
 	ranking_menu.add_command(label="By account level", command=rank_by_account_level)
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
+def see_game_info(text_):
+	messagebox.showinfo("Search Results", text_)
 
 
 
@@ -259,7 +262,7 @@ Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='bla
 
 
         
-Search.SearchBox(root, command=get_game_rec, placeholder="Search for a game here").pack(pady=6, padx=3)
+Search.SearchBox(root, command=see_game_info, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
 
