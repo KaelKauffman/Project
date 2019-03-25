@@ -239,7 +239,6 @@ class SteamSpy_API_Caller:
         all_results = []
         for gameID in gameIDs:
             all_results.append( self.recommend_from_single_game(gameID, matchRate=matchRate, cutoff=cutoff, ratePower=ratePower, confPower=confPower) )
-            print("Rec. Load")
             
         for result in all_results:
             remove_list = []

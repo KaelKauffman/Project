@@ -112,7 +112,7 @@ class User:
         parsed_result = requests.get(api_call_url).json()
         if parsed_result['.meta']['match'] == False:
             return ""
-        return parsed_result['data']['plain']   
+        return parsed_result['data']['plain']
     
     def get_Steam_Worth():
         for game in self.playedGames:

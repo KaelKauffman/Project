@@ -2,9 +2,17 @@ from tkinter import *
 from tkinter import messagebox
 from SteamSpy_API_Calls import SteamSpy_API_Caller
 from ITAD_API_Calls import ITAD_API_Caller
+from User import User
 
 import os
 import Search
+
+#API Call objects
+steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
+itad_api = ITAD_API_Caller()
+
+#User object
+steam_user = User()
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
@@ -171,9 +179,7 @@ def make_menus():
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
 
-#API Call objects
-steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
-itad_api = ITAD_API_Caller()
+
 
 #Create initial window.
 root = Tk()
@@ -193,13 +199,13 @@ def get_game_rec(text):
         global itad_api
         appID = steam_api.get_game_id_from_steam(text)
         prices = itad_api.get_prices(itad_api.get_plain(appID))
-        recommend = steam_api.recommend_similar_games(appID, matchRate=0.5, cutoff=10, ratePower=0)
+        recommend = steam_api.recommend_multi_input(gameIDs=[appID], matchRate=0.5, showTop=10, cross_thresh=0.5, cutoff=10, ratePower=1, confPower=5)
         #check = steam_api.save_game_data_to_cache()
         resultString = ""
         resultString += "Lowest Price in History: " + str(prices[0]) + "\n"
         resultString += "Current Prices: " + str(prices[1:]) + "\n\n"
         resultString += "Recommendations:  [ id, name, score ]\n"
-        for r in recommend:
+        for r in recommend[1][0][2]:
                 resultString += str(r) + "\n"
         messagebox.showinfo("search command", resultString)
         
