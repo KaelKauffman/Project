@@ -16,38 +16,50 @@ itad_api = ITAD_API_Caller()
 def connect_to_steam():
 	filewin = Toplevel(root)
 	filewin.title("Connect to Steam.")
-	
 	#Have popup window follow parent object placement.
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
-	Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
-	Button(filewin, text= "Login here").pack()
+	Label(filewin, text='Steam ID').grid(row=0)
+	e1=Entry(filewin).grid(row=0, column=1, padx=3)
+	# Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
+	Button(filewin, text= "Login here").grid(columnspan=2)
 
 ## Module to switch current user. Currently uses a username/password system. 
+## Want to implement a dropdown menu for users to get rid of password authentication;
+## Not sure about security for that choice.
 def switch_user():
 	filewin = Toplevel(root)
-	filewin.title("Change User")
+	filewin.title("Users")
 	
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
+	#Suppose every account that ever login is stored in users
+	users=["1","Kael","Michelle","Asshole","GLOBAL ASSHOLE"]
+	row_num=1
+	var=IntVar()
+	var.set(1)
+	for user in users:
+		r = Radiobutton(filewin, text=user, variable=var, value=row_num)
+		r.pack(anchor=W)
+		row_num+=1
+	# #Username and password labels
+	# Label(filewin, text='Username').grid(row=0)
+	# Label(filewin, text='Password').grid(row=1)
 
-	#Username and password labels
-	Label(filewin, text='Username').grid(row=0)
-	Label(filewin, text='Password').grid(row=1)
-
-	#Entry fields for username, password
-	e1 = Entry(filewin).grid(row=0,column=1, padx=3)
-	e2 = Entry(filewin, show='*').grid(row=1, column=1, padx=3)
+	# #Entry fields for username, password
+	# e1 = Entry(filewin).grid(row=0,column=1, padx=3)
+	# e2 = Entry(filewin, show='*').grid(row=1, column=1, padx=3)
 	
-	#Keep user logged in
-	Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
-	#Submit
-	Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
+	# #Keep user logged in
+	# Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
+	# #Submit
+	# Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
+
 
 # Return popup window of game recommendations given a game.
 def get_game_rec(text):
