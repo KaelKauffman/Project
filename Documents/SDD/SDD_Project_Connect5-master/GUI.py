@@ -42,23 +42,6 @@ def switch_user():
 	Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
 	#Submit
 	Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
-	
-
-	# Attempts to make a drop down list for login, currently not working.
-
-	# Label(filewin, text='Select from available accounts below.').pack(padx=30, pady=30)
-	# mainframe = Frame(filewin)
-	# mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
-	# mainframe.columnconfigure(0, weight = 1)
-	# mainframe.rowconfigure(0, weight = 1)
-	# mainframe.pack(pady = 100, padx = 100)
-
-	# tkvar = StringVar(filewin)
-	# choices = { " ----- ", "Michelle Zhou", "Yaoyu Cheng"}
-	# tkvar.set(" ----- ")
-
-	# dropdown = OptionMenu(mainframe, tkvar, *choices)
-	# dropdown.grid(row=2, column=1)
 
 ## Module to generate game recommendations based on 2 parameters, by type or by name.
 def generate_recommendation():
