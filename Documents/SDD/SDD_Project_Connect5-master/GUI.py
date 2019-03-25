@@ -91,6 +91,11 @@ def generate_recommendation():
 		filewin2 = Toplevel(root)
 		filewin2.title("Recommend by Names")
 
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
+		geom="+%d+%d" % (x,y)
+		filewin2.geometry(geom)
+
 		def command_temp(text):
 			messagebox.showinfo("Search Results", "Searching for: %s"%text)
 		Search.SearchBox(filewin2, command=command_temp, placeholder="Enter game name").pack(pady=6, padx=3)
@@ -178,7 +183,7 @@ itad_api = ITAD_API_Caller()
 #Create initial window.
 root = Tk()
 root.title("SteamRush")
-root.geometry("800x600")
+root.geometry("800x600+500+200")
 root.configure(background='black')
 make_menus()
 
