@@ -29,8 +29,8 @@ def connect_to_steam():
         steamID.pack(padx=3, pady=3, ipadx=10, ipady=4)
 
         def log_in():
-                print(steamID.get())
-                if steamID != "":
+                #print(steamID.get())
+                if steamID.get() != "" and steamID.get().isdigit():
                         steam_user.loginSteamID(steamID.get())
 
         Button(filewin, text= "Login here", command=log_in).pack()
