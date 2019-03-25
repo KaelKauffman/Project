@@ -77,7 +77,9 @@ def get_game_rec(text):
         names_list = [x.strip() for x in text.split(",")]
         game_ids = []
         for name in names_list:
-            game_ids.append(steam_api.get_game_id_from_steam(name))
+            g = steam_api.get_game_id_from_steam(name)
+            if g != "999999999":
+                game_ids.append(g)
            
         
         all_results = steam_api.recommend_multi_input(gameIDs=game_ids, required_genres=steam_api.getRequiredGenres(), banned_genres=[], banned_games=[], showTop=5, cross_thresh=2, matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
@@ -87,11 +89,12 @@ def get_game_rec(text):
         resultString += "Cross-Recommendation Results:\n"
         for r in all_results[0]:
             resultString += str(r) + "\n"
-
+        resultString += "\n"
         for results in all_results[1]:
             resultString += "Recommendations from " + results[1] + " (" + results[0] + "):\n"
             for r in results[2]:
                 resultString += str(r) + "\n"
+            resultString += "\n"
             
         messagebox.showinfo("search command", resultString)
 
@@ -269,13 +272,20 @@ def make_menus():
 ## View a game's information.
 def see_game_info(text_):
         app_id = steam_api.get_game_id_from_steam(text_)
-        name = steam_api.get_name(app_id)
-        hours = steam_api.get_playtime(app_id)[0]
-        reviews = steam_api.get_rating(app_id)
-        genres = steam_api.get_genres(app_id)
-        tags = steam_api.get_tags(app_id)
-        if len(tags) > 3:
-                tags = tags[0:3]
+        name = "Game not found"
+        hours = 0
+        reviews = [0,0]
+        genres = []
+        tags = []
+
+        if app_id != "999999999":
+                name = steam_api.get_name(app_id)
+                hours = steam_api.get_playtime(app_id)[0]
+                reviews = steam_api.get_rating(app_id)
+                genres = steam_api.get_genres(app_id)
+                tags = steam_api.get_tags(app_id)
+                if len(tags) > 3:
+                        tags = tags[0:3]
         
         filewin = Toplevel(root)
         filewin.title(text_)

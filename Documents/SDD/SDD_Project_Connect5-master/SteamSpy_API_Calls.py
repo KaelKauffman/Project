@@ -54,20 +54,23 @@ class SteamSpy_API_Caller:
     # Returns: A string containing the steam app ID if the search contained a game that matched
     #          the search string, or a string of "999999999" (an invalid ID) if no matches were found
     def get_game_id_from_steam(self, search_string):
-        steam_lookup_url = "https://store.steampowered.com/search/?term=" + search_string.replace(" ", "+")
-        steam_page = requests.get(steam_lookup_url)
-        html_tree = html.fromstring(steam_page.content)
-        #xpath based on inspecting page source
-        steam_store_urls = html_tree.xpath('//*[@id="search_result_container"]/div/a/@href')
-        results = []
-        #Remove punctiation and capitals from search string, steam urls will never have these in the names
-        search_string_formatted = search_string.replace(":", "").replace("!", "").replace("?", "").replace(",", "").replace("-", "").replace("  ", " ").lower()
-        for url in steam_store_urls:
-            fields = url.split("/")
-            name = fields[5].replace("_", " ").replace("  ", " ").lower()
-            if search_string_formatted == name:
-                return fields[4]
-        return "999999999"
+        try:
+            steam_lookup_url = "https://store.steampowered.com/search/?term=" + search_string.replace(" ", "+")
+            steam_page = requests.get(steam_lookup_url)
+            html_tree = html.fromstring(steam_page.content)
+            #xpath based on inspecting page source
+            steam_store_urls = html_tree.xpath('//*[@id="search_result_container"]/div/a/@href')
+            results = []
+            #Remove punctiation and capitals from search string, steam urls will never have these in the names
+            search_string_formatted = search_string.replace(":", "").replace("!", "").replace("?", "").replace(",", "").replace("-", "").replace("  ", " ").lower()
+            for url in steam_store_urls:
+                fields = url.split("/")
+                name = fields[5].replace("_", " ").replace("  ", " ").lower()
+                if search_string_formatted == name:
+                    return fields[4]
+            return "999999999"
+        except:
+            return "999999999"
 
     def load_game_data(self, gameID):
         if not str(gameID).isdigit() or str(gameID) == "999999999":
