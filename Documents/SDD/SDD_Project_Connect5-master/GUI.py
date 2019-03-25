@@ -241,8 +241,19 @@ def make_menus():
         ranking_menu.add_command(label="By account level", command=rank_by_account_level)
         menu.add_cascade(label="Ranking", menu=ranking_menu)
 
+## 
 def see_game_info(text_):
-        messagebox.showinfo("Search Results", text_)
+	filewin = Toplevel(root)
+	filewin.title(text_)
+
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
+
+	Label(filewin, text="See game info here")
+	# messagebox.showinfo("Search Results", text_)
+
 
 
 
@@ -261,8 +272,6 @@ steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
 Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='black', fg='white').pack()
 
-
-        
 Search.SearchBox(root, command=see_game_info, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
