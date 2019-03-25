@@ -302,8 +302,7 @@ def see_game_info(text_):
         Label(filewin, text="Total Reviews: {}".format(reviews[1])).grid(row=3, sticky=W)
         Label(filewin, text="Genres: {}".format(str(genres))).grid(row=4, sticky=W)
         Label(filewin, text="Top-Voted Tags: {}".format(str(tags))).grid(row=5, sticky=W)
-        Label(filewin, text="").grid(row=6)
-
+        Button(filewin, text="Add to Wishlist").grid(row=6, sticky=W, padx=5, pady=3)
 
 
 
