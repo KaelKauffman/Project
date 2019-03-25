@@ -3,8 +3,6 @@ from tkinter import messagebox
 from SteamSpy_API_Calls import SteamSpy_API_Caller
 from ITAD_API_Calls import ITAD_API_Caller
 from User import User
-
-import os
 import Search
 
 #API Call objects
@@ -20,8 +18,8 @@ def connect_to_steam():
 	filewin.title("Connect to Steam.")
 	
 	#Have popup window follow parent object placement.
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -29,14 +27,12 @@ def connect_to_steam():
 	Button(filewin, text= "Login here").pack()
 
 ## Module to switch current user. Currently uses a username/password system. 
-## Want to implement a dropdown menu for users to get rid of password authentication;
-## Not sure about security for that choice.
 def switch_user():
 	filewin = Toplevel(root)
 	filewin.title("Change User")
 	
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -53,14 +49,31 @@ def switch_user():
 	#Submit
 	Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
 
+# Return popup window of game recommendations given a game.
+def get_game_rec(text):
+        global steam_api
+        global itad_api
+        appID = steam_api.get_game_id_from_steam(text)
+        prices = itad_api.get_prices(itad_api.get_plain(appID))
+        recommend = steam_api.recommend_multi_input(gameIDs=[appID], matchRate=0.5, showTop=10, cross_thresh=0.5, cutoff=10, ratePower=1, confPower=5)
+        #check = steam_api.save_game_data_to_cache()
+        resultString = ""
+        resultString += "Lowest Price in History: " + str(prices[0]) + "\n"
+        resultString += "Current Prices: " + str(prices[1:]) + "\n\n"
+        resultString += "Recommendations:  [ id, name, score ]\n"
+        for r in recommend[1][0][2]:
+                resultString += str(r) + "\n"
+        messagebox.showinfo("search command", resultString)
+
+
 ## Module to generate game recommendations based on 2 parameters, by type or by name.
 def generate_recommendation():
 	TYPES = ['Action', 'Adventure', 'Casual', 'Indie', 'Massively Multiplayer', 'Racing', 'RPG', 'Simulation', 
 		 'Sports', 'Strategy']
 	## Module to generate game recommendations by type.
 	def by_types():
-		x=root.winfo_rootx()
-		y=root.winfo_rooty()
+		x=root.winfo_rootx()*(1.05)
+		y=root.winfo_rooty()*(1.1)
 		geom="+%d+%d" % (x,y)
 		filewin1 = Toplevel(root)
 		filewin1.title("Recommend by Types")
@@ -99,18 +112,16 @@ def generate_recommendation():
 		filewin2 = Toplevel(root)
 		filewin2.title("Recommend by Names")
 
-		x=root.winfo_rootx()
-		y=root.winfo_rooty()
+		x=root.winfo_rootx()*(1.05)
+		y=root.winfo_rooty()*(1.1)
 		geom="+%d+%d" % (x,y)
 		filewin2.geometry(geom)
 
-		def command_temp(text):
-			messagebox.showinfo("Search Results", "Searching for: %s"%text)
-		Search.SearchBox(filewin2, command=command_temp, placeholder="Enter game name").pack(pady=6, padx=3)
+		Search.SearchBox(filewin2, command=get_game_rec, placeholder="Enter game name").pack(pady=6, padx=3)
 		
 	## User game recommendation method selection: by type or by name.	
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
 	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Game Recommendation")
@@ -123,8 +134,14 @@ def generate_recommendation():
 ## Module to view user's wishlist.
 def wishlist():
 	wishlist = ["Cuphead", "Overcooked", "Overcooked 2", "DOTA 2"]
+
 	filewin = Toplevel(root)
 	filewin.title("Wishlist")
+
+	x=root.winfo_rootx()*(1.05)
+	y=root.winfo_rooty()*(1.1)
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
 
 	Label(filewin, text="Your wishlist is displayed below.", font=("", 10, "italic")).grid(pady=3, columnspan=4)
 	row_num = 2
@@ -141,6 +158,12 @@ def wishlist():
 def pricecheck():
 	filewin = Toplevel(root)
 	filewin.title("Price Check")
+
+	x=root.winfo_rootx()*(1.5)
+	y=root.winfo_rooty()*(1.5)
+	geom="+%d+%d" % (x,y)
+	filewin.geometry(geom)
+
 	def command(text):
 		messagebox.showinfo("Search Results", "Searching for: %s"%text)
 	Search.SearchBox(filewin, command=command, placeholder="Enter game name").pack(pady=6, padx=3)
@@ -189,7 +212,10 @@ def make_menus():
 #Create initial window.
 root = Tk()
 root.title("SteamRush")
-root.geometry("800x600+500+200")
+root.geometry("800x600")
+posRight = int(root.winfo_screenwidth()/2 - 800/2)
+posDown = int(root.winfo_screenheight()/2 - 600/2)
+root.geometry("+{}+{}".format(posRight, posDown))
 root.configure(background='black')
 make_menus()
 
@@ -198,21 +224,7 @@ steam_icon = PhotoImage(file= "images/steam_icon.gif")
 Label(root, bg='black', image=steam_icon).pack()
 Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='black', fg='white').pack()
 
-#text represents the user's input.
-def get_game_rec(text):
-        global steam_api
-        global itad_api
-        appID = steam_api.get_game_id_from_steam(text)
-        prices = itad_api.get_prices(itad_api.get_plain(appID))
-        recommend = steam_api.recommend_multi_input(gameIDs=[appID], matchRate=0.5, showTop=10, cross_thresh=0.5, cutoff=10, ratePower=1, confPower=5)
-        #check = steam_api.save_game_data_to_cache()
-        resultString = ""
-        resultString += "Lowest Price in History: " + str(prices[0]) + "\n"
-        resultString += "Current Prices: " + str(prices[1:]) + "\n\n"
-        resultString += "Recommendations:  [ id, name, score ]\n"
-        for r in recommend[1][0][2]:
-                resultString += str(r) + "\n"
-        messagebox.showinfo("search command", resultString)
+
         
 Search.SearchBox(root, command=get_game_rec, placeholder="Search for a game here").pack(pady=6, padx=3)
 
