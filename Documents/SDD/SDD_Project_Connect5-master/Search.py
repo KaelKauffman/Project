@@ -59,13 +59,13 @@ def add_placeholder_to(entry, placeholder, color="grey", font=None):
     return state
 
 class SearchBox(Frame):
-    def __init__(self, master, entry_width=30, entry_font=None, entry_background="white", entry_highlightthickness=1, button_text="Search", button_ipadx=10, button_background="#009688", button_foreground="white", button_font=None, opacity=0.8, placeholder=None, placeholder_font=None, placeholder_color="grey", spacing=3, command=None):
+    def __init__(self, master, entry_width=50, entry_font=None, entry_background="white", entry_highlightthickness=1, button_text="Search", button_ipadx=10, button_background="#009688", button_foreground="white", button_font=None, opacity=0.8, placeholder=None, placeholder_font=None, placeholder_color="grey", spacing=3, command=None):
         Frame.__init__(self, master)
         
         self._command = command
 
         self.entry = Entry(self, width=entry_width, background=entry_background, highlightcolor=button_background, highlightthickness=entry_highlightthickness)
-        self.entry.pack(side=LEFT, fill=BOTH, ipady=1, padx=(0,spacing))
+        self.entry.pack(side=LEFT, fill=BOTH, ipady=5, padx=(0,spacing))
         
         if entry_font:
             self.entry.configure(font=entry_font)
