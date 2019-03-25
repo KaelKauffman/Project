@@ -4,7 +4,7 @@ import json
 
 class SteamUser:
     
-    def __init__(self, steamID="", token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):
+    def __init__(self, steamID="00000", token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):
         self.steamID = steamID
         self.steam_token = token
         self.ITAD_Key = ITAD_key
