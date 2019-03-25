@@ -45,7 +45,7 @@ def switch_user():
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 	#Suppose every account that ever login is stored in users
-	users=["1","Kael","Michelle","Asshole","GLOBAL ASSHOLE"]
+	users=["Andrew", "Kael", "Michelle", "Yao", "Yiwei"]
 	row_num=1
 	var=IntVar()
 	var.set(1)
