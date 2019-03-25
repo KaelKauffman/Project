@@ -16,16 +16,22 @@ itad_api = ITAD_API_Caller()
 def connect_to_steam():
 	filewin = Toplevel(root)
 	filewin.title("Connect to Steam.")
+	
 	#Have popup window follow parent object placement.
 	x=root.winfo_rootx()
 	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
-	Label(filewin, text='Steam ID').grid(row=0)
-	e1=Entry(filewin).grid(row=0, column=1, padx=3)
-	# Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
-	Button(filewin, text= "Login here").grid(columnspan=2)
+	description ='Connect to your public Steam account here by entering your SteamID'
+	Label(filewin, text=description).pack(padx=30, pady=3)
+	steamID = Entry(filewin)
+	steamID.pack(padx=3, pady=3, ipadx=10, ipady=4)
+
+	def log_in():
+		print(steamID.get())
+
+	Button(filewin, text= "Login here", command=log_in).pack()
 
 ## Module to switch current user. Currently uses a username/password system. 
 ## Want to implement a dropdown menu for users to get rid of password authentication;
