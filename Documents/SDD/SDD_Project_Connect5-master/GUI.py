@@ -253,7 +253,7 @@ def make_menus():
         ranking_menu.add_command(label="By account level", command=rank_by_account_level)
         menu.add_cascade(label="Ranking", menu=ranking_menu)
 
-## 
+## View a game's information.
 def see_game_info(text_):
         filewin = Toplevel(root)
         filewin.title(text_)
@@ -272,11 +272,6 @@ def see_game_info(text_):
 	Label(filewin, text="Genres: {}".format("Adventure, RPG")).grid(row=5, sticky=W)
 	Label(filewin, text="Tags: {}".format("aaa, bbb, ccc")).grid(row=6, sticky=W)
 	Label(filewin, text="").grid(row=7)
-
-
-	# messagebox.showinfo("Search Results", text_)
-
-
 
 
 
