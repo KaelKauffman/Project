@@ -46,15 +46,17 @@ def switch_user():
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 	#Suppose every account that ever login is stored in users
-	users=["1","Kael","Michelle","Asshole","GLOBAL ASSHOLE"]
+	users = steam_user.getAllUsers()
 	def selection():
-		print(users[var.get()])
+		u_id = users[var.get()][0]
+		steam_user.loginSteamID(u_id)
+		
 	Label(filewin, text='Choose Your Account Below').pack()
 	var=IntVar()
 	var.set(1)
 	row_num=0
 	for user in users:
-		r = Radiobutton(filewin, text=user, variable=var, value=row_num, command=selection)
+		r = Radiobutton(filewin, text=user[1], variable=var, value=row_num, command=selection)
 		r.pack(anchor=W)
 		row_num+=1
 	# #Username and password labels
