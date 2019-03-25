@@ -189,7 +189,7 @@ def make_menus():
 #Create initial window.
 root = Tk()
 root.title("SteamRush")
-root.geometry("800x600+500+200")
+root.geometry("800x600+500+300")
 root.configure(background='black')
 make_menus()
 
