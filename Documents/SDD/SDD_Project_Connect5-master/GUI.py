@@ -30,7 +30,8 @@ def connect_to_steam():
 
         def log_in():
                 print(steamID.get())
-                steam_user.loginSteamID(steamID.get())
+                if steamID != "":
+                        steam_user.loginSteamID(steamID.get())
 
         Button(filewin, text= "Login here", command=log_in).pack()
 
@@ -268,6 +269,7 @@ def make_menus():
 ## View a game's information.
 def see_game_info(text_):
         app_id = steam_api.get_game_id_from_steam(text_)
+        name = steam_api.get_name(app_id)
         hours = steam_api.get_playtime(app_id)[0]
         reviews = steam_api.get_rating(app_id)
         genres = steam_api.get_genres(app_id)
@@ -283,13 +285,13 @@ def see_game_info(text_):
         geom="+%d+%d" % (x,y)
         filewin.geometry(geom)
 
-        Label(filewin, text=text_, font=("fixedsys", 26, "bold")).grid(padx=5, pady=3)
+        Label(filewin, text=name, font=("fixedsys", 26, "bold")).grid(padx=5, pady=3)
         Label(filewin, text="Game image here", fg='white', bg='black').grid(row=1,column=1, rowspan=5, padx=5, pady=2, ipady=40, sticky=W)
         Label(filewin, text="Avg Hours Played: {0:.2f}".format(hours)).grid(row=1, sticky=W)
         Label(filewin, text="Percentage Positive Reviews: {0:.2f}%".format(100*reviews[0])).grid(row=2, sticky=W)
         Label(filewin, text="Total Reviews: {}".format(reviews[1])).grid(row=3, sticky=W)
         Label(filewin, text="Genres: {}".format(str(genres))).grid(row=4, sticky=W)
-        Label(filewin, text="Tags: {}".format(str(tags))).grid(row=5, sticky=W)
+        Label(filewin, text="Top-Voted Tags: {}".format(str(tags))).grid(row=5, sticky=W)
         Label(filewin, text="").grid(row=6)
 
 
