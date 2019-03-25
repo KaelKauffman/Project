@@ -18,21 +18,28 @@ def connect_to_steam():
 	filewin.title("Connect to Steam.")
 	
 	#Have popup window follow parent object placement.
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
-	Label(filewin, text='Connect to your public Steam account here.').pack(padx=30, pady=30)
-	Button(filewin, text= "Login here").pack()
+	description ='Connect to your public Steam account here by entering your SteamID'
+	Label(filewin, text=description).pack(padx=30, pady=3)
+	steamID = Entry(filewin)
+	steamID.pack(padx=3, pady=3, ipadx=10, ipady=4)
+
+	def log_in():
+		print(steamID.get())
+
+	Button(filewin, text= "Login here", command=log_in).pack()
 
 ## Module to switch current user. Currently uses a username/password system. 
 def switch_user():
 	filewin = Toplevel(root)
 	filewin.title("Change User")
 	
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -72,8 +79,8 @@ def generate_recommendation():
 		 'Sports', 'Strategy']
 	## Module to generate game recommendations by type.
 	def by_types():
-		x=root.winfo_rootx()*(1.05)
-		y=root.winfo_rooty()*(1.1)
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
 		geom="+%d+%d" % (x,y)
 		filewin1 = Toplevel(root)
 		filewin1.title("Recommend by Types")
@@ -112,16 +119,16 @@ def generate_recommendation():
 		filewin2 = Toplevel(root)
 		filewin2.title("Recommend by Names")
 
-		x=root.winfo_rootx()*(1.05)
-		y=root.winfo_rooty()*(1.1)
+		x=root.winfo_rootx()
+		y=root.winfo_rooty()
 		geom="+%d+%d" % (x,y)
 		filewin2.geometry(geom)
 
 		Search.SearchBox(filewin2, command=get_game_rec, placeholder="Enter game name").pack(pady=6, padx=3)
 		
 	## User game recommendation method selection: by type or by name.	
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin = Toplevel(root)
 	filewin.title("Game Recommendation")
@@ -159,8 +166,8 @@ def pricecheck():
 	filewin = Toplevel(root)
 	filewin.title("Price Check")
 
-	x=root.winfo_rootx()*(1.5)
-	y=root.winfo_rooty()*(1.5)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -206,6 +213,8 @@ def make_menus():
 	ranking_menu.add_command(label="By account level", command=rank_by_account_level)
 	menu.add_cascade(label="Ranking", menu=ranking_menu)
 
+def see_game_info(text_):
+	messagebox.showinfo("Search Results", text_)
 
 
 
@@ -226,7 +235,7 @@ Label(root, text="Welcome to SteamRush!", font=("fixedsys", 26, "bold"), bg='bla
 
 
         
-Search.SearchBox(root, command=get_game_rec, placeholder="Search for a game here").pack(pady=6, padx=3)
+Search.SearchBox(root, command=see_game_info, placeholder="Search for a game here").pack(pady=6, padx=3)
 
 root.mainloop()
 
