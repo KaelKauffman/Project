@@ -49,6 +49,11 @@ def switch_user():
         def selection():
                 u_id = users[var.get()][0]
                 steam_user.loginSteamID(u_id)
+                print(steam_user.getName())
+                print([steam_api.get_name(g_id[0]) for g_id in steam_user.getPlayedGames()])
+                print(steam_user.getTotalHours())
+                print(steam_user.getSteamWorth())
+                
                 
         Label(filewin, text='Choose Your Account Below').pack()
         var=IntVar()

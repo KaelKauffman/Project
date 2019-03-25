@@ -5,12 +5,13 @@ from time import sleep
 
 kael_id = '76561198046994663'
 wellsee_id = '76561198319742744'
+other_id = '76561198096608890'
 
 steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
 itad_api = ITAD_API_Caller()
 steam_user = SteamUser(kael_id, userFile="User_Data_Cache.txt")
 
-game_name_list = [ "Factorio", "Subnautica", "Slay the Spire", "Terraria" ]
+game_name_list = [ "Factorio", "Subnautica", "Slay the Spire", "Terraria", "Cities Skylines" ]
 game_ids = []
 for name in game_name_list:
     game_ids.append(steam_api.get_game_id_from_steam(name))

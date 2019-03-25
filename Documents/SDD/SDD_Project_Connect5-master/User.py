@@ -43,7 +43,7 @@ class SteamUser:
     def loginSteamID(self,ID):
         self.steamID = ID
         if self.steamID not in self.user_data_cache:
-            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'accountWorth':0}
+            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'hoursPlayed':0, 'accountWorth':0}
             check = self.loadName()
             check = self.loadPlayedGames()
             check = self.loadSteamWorth()
