@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from SteamSpy_API_Calls import SteamSpy_API_Caller
 from ITAD_API_Calls import ITAD_API_Caller
-from User import User
+from User import SteamUser
 import Search
 
 #API Call objects
