@@ -1,21 +1,15 @@
 import requests
 import json
 
-steam_id = '76561197960434622'
 
-class User:
+class SteamUser:
     
     def __init__(self, steamID, token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):
         self.steamID = steamID
         self.steam_token = token
         self.ITAD_Key = ITAD_key
-        self.name = ''
-        self.desiredGames = []
-        self.playedGames = []
-        self.gameTags = []
         self.userFileName = userFile
         self.user_data_cache = dict()
-        self.steamAccountWorth = 0
         
         if userFile !="":
             try:
@@ -24,6 +18,12 @@ class User:
                 userCache.close()
             except:
                 pass
+
+        if self.steamID not in self.user_data_cache:
+            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'accountWorth':0, 'hoursPlayed':0}
+            check = self.loadName()
+            check = self.loadPlayedGames()
+            check = self.loadSteamWorth()
         
     def save_user_data_to_cache(self):
             try:
@@ -34,35 +34,18 @@ class User:
                 return True
             except:
                 return False
-
-    def load_user_data(self):
-        user = self.user_data_cache['users'][0]
-        self.steamID = user['user_id']
-        self.name = user['user_name']
-        self.desiredGames = user['desired_games']
-        self.gameTags = user['game_tags']
-        self.playedGames = user['played_games']
         
     def getSteamID(self):
         return self.steamID
     
     def setSteamID(self,ID):
         self.steamID = ID
-    
-    def getDesiredGames(self):
-        return self.desiredGames
-    
-    def addDesiredGame(self,game):
-        self.desiredGames.append(game)
-        
-    def deleteDesiredGame(self, game):
-        if(game in desiredGames):
-            g = desiredGames.index(game)
-            del desiredGames[g]
-    
-    def getName(self):
-        return self.name
-    
+        if self.steamID not in self.user_data_cache:
+            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'accountWorth':0}
+            check = self.loadName()
+            check = self.loadPlayedGames()
+            check = self.loadSteamWorth()
+
     def loadName(self):
         summary_url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+self.steam_token+"&steamids="+self.steamID
         player = requests.get(summary_url).json()
@@ -70,18 +53,17 @@ class User:
             player = player['response']
             player = player['players'][0]
             player = player['personaname']
-            self.name = player
+            self.user_data_cache[self.steamID]['name'] = player
             return True
         except:
+            self.user_data_cache[self.steamID]['name'] = "ACCESS ERROR"
             return False
 
-    def getPlayedGames(self):
-        return self.playedGames
-     
-    def loadPlayedGames(self, playMinutesThreshold=0):
+    def loadPlayedGames(self, playMinutesThreshold=10):
         recent_games_url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+self.steam_token+"&steamid="+self.steamID+"&format=json"
         games = requests.get(recent_games_url).json()
         try:
+            totalHours = 0
             games = games['response']
             games = games['games']
             games_list = []
@@ -89,52 +71,96 @@ class User:
                 game_id = game['appid']
                 play_time = game['playtime_forever']
                 game_info = game_id,play_time
+                totalHours += play_time/float(60)
                 if play_time >= playMinutesThreshold:
                     games_list.append(game_info)
-            self.playedGames = games_list
+            self.user_data_cache[self.steamID]['playedGames'] = games_list
+            self.user_data_cache[self.steamID]['hoursPlayed'] = totalHours
             return True
         except:
             return False
     
-    def getTags(self):
-        return gameTags
-    
-    def addTag(self,tag):
-        self.gameTags.append(tag)
-    
-    def deleteTag(self, tag):
-        if(tag in gameTags):
-            t = gameTags.index(tag)
-            del desiredGames[t]
-    
-    def get_plain(steam_game_id):
+    def get_plain(self, steam_game_id):
         api_call_url = "https://api.isthereanydeal.com/v02/game/plain/?key=" + self.ITAD_Key + "&shop=steam&game_id=app%2F" + str(steam_game_id)
         parsed_result = requests.get(api_call_url).json()
         if parsed_result['.meta']['match'] == False:
             return ""
         return parsed_result['data']['plain']
     
-    def get_Steam_Worth():
-        for game in self.playedGames:
-            app_plain = get_plain(game[0])
-            if app_plain == "":
-                return []
-    
-            api_call_url = "https://api.isthereanydeal.com/v01/game/prices/?key=" + self.ITAD_Key + "&plains=" + app_plain + "&country=US"
-            parsed_result = requests.get(api_call_url).json()
-            price_list = parsed_result['data'][itad_game_plain]['list']
-            return_list =[]
-            for p in price_list:
-                shop = p['shop']
-                if shop['id'] == "steam":
-                    self.steamAccountWorth+=p['price_new']
-        return self.steamAccountWorth    
-    
-'''
-Andrew  = User("","","user_data_test.txt","")
-Andrew.save_user_data_to_cache()
-Andrew.load_user_data()
+    def loadSteamWorth(self):
+        playedGames = self.user_data_cache[self.steamID]['playedGames']
+        worthTotal = 0
+        try:
+            for game in playedGames:
+                app_plain = self.get_plain(game[0])
+                if app_plain == "":
+                    continue
+                else:
+                    api_call_url = "https://api.isthereanydeal.com/v01/game/prices/?key=" + self.ITAD_Key + "&plains=" + app_plain + "&country=US"
+                    parsed_result = requests.get(api_call_url).json()
+                    price_list = parsed_result['data'][app_plain]['list']
+                    return_list =[]
+                    for p in price_list:
+                        if p['shop']['id'] == "steam":
+                            worthTotal+=p['price_new']
+                            break
+            self.user_data_cache[self.steamID]['accountWorth'] = worthTotal
+            return True
+        except:
+            self.user_data_cache[self.steamID]['accountWorth'] = -1
+            return False
 
-print Andrew.name
-print Andrew.steamID
-'''
+    def getName(self):
+        return self.user_data_cache[self.steamID]['name']
+    
+    def getPlayedGames(self):
+        return self.user_data_cache[self.steamID]['playedGames']
+
+    def getTotalHours(self):
+        return self.user_data_cache[self.steamID]['hoursPlayed']
+
+    def getSteamWorth(self):
+        return self.user_data_cache[self.steamID]['accountWorth']
+    
+    def getDesiredGames(self):
+        return self.user_data_cache[self.steamID]['desiredGames']
+    
+    def addDesiredGame(self,game):
+        desiredGames = self.user_data_cache[self.steamID]['desiredGames']
+        if game not in desiredGames:
+            desiredGames.append(game)
+        
+    def deleteDesiredGame(self, game):
+        desiredGames = self.user_data_cache[self.steamID]['desiredGames']
+        if(game in desiredGames):
+            g = desiredGames.index(game)
+            del desiredGames[g]
+
+    def getRecommendGames(self):
+        return self.user_data_cache[self.steamID]['recommendGames']
+    
+    def addRecommendGame(self,game):
+        recommendGames = self.user_data_cache[self.steamID]['recommendGames']
+        if game not in recommendGames:
+            recommendGames.append(game)
+        
+    def deleteRecommendGame(self, game):
+        recommendGames = self.user_data_cache[self.steamID]['recommendGames']
+        if(game in recommendGames):
+            g = recommendGames.index(game)
+            del recommendGames[g]
+
+    def getBanList(self):
+        return self.user_data_cache[self.steamID]['banList']
+    
+    def addBanList(self,game):
+        banList = self.user_data_cache[self.steamID]['banList']
+        if game not in banList:
+            banList.append(game)
+        
+    def deleteBanList(self, game):
+        banList = self.user_data_cache[self.steamID]['banList']
+        if(game in banList):
+            g = banList.index(game)
+            del banList[g]
+
