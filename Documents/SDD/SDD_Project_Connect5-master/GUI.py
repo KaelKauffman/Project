@@ -190,7 +190,7 @@ def wishlist():
                 Label(filewin, text="Vendor: {}".format(revised_prices[g][1][0])).grid(row=row_num+3, columnspan=2, sticky=W, padx=12)
                 Label(filewin, text="").grid(row=row_num+4, columnspan=4)
 
-				row_num += 5
+                row_num += 5
 
 ## Module to check price of one game.
 def pricecheck():
