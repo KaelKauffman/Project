@@ -170,56 +170,122 @@ class SteamSpy_API_Caller:
 
         return [currentPrice, normalPrice, currentDiscount]
     
-    def recommend_similar_games(self, gameID, matchRate=0.7, cutoff=10, ratePower=2, confPower=2):
+    def recommend_from_single_game(self, gameID, matchRate=0.5, cutoff=10, ratePower=1, confPower=1):
         if not str(gameID).isdigit():
             return []
 
-        tags = self.get_tags(gameID)
-        refRate = self.get_rating(gameID)
-        refConf = (1-1/float(math.log(refRate[1], 10)))
-        
-        #Take all tags of given game, add all games with those tags into a list
-        total_combined_tag_lists = []
-        for tag in tags:
-            gameList = self.get_games_with_tag(tag)
-            total_combined_tag_lists += list(gameList.keys())
+        tags = self.get_tags_and_values(gameID)
+        #tags = sorted(tags, key=lambda x: x[1], reverse=True)
+        #Normalize the scores given to each tag
+        tagSum = sum([t[1] for t in tags])
+        tagWeights = [(tags[i][0], (len(tags)-i)*tags[i][1]/float(tagSum)) for i in range(len(tags))]
 
-        #Make a set of pairs of game ID's and how many tags they share with given game
         frequency_list = {}
-        for item in total_combined_tag_lists:
-            frequency_list[item] = frequency_list.get(item, 0) + 1
+        for tag in tagWeights:
+            #Take all tags of given game, add all games with those tags into a list
+            gameList = list(self.get_games_with_tag(tag[0]).keys())
+            #Make a set of pairs of game ID's and the tag similarity score with the given game
+            for game in gameList:
+                frequency_list[game] = frequency_list.get(game, 0) + 1
+                    
 
         #Sort list by greatest number of tags in common and cut off at only the top items. 
-        final = sorted(frequency_list.items(), key=lambda x: x[1], reverse=True)
-        catch = 0
-        for i in range(len(final)):
-            if final[i][1]/float(len(tags)) < matchRate:
+        pre_final = sorted(frequency_list.items(), key=lambda x: x[1], reverse=True)
+        original = pre_final[0]
+        catch = len(pre_final)
+        for i in range(len(pre_final)):
+            if pre_final[i][1]/float(pre_final[0][1]) < matchRate:
                 catch = i
                 break
-            
-        final = final[0:catch]
+        pre_final = pre_final[0:catch]
+
+        #Take the pre-final results and score them based on the difference between their weighted tag profiles
+        #and the given game's. Lower difference scores indicate a closer match. 
+        score_list = {}
+        for game in pre_final:
+            g_tags = self.get_tags_and_values(game[0])
+            g_tagSum = sum([t[1] for t in g_tags])
+            g_tagWeights = {g_tags[i][0]:((len(g_tags)-i)*g_tags[i][1]/float(g_tagSum)) for i in range(len(g_tags))}
+            diff = sum([abs(t[1]-g_tagWeights.get(t[0],0)) for t in tagWeights])
+            score_list[game[0]] = diff
+
+        final = sorted(score_list.items(), key=lambda x: x[1])
+        
 
         #Get the id, and name for each game in the cutoff
         #Compute a score using the number of tags in common and the player rating
         results = []
         for game in final:
             g_id = game[0]
-            similarity = game[1]/float(len(tags))
+            similarity = game[1]#/float(original[1])
             g_name = self.get_name(g_id)
             rate = self.get_rating(g_id)
             conf = (1-1/float(math.log(rate[1], 10)))
-            conf = conf/float(refConf)
             revisedRate = 0.5 + (rate[0]-0.5)*math.pow(conf, confPower)
-            print([g_name, similarity, rate, conf, revisedRate])
-            score = similarity*math.pow(revisedRate, ratePower)
+            #print([g_name, similarity, rate, conf, revisedRate])
+            score = similarity*(1/math.pow(revisedRate, ratePower))
             results.append([g_id, g_name, score])
             
         #Sort final results by score 
-        results = sorted(results, key=lambda x: x[2], reverse=True)
+        results = sorted(results, key=lambda x: x[2])
 
         if len(results) > cutoff:
             results = results[0:cutoff]
         
-        return results
+        return [ [r[0], r[1]] for r in results ]
+
+
+    def recommend_multi_input(self, gameIDs=[], required_genres=[], banned_genres=[], banned_games=[], showTop=5, cross_thresh=0.5, matchRate=0.5, cutoff=10, ratePower=1, confPower=1):
+        all_results = []
+        for gameID in gameIDs:
+            all_results.append( self.recommend_from_single_game(gameID, matchRate=matchRate, cutoff=cutoff, ratePower=ratePower, confPower=confPower) )
+            print("Rec. Load")
+            
+        for result in all_results:
+            remove_list = []
+            for r in result:
+                r_genres = self.get_genres(r[0])
+                found = False
+                banned = False
+                for g in r_genres:
+                    if g in required_genres:
+                        found = True
+                        break
+                    if g in banned_genres:
+                        banned = True
+                        break
+        
+                if r[0] in gameIDs or r[0] in banned_games or (found == False and len(required_genres) > 0) or banned:
+                    remove_list.append(r)
+
+            for r in remove_list:
+                result.remove(r)
+
+        
+        frequency_list = {}
+        for result in all_results:
+            for r in result:
+                frequency_list[r[0]] = frequency_list.get(r[0], 0) + 1
+
+        cross_results = sorted(frequency_list.items(), key=lambda x: x[1], reverse=True)
+        catch = len(cross_results)
+        for i in range(len(cross_results)):
+            if cross_results[i][1] < cross_thresh:
+                catch = i
+                break
+
+        cross_results = cross_results[0:catch]
+
+        final_cross = [ [c[0], self.get_name(c[0])] for c in cross_results ]
+
+        final_single = [ [gameIDs[i], self.get_name(gameIDs[i]), all_results[i][0:showTop]] if len(all_results[i]) >= showTop else [gameIDs[i], self.get_name(gameIDs[i]), all_results[i]] for i in range(len(gameIDs)) ]
+
+        return [final_cross, final_single]
+
+
+
+
+
+        
             
         
