@@ -4,7 +4,7 @@ import json
 
 class SteamUser:
     
-    def __init__(self, steamID, token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):
+    def __init__(self, steamID="", token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):
         self.steamID = steamID
         self.steam_token = token
         self.ITAD_Key = ITAD_key
@@ -19,11 +19,8 @@ class SteamUser:
             except:
                 pass
 
-        if self.steamID not in self.user_data_cache:
-            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'accountWorth':0, 'hoursPlayed':0}
-            check = self.loadName()
-            check = self.loadPlayedGames()
-            check = self.loadSteamWorth()
+        if self.steamID != "":
+            self.loginSteamID(self.steamID)
         
     def save_user_data_to_cache(self):
             try:
@@ -38,7 +35,7 @@ class SteamUser:
     def getSteamID(self):
         return self.steamID
     
-    def setSteamID(self,ID):
+    def loginSteamID(self,ID):
         self.steamID = ID
         if self.steamID not in self.user_data_cache:
             self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'accountWorth':0}
@@ -47,9 +44,9 @@ class SteamUser:
             check = self.loadSteamWorth()
 
     def loadName(self):
-        summary_url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+self.steam_token+"&steamids="+self.steamID
-        player = requests.get(summary_url).json()
         try:
+            summary_url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+self.steam_token+"&steamids="+self.steamID
+            player = requests.get(summary_url).json()
             player = player['response']
             player = player['players'][0]
             player = player['personaname']
@@ -59,10 +56,10 @@ class SteamUser:
             self.user_data_cache[self.steamID]['name'] = "ACCESS ERROR"
             return False
 
-    def loadPlayedGames(self, playMinutesThreshold=10):
-        recent_games_url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+self.steam_token+"&steamid="+self.steamID+"&format=json"
-        games = requests.get(recent_games_url).json()
+    def loadPlayedGames(self, playMinutesThreshold=10): 
         try:
+            recent_games_url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+self.steam_token+"&steamid="+self.steamID+"&format=json"
+            games = requests.get(recent_games_url).json()
             totalHours = 0
             games = games['response']
             games = games['games']
@@ -81,12 +78,15 @@ class SteamUser:
             return False
     
     def get_plain(self, steam_game_id):
-        api_call_url = "https://api.isthereanydeal.com/v02/game/plain/?key=" + self.ITAD_Key + "&shop=steam&game_id=app%2F" + str(steam_game_id)
-        parsed_result = requests.get(api_call_url).json()
-        if parsed_result['.meta']['match'] == False:
+        try:
+            api_call_url = "https://api.isthereanydeal.com/v02/game/plain/?key=" + self.ITAD_Key + "&shop=steam&game_id=app%2F" + str(steam_game_id)
+            parsed_result = requests.get(api_call_url).json()
+            if parsed_result['.meta']['match'] == False:
+                return ""
+            return parsed_result['data']['plain']
+        except:
             return ""
-        return parsed_result['data']['plain']
-    
+        
     def loadSteamWorth(self):
         playedGames = self.user_data_cache[self.steamID]['playedGames']
         worthTotal = 0

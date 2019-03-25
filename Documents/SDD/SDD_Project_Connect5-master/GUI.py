@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from SteamSpy_API_Calls import SteamSpy_API_Caller
 from ITAD_API_Calls import ITAD_API_Caller
-from User import User
+from User import SteamUser
 import Search
 
 #API Call objects
@@ -10,7 +10,7 @@ steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="Steam
 itad_api = ITAD_API_Caller()
 
 #User object
-#steam_user = User()
+steam_user = SteamUser(userFile="User_Data_Cache.txt")
 
 ## Module to connect to public Steam profile 
 def connect_to_steam():
@@ -30,6 +30,7 @@ def connect_to_steam():
 
 	def log_in():
 		print(steamID.get())
+		steam_user.loginSteamID(steamID.get())
 
 	Button(filewin, text= "Login here", command=log_in).pack()
 
@@ -151,7 +152,21 @@ def generate_recommendation():
 
 ## Module to view user's wishlist.
 def wishlist():
-	wishlist = ["Cuphead", "Overcooked", "Overcooked 2", "DOTA 2"]
+	wishlist = [ steam_api.get_name(g_id) for g_id in steam_user.getDesiredGames() ]
+	raw_prices = [ itad_api.get_prices(itad_api.get_plain(g_id)) for g_id in steam_user.getDesiredGames() ]
+        revised_prices = []
+	for item in raw_prices:
+                if len(item) > 1:
+                        s_p = ("Steam", 9999)
+                        l_p = ("Steam", 9999)
+                        for i in range(1, len(item)):
+                                if item[0] == "Steam":
+                                        s_p = item
+                                if (l_p[1] - item[1]) > 0.1:
+                                        l_p = item
+                        revised_prices.append([s_p, l_p])
+                else:
+                        revised_prices.append([("Steam", -1), ("Steam", -1)])
 
 	filewin = Toplevel(root)
 	filewin.title("Wishlist")
