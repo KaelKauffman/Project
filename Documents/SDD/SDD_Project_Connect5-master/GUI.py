@@ -156,8 +156,8 @@ def wishlist():
 	filewin = Toplevel(root)
 	filewin.title("Wishlist")
 
-	x=root.winfo_rootx()*(1.05)
-	y=root.winfo_rooty()*(1.1)
+	x=root.winfo_rootx()
+	y=root.winfo_rooty()
 	geom="+%d+%d" % (x,y)
 	filewin.geometry(geom)
 
@@ -166,11 +166,12 @@ def wishlist():
 	for game in wishlist:
 		#Game name, price information, and current rating are displayed. Rating is optional.
 		Label(filewin, text=game, font="fixedsys 12 bold").grid(row=row_num, sticky=W, columnspan=4)
-		Label(filewin, text="Current Price: $9.99").grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
-		Label(filewin, text="Rating: 7.9/10").grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
-		Label(filewin, text="").grid(row=row_num+3, columnspan=4)
+		Label(filewin, text="Current Price: {}".format(9.99)).grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
+		Label(filewin, text="Lowest Price: {}".format(9.99)).grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
+		Label(filewin, text="Vendor: {}".format("Humble")).grid(row=row_num+3, columnspan=2, sticky=W, padx=12)
+		Label(filewin, text="").grid(row=row_num+4, columnspan=4)
 
-		row_num += 4
+		row_num += 5
 
 ## Module to check price of one game.
 def pricecheck():
