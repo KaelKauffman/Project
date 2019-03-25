@@ -155,41 +155,42 @@ def generate_recommendation():
 
 ## Module to view user's wishlist.
 def wishlist():
-	wishlist = [ steam_api.get_name(g_id) for g_id in steam_user.getDesiredGames() ]
-	raw_prices = [ itad_api.get_prices(itad_api.get_plain(g_id)) for g_id in steam_user.getDesiredGames() ]
+	 wishlist = [ steam_api.get_name(g_id) for g_id in steam_user.getDesiredGames() ]
+        raw_prices = [ itad_api.get_prices(itad_api.get_plain(g_id)) for g_id in steam_user.getDesiredGames() ]
         revised_prices = []
-	for item in raw_prices:
+        for item in raw_prices:
                 if len(item) > 1:
                         s_p = ("Steam", 9999)
                         l_p = ("Steam", 9999)
                         for i in range(1, len(item)):
-                                if item[0] == "Steam":
-                                        s_p = item
-                                if (l_p[1] - item[1]) > 0.1:
-                                        l_p = item
+                                if item[i][0] == "Steam":
+                                        s_p = item[i]
+                                if (l_p[1] - item[i][1]) > 0.1:
+                                        l_p = item[i]
                         revised_prices.append([s_p, l_p])
                 else:
                         revised_prices.append([("Steam", -1), ("Steam", -1)])
 
-	filewin = Toplevel(root)
-	filewin.title("Wishlist")
 
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
-	geom="+%d+%d" % (x,y)
-	filewin.geometry(geom)
+        filewin = Toplevel(root)
+        filewin.title("Wishlist")
 
-	Label(filewin, text="Your wishlist is displayed below.", font=("", 10, "italic")).grid(pady=3, columnspan=4)
-	row_num = 2
-	for game in wishlist:
-		#Game name, price information, and current rating are displayed. Rating is optional.
-		Label(filewin, text=game, font="fixedsys 12 bold").grid(row=row_num, sticky=W, columnspan=4)
-		Label(filewin, text="Current Price: {}".format(9.99)).grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
-		Label(filewin, text="Lowest Price: {}".format(9.99)).grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
-		Label(filewin, text="Vendor: {}".format("Humble")).grid(row=row_num+3, columnspan=2, sticky=W, padx=12)
-		Label(filewin, text="").grid(row=row_num+4, columnspan=4)
+        x=root.winfo_rootx()
+        y=root.winfo_rooty()
+        geom="+%d+%d" % (x,y)
+        filewin.geometry(geom)
 
-		row_num += 5
+        Label(filewin, text="Your wishlist is displayed below.", font=("", 10, "italic")).grid(pady=3, columnspan=4)
+        row_num = 2
+        for g in range(len(wishlist)):
+                #Game name, price information, and current rating are displayed. Rating is optional.
+                Label(filewin, text=wishlist[g], font="fixedsys 12 bold").grid(row=row_num, sticky=W, columnspan=4)
+                Label(filewin, text="Current Steam Price: {}".format(revised_prices[g][0][1])).grid(row=row_num+1, columnspan=2, sticky=W, padx=8)
+                Label(filewin, text="Lowest Price: {}".format(revised_prices[g][1][1])).grid(row=row_num+2, columnspan=2, sticky=W, padx=8)
+                Label(filewin, text="Vendor: {}".format(revised_prices[g][1][0])).grid(row=row_num+3, columnspan=2, sticky=W, padx=12)
+                Label(filewin, text="").grid(row=row_num+4, columnspan=4)
+
+				row_num += 5
 
 ## Module to check price of one game.
 def pricecheck():
