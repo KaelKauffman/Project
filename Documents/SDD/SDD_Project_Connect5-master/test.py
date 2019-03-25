@@ -4,6 +4,7 @@ from User import SteamUser
 from time import sleep
 
 kael_id = '76561198046994663'
+wellsee_id = '76561198319742744'
 
 steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
 itad_api = ITAD_API_Caller()
