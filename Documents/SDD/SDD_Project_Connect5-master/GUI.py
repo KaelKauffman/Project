@@ -38,62 +38,69 @@ def connect_to_steam():
 ## Want to implement a dropdown menu for users to get rid of password authentication;
 ## Not sure about security for that choice.
 def switch_user():
-	filewin = Toplevel(root)
-	filewin.title("Users")
-	
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
-	geom="+%d+%d" % (x,y)
-	filewin.geometry(geom)
-	#Suppose every account that ever login is stored in users
-	users = steam_user.getAllUsers()
-	def selection():
-		u_id = users[var.get()][0]
-		steam_user.loginSteamID(u_id)
-		
-	Label(filewin, text='Choose Your Account Below').pack()
-	var=IntVar()
-	var.set(1)
-	row_num=0
-	for user in users:
-		r = Radiobutton(filewin, text=user[1], variable=var, value=row_num, command=selection)
-		r.pack(anchor=W)
-		row_num+=1
-	# #Username and password labels
-	# Label(filewin, text='Username').grid(row=0)
-	# Label(filewin, text='Password').grid(row=1)
+        filewin = Toplevel(root)
+        filewin.title("Users")
+        
+        x=root.winfo_rootx()
+        y=root.winfo_rooty()
+        geom="+%d+%d" % (x,y)
+        filewin.geometry(geom)
+        #Suppose every account that ever login is stored in users
+        users = steam_user.getAllUsers()
+        def selection():
+                u_id = users[var.get()][0]
+                steam_user.loginSteamID(u_id)
+                
+        Label(filewin, text='Choose Your Account Below').pack()
+        var=IntVar()
+        var.set(1)
+        row_num=0
+        for user in users:
+                r = Radiobutton(filewin, text=user[1], variable=var, value=row_num, command=selection)
+                r.pack(anchor=W)
+                row_num+=1
+        # #Username and password labels
+        # Label(filewin, text='Username').grid(row=0)
+        # Label(filewin, text='Password').grid(row=1)
 
-	# #Entry fields for username, password
-	# e1 = Entry(filewin).grid(row=0,column=1, padx=3)
-	# e2 = Entry(filewin, show='*').grid(row=1, column=1, padx=3)
-	
-	# #Keep user logged in
-	# Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
-	# #Submit
-	# Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
+        # #Entry fields for username, password
+        # e1 = Entry(filewin).grid(row=0,column=1, padx=3)
+        # e2 = Entry(filewin, show='*').grid(row=1, column=1, padx=3)
+        
+        # #Keep user logged in
+        # Checkbutton(filewin, text = "Keep Me Logged In").grid(columnspan=2)
+        # #Submit
+        # Button(filewin, text= "Login!", activebackground='pink1').grid(columnspan=2, pady=3)
 
 
 # Return popup window of game recommendations given a game.
 def get_game_rec(text):
-        global steam_api
-        global itad_api
-        appID = steam_api.get_game_id_from_steam(text)
-        prices = itad_api.get_prices(itad_api.get_plain(appID))
-        recommend = steam_api.recommend_multi_input(gameIDs=[appID], matchRate=0.5, showTop=10, cross_thresh=0.5, cutoff=10, ratePower=1, confPower=5)
+        names_list = [x.strip() for x in text.split(",")]
+        game_ids = []
+        for name in names_list:
+            game_ids.append(steam_api.get_game_id_from_steam(name))
+           
+        
+        all_results = steam_api.recommend_multi_input(gameIDs=game_ids, required_genres=steam_api.getRequiredGenres(), banned_genres=[], banned_games=[], showTop=5, cross_thresh=2, matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
+
         #check = steam_api.save_game_data_to_cache()
         resultString = ""
-        resultString += "Lowest Price in History: " + str(prices[0]) + "\n"
-        resultString += "Current Prices: " + str(prices[1:]) + "\n\n"
-        resultString += "Recommendations:  [ id, name, score ]\n"
-        for r in recommend[1][0][2]:
+        resultString += "Cross-Recommendation Results:\n"
+        for r in all_results[0]:
+            resultString += str(r) + "\n"
+
+        for results in all_results[1]:
+            resultString += "Recommendations from " + results[1] + " (" + results[0] + "):\n"
+            for r in results[2]:
                 resultString += str(r) + "\n"
+            
         messagebox.showinfo("search command", resultString)
 
 
 ## Module to generate game recommendations based on 2 parameters, by type or by name.
 def generate_recommendation():
-        TYPES = ['Action', 'Adventure', 'Casual', 'Indie', 'Massively Multiplayer', 'Racing', 'RPG', 'Simulation', 
-                 'Sports', 'Strategy']
+        genres = [('Action', 'Action'), ('Adventure', 'Adventure'), ('Casual', 'Casual'), ('Indie','Indie') , ('Massively Multiplayer', 'Massively'), ('Racing','Racing') ,
+                  ('RPG', 'RPG'), ('Simulation', 'Simulation'), ('Sports','Sports'), ('Strategy','Strategy')]
         ## Module to generate game recommendations by type.
         def by_types():
                 x=root.winfo_rootx()
@@ -107,9 +114,9 @@ def generate_recommendation():
                 checks=[]
                 row_num=1
                 #Output checkboxes in column format.
-                for type in TYPES:
+                for genre in genres:
                         var = IntVar()
-                        chk = Checkbutton(filewin1, text=type, variable=var)
+                        chk = Checkbutton(filewin1, text=genre[0], variable=var)
                         chk.grid(row=row_num, sticky=W)
                         row_num+=1
                         vars.append(var)
@@ -117,16 +124,16 @@ def generate_recommendation():
                         checks.clear()
                         count=0
                         for i in vars:
-                                if i.get() == 1 and TYPES[count] not in checks:
-                                        checks.append(TYPES[count])
+                                if i.get() == 1 and genres[count][1] not in checks:
+                                        checks.append(genres[count][1])
                                 count+=1
-                        print(checks)
+                        steam_api.setRequiredGenres(checks)
 
                 def clear_checkbox():
                         for i in vars:
                                 i.set(0)
                         checks.clear()
-                        print(checks)
+                        steam_api.setRequiredGenres(checks)
                 
                 Button(filewin1, text="Submit", activebackground='pink1', command=submit).grid(row=row_num, pady=3)
                 Button(filewin1, text="Clear", activebackground='pink1', command=clear_checkbox).grid(row=row_num+1)
@@ -192,7 +199,7 @@ def wishlist():
                 Label(filewin, text="Vendor: {}".format(revised_prices[g][1][0])).grid(row=row_num+3, columnspan=2, sticky=W, padx=12)
                 Label(filewin, text="").grid(row=row_num+4, columnspan=4)
 
-				row_num += 5
+                row_num += 5
 
 ## Module to check price of one game.
 def pricecheck():
@@ -248,16 +255,16 @@ def make_menus():
 
 ## 
 def see_game_info(text_):
-	filewin = Toplevel(root)
-	filewin.title(text_)
+        filewin = Toplevel(root)
+        filewin.title(text_)
 
-	x=root.winfo_rootx()
-	y=root.winfo_rooty()
-	geom="+%d+%d" % (x,y)
-	filewin.geometry(geom)
+        x=root.winfo_rootx()
+        y=root.winfo_rooty()
+        geom="+%d+%d" % (x,y)
+        filewin.geometry(geom)
 
-	Label(filewin, text="See game info here")
-	# messagebox.showinfo("Search Results", text_)
+        Label(filewin, text="See game info here")
+        # messagebox.showinfo("Search Results", text_)
 
 
 

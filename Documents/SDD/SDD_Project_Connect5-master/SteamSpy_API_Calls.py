@@ -10,6 +10,7 @@ class SteamSpy_API_Caller:
 
         self.appFileName = appFile
         self.tagFileName = tagFile
+        self.requiredGenres = []
         self.app_data_cache = dict()
         self.tag_data_cache = dict()
         
@@ -41,6 +42,12 @@ class SteamSpy_API_Caller:
             return True
         except:
             return False
+
+    def setRequiredGenres(self, genres):
+        self.requiredGenres = genres
+
+    def getRequiredGenres(self):
+        return self.requiredGenres 
 
     # Performs web scraping on steam store to search for the given game's app ID
     # Argument: search_string ; A string containing the name of the game; example: "Dota 2"
