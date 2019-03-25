@@ -31,6 +31,11 @@ class SteamUser:
                 return True
             except:
                 return False
+
+    def getAllUsers(self):
+        all_ids = list(self.user_data_cache.keys())
+        results = [ [u_id, self.user_data_cache[u_id]['name']] for u_id in all_ids]
+        return results
         
     def getSteamID(self):
         return self.steamID
@@ -42,6 +47,7 @@ class SteamUser:
             check = self.loadName()
             check = self.loadPlayedGames()
             check = self.loadSteamWorth()
+            self.save_user_data_to_cache()
 
     def loadName(self):
         try:
@@ -53,7 +59,7 @@ class SteamUser:
             self.user_data_cache[self.steamID]['name'] = player
             return True
         except:
-            self.user_data_cache[self.steamID]['name'] = "ACCESS ERROR"
+            self.user_data_cache[self.steamID]['name'] = "NO LOGIN"
             return False
 
     def loadPlayedGames(self, playMinutesThreshold=10): 
