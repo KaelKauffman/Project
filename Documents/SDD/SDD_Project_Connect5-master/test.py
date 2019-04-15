@@ -2,6 +2,11 @@ from SteamSpy_API_Calls import SteamSpy_API_Caller
 from ITAD_API_Calls import ITAD_API_Caller
 from User import SteamUser
 from time import sleep
+from PIL import Image
+from io import BytesIO
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PIL.ImageQt import ImageQt
 
 kael_id = '76561198046994663'
 wellsee_id = '76561198319742744'
@@ -11,26 +16,51 @@ steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="Steam
 itad_api = ITAD_API_Caller()
 steam_user = SteamUser(kael_id, userFile="User_Data_Cache.txt")
 
+##r = steam_api.get_game_id_from_steam("Factorio")
+##print(r[0])
+##print(len(r[1]))
+##im = Image.open(BytesIO(r[1]))
+##
+##print("g")
+##qim = ImageQt(im)
+##print("g")
+##pix = QtGui.QPixmap.fromImage(qim)
+##print("g")
+##
+##assert(0==1)
+
+##print("BY RATING")
+##rank = steam_api.get_ranked_by_rating(100, with_conf=True)
+##for r in rank:
+##    print(r)
+##
+##print("BY HOURS")
+##rank = steam_api.get_ranked_by_hours(100)
+##for r in rank:
+##    print(r)
+##
+##assert(0==1)
+
 game_name_list = [ "Factorio", "Subnautica", "Slay the Spire", "Terraria", "Cities Skylines" ]
 game_ids = []
 for name in game_name_list:
-    game_ids.append(steam_api.get_game_id_from_steam(name))
+    game_ids.append(steam_api.get_game_id_from_steam(name)[0])
     sleep(0.25)
 print(game_ids)
 
 
-all_the_things = [ steam_user.getName(), steam_user.getPlayedGames(), steam_user.getTotalHours(), steam_user.getSteamWorth() ]
-print(all_the_things)
-print(steam_user.getDesiredGames())
-for g in game_ids:
-    steam_user.addDesiredGame(g)
-print(steam_user.getDesiredGames())
-print(steam_user.getRecommendGames())
-for g in game_ids:
-    steam_user.addRecommendGame(g)
-print(steam_user.getRecommendGames())
-
-print(steam_user.save_user_data_to_cache())
+##all_the_things = [ steam_user.getName(), steam_user.getPlayedGames(), steam_user.getTotalHours(), steam_user.getSteamWorth() ]
+##print(all_the_things)
+##print(steam_user.getDesiredGames())
+##for g in game_ids:
+##    steam_user.addDesiredGame(g)
+##print(steam_user.getDesiredGames())
+##print(steam_user.getRecommendGames())
+##for g in game_ids:
+##    steam_user.addRecommendGame(g)
+##print(steam_user.getRecommendGames())
+##
+##print(steam_user.save_user_data_to_cache())
 
 
 

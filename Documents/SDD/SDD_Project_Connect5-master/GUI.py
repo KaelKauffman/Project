@@ -276,7 +276,7 @@ def make_menus():
 
 ## View a game's information.
 def see_game_info(text_):
-        app_id = steam_api.get_game_id_from_steam(text_)
+        app_id = steam_api.get_game_id_from_steam(text_)[0]
         name = "Game not found"
         hours = 0
         reviews = [0,0]

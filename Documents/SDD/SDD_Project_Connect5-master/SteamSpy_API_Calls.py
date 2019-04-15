@@ -4,6 +4,8 @@ import json
 import math
 from time import sleep
 
+
+
 class SteamSpy_API_Caller:
 
     def __init__(self, appFile="", tagFile=""):
@@ -51,7 +53,7 @@ class SteamSpy_API_Caller:
 
     # Performs web scraping on steam store to search for the given game's app ID
     # Argument: search_string ; A string containing the name of the game; example: "Dota 2"
-    # Returns: A string containing the steam app ID if the search contained a game that matched
+    # Returns: A list containing [id: string, image_link: string], with a string containing the steam app ID if the search contained a game that matched
     #          the search string, or a string of "999999999" (an invalid ID) if no matches were found
     def get_game_id_from_steam(self, search_string):
         try:
@@ -60,17 +62,19 @@ class SteamSpy_API_Caller:
             html_tree = html.fromstring(steam_page.content)
             #xpath based on inspecting page source
             steam_store_urls = html_tree.xpath('//*[@id="search_result_container"]/div/a/@href')
+            image_urls = html_tree.xpath('//*[@id="search_result_container"]/div/a/div/img/@src')
             results = []
             #Remove punctiation and capitals from search string, steam urls will never have these in the names
             search_string_formatted = search_string.replace(":", "").replace("!", "").replace("?", "").replace(",", "").replace("-", "").replace("  ", " ").lower()
-            for url in steam_store_urls:
-                fields = url.split("/")
+            for i in range(len(steam_store_urls)):
+                fields = steam_store_urls[i].split("/")
                 name = fields[5].replace("_", " ").replace("  ", " ").lower()
                 if search_string_formatted == name:
-                    return fields[4]
-            return "999999999"
+                    image_scrape = requests.get(image_urls[i])
+                    return [fields[4], image_scrape.content]
+            return ["999999999", ""]
         except:
-            return "999999999"
+            return ["999999999", ""]
 
     def load_game_data(self, gameID):
         if not str(gameID).isdigit() or str(gameID) == "999999999":
@@ -179,6 +183,26 @@ class SteamSpy_API_Caller:
         currentDiscount = self.app_data_cache[str(gameID)]['discount']
 
         return [currentPrice, normalPrice, currentDiscount]
+
+    def get_ranked_by_rating(self, cut, with_conf=True):
+        ranked = []
+        if with_conf:
+            ranked = sorted(self.app_data_cache.items(), key=lambda x: (0.5 + ((x[1]['positive'] / float(x[1]['positive']+x[1]['negative']))-0.5)*(1-1/float(math.log((x[1]['positive']+x[1]['negative']), 10)))), reverse=True)
+        else:
+            ranked = sorted(self.app_data_cache.items(), key=lambda x: (x[1]['positive'] / float(x[1]['positive']+x[1]['negative'])), reverse=True)
+        result = []
+        for i in range(0, cut):
+            result.append([ranked[i][0], ranked[i][1]['name'], self.get_rating(ranked[i][0])])
+        return result
+
+    def get_ranked_by_hours(self, cut):
+       
+        ranked = sorted(self.app_data_cache.items(), key=lambda x: x[1]['median_2weeks'], reverse=True)
+        result = []
+        for i in range(0, cut):
+            result.append([ranked[i][0], ranked[i][1]['name'], ranked[i][1]['median_2weeks']])
+        return result
+    
     
     def recommend_from_single_game(self, gameID, matchRate=0.5, cutoff=10, ratePower=1, confPower=1):
         if not str(gameID).isdigit():
@@ -221,7 +245,7 @@ class SteamSpy_API_Caller:
 
         final = sorted(score_list.items(), key=lambda x: x[1])
         
-
+        
         #Get the id, and name for each game in the cutoff
         #Compute a score using the number of tags in common and the player rating
         results = []
