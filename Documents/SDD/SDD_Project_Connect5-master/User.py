@@ -43,26 +43,27 @@ class SteamUser:
     def loginSteamID(self,ID):
         self.steamID = ID
         if self.steamID not in self.user_data_cache:
-            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'banList':[], 'hoursPlayed':0, 'accountWorth':0}
-            check = self.loadName()
+            self.user_data_cache[self.steamID] = {'name':"", 'desiredGames':[], 'playedGames':[], 'recommendGames':[], 'hoursPlayed':0, 'accountWorth':0, 'startDate':0, 'imgUrl':""}
+            check = self.loadNameAndInfo()
             check = self.loadPlayedGames()
             check = self.loadSteamWorth()
             self.save_user_data_to_cache()
 
-    def loadName(self):
+    def loadNameAndInfo(self):
         try:
             summary_url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+self.steam_token+"&steamids="+self.steamID
             player = requests.get(summary_url).json()
             player = player['response']
             player = player['players'][0]
-            player = player['personaname']
-            self.user_data_cache[self.steamID]['name'] = player
+            self.user_data_cache[self.steamID]['name'] = player['personaname']
+            self.user_data_cache[self.steamID]['startDate'] = player['timecreated']
+            self.user_data_cache[self.steamID]['imgUrl'] = player['avatarfull']
             return True
         except:
             self.user_data_cache[self.steamID]['name'] = "NO LOGIN"
             return False
 
-    def loadPlayedGames(self, playMinutesThreshold=10): 
+    def loadPlayedGames(self, playMinutesThreshold=0): 
         try:
             recent_games_url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+self.steam_token+"&steamid="+self.steamID+"&format=json"
             games = requests.get(recent_games_url).json()
@@ -127,6 +128,12 @@ class SteamUser:
 
     def getSteamWorth(self):
         return self.user_data_cache[self.steamID]['accountWorth']
+
+    def getStartDate(self):
+        return self.user_data_cache[self.steamID]['startDate']
+
+    def getAvatar(self):
+        return self.user_data_cache[self.steamID]['imgUrl']
     
     def getDesiredGames(self):
         return self.user_data_cache[self.steamID]['desiredGames']
@@ -155,18 +162,4 @@ class SteamUser:
         if(game in recommendGames):
             g = recommendGames.index(game)
             del recommendGames[g]
-
-    def getBanList(self):
-        return self.user_data_cache[self.steamID]['banList']
-    
-    def addBanList(self,game):
-        banList = self.user_data_cache[self.steamID]['banList']
-        if game not in banList:
-            banList.append(game)
-        
-    def deleteBanList(self, game):
-        banList = self.user_data_cache[self.steamID]['banList']
-        if(game in banList):
-            g = banList.index(game)
-            del banList[g]
 

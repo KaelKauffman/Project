@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>steam_icon.gif</file>
+        <file>Overcooked-Banner.jpg</file>
+    </qresource>
+</RCC>

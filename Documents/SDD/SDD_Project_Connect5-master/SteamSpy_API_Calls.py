@@ -187,7 +187,7 @@ class SteamSpy_API_Caller:
     def get_ranked_by_rating(self, cut, with_conf=True):
         ranked = []
         if with_conf:
-            ranked = sorted(self.app_data_cache.items(), key=lambda x: (0.5 + ((x[1]['positive'] / float(x[1]['positive']+x[1]['negative']))-0.5)*(1-1/float(math.log((x[1]['positive']+x[1]['negative']), 10)))), reverse=True)
+            ranked = sorted(self.app_data_cache.items(), key=lambda x: (0.5 + ((x[1]['positive'] / float(x[1]['positive']+x[1]['negative']))-0.5)*math.pow((1-1/float(math.log((x[1]['positive']+x[1]['negative']), 10))), 2)), reverse=True)
         else:
             ranked = sorted(self.app_data_cache.items(), key=lambda x: (x[1]['positive'] / float(x[1]['positive']+x[1]['negative'])), reverse=True)
         result = []
@@ -197,7 +197,7 @@ class SteamSpy_API_Caller:
 
     def get_ranked_by_hours(self, cut):
        
-        ranked = sorted(self.app_data_cache.items(), key=lambda x: x[1]['median_2weeks'], reverse=True)
+        ranked = sorted(self.app_data_cache.items(), key=lambda x: x[1]['average_2weeks'], reverse=True)
         result = []
         for i in range(0, cut):
             result.append([ranked[i][0], ranked[i][1]['name'], ranked[i][1]['median_2weeks']])
