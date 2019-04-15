@@ -60,10 +60,19 @@ class GUI_Content_Model():
 
     def addToWishlist(self, gameID):
         if gameID != "999999999":
-            self.loadWishlistItems([gameID])
-            self.steam_user.addDesiredGame(gameID)
+            found = False
+            name = self.steam_api.get_name(gameID)
+            for item in self.wishListContent:
+                print(item[0])
+                print(name)
+                if item[0] == name:
+                    found = True
+                    break
+            if not found:       
+                self.loadWishlistItems([gameID])
+                self.steam_user.addDesiredGame(gameID)
             
-            self.steam_user.save_user_data_to_cache()
+                self.steam_user.save_user_data_to_cache()
 
     def removeSelectedFromWishlist(self):
         if self.selectedWishItem >= 0 and len(self.wishListContent) > self.selectedWishItem:
@@ -75,10 +84,16 @@ class GUI_Content_Model():
 
     def addToReclist(self, gameID):
         if gameID != "999999999":
-            self.loadRecommendItems([gameID])
-            self.steam_user.addRecommendGame(gameID)
+            found = False
+            for item in self.recommendListContent:
+                if str(item[0]) == str(gameID):
+                    found = True
+                    break
+            if not found:
+                self.loadRecommendItems([gameID])
+                self.steam_user.addRecommendGame(gameID)
             
-            self.steam_user.save_user_data_to_cache()
+                self.steam_user.save_user_data_to_cache()
 
     def removeSelectedFromReclist(self):
         if self.selectedRecItem >= 0 and len(self.recommendListContent) > self.selectedRecItem:
@@ -554,8 +569,8 @@ class Main_GUI_Visuals(object):
         self.MostPlayedList.setMinimumSize(QtCore.QSize(500, 0))
         self.MostPlayedList.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setFamily("Dubai Light")
-        font.setPointSize(14)
+        font.setFamily("Agency FB")
+        font.setPointSize(18)
         self.MostPlayedList.setFont(font)
         self.MostPlayedList.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(140, 140, 140);")
         self.MostPlayedList.setObjectName("MostPlayedList")
@@ -570,8 +585,8 @@ class Main_GUI_Visuals(object):
         self.MostPositiveList.setMinimumSize(QtCore.QSize(500, 0))
         self.MostPositiveList.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setFamily("Consolas")
-        font.setPointSize(14)
+        font.setFamily("Agency FB")
+        font.setPointSize(18)
         self.MostPositiveList.setFont(font)
         self.MostPositiveList.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(140, 140, 140);")
         self.MostPositiveList.setObjectName("MostPositiveList")
@@ -1352,6 +1367,7 @@ class Main_GUI_Visuals(object):
 
     def removeFromReclist(self):
         self.model.removeSelectedFromReclist()
+        self.RecommendationResults.clear()
         self.refreshReclist()
 
     def addReclistButton(self):
@@ -1361,8 +1377,10 @@ class Main_GUI_Visuals(object):
             app_id = app_parse[0]
             if app_id != "999999999":
                 self.model.addToReclist(app_id)
+                self.RecommendationResults.clear()
         self.GameRecommendationEntry.clear()
         self.refreshReclist()
+        
 
     def processRecommendRequest(self):
         
@@ -1505,7 +1523,7 @@ class Main_GUI_Visuals(object):
 
         self.GameLibraryInfo.clear()
         for g in range(len(played)):
-            lineString = played[g][0] + ",  Hours Played: {0:.2f}".format(played[g][1])
+            lineString = played[g][0] + "\n    Hours Played: {0:.2f}".format(played[g][1])
             self.GameLibraryInfo.addItem(lineString)
 
 

@@ -48,6 +48,11 @@ class SteamUser:
             check = self.loadPlayedGames()
             check = self.loadSteamWorth()
             self.save_user_data_to_cache()
+        elif self.user_data_cache[self.steamID]['hoursPlayed'] == 0 and self.user_data_cache[self.steamID]['accountWorth'] == 0:
+            check = self.loadNameAndInfo()
+            check = self.loadPlayedGames()
+            check = self.loadSteamWorth()
+            self.save_user_data_to_cache()
 
     def loadNameAndInfo(self):
         try:
