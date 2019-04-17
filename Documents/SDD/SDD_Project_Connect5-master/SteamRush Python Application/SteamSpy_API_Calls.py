@@ -5,7 +5,11 @@ import math
 from time import sleep
 
 
-
+# This class encapsulates the information on avaliable Steam games and provides an access point
+# for the SteamSpy API. Games are encoded using python Dictionary objects, keyed to retrieve
+# parameters such as ID, name, genres, tags, ratings, price, etc. The access functions
+# dynamically update this data cache behind the scenes, and write it to a file for persistance between runtimes.
+# Operation names are explanitory of function.
 class SteamSpy_API_Caller:
 
     def __init__(self, appFile="", tagFile=""):
@@ -65,10 +69,10 @@ class SteamSpy_API_Caller:
             image_urls = html_tree.xpath('//*[@id="search_result_container"]/div/a/div/img/@src')
             results = []
             #Remove punctiation and capitals from search string, steam urls will never have these in the names
-            search_string_formatted = search_string.replace(":", "").replace("!", "").replace("?", "").replace(",", "").replace("-", "").replace("  ", " ").lower()
+            search_string_formatted = search_string.replace(":", "").replace("!", "").replace("?", "").replace("'", "").replace(",", "").replace("-", "").replace("  ", " ").lower()
             for i in range(len(steam_store_urls)):
                 fields = steam_store_urls[i].split("/")
-                name = fields[5].replace("_", " ").replace("  ", " ").lower()
+                name = fields[5].replace("_", " ").replace("  ", " ").replace("®", " ").lower()
                 if search_string_formatted == name:
                     image_scrape = requests.get(image_urls[i])
                     return [fields[4], image_scrape.content]
@@ -76,31 +80,39 @@ class SteamSpy_API_Caller:
         except:
             return ["999999999", ""]
 
+    # Adds a game from the Steam API to the cache
     def load_game_data(self, gameID):
         if not str(gameID).isdigit() or str(gameID) == "999999999":
             return False
-        api_call_url = "https://steamspy.com/api.php?request=appdetails&appid=" + str(gameID)
-        sleep(0.2)
-        parsed_result = requests.get(api_call_url).json()
-        if parsed_result["name"] == None:
+        try:
+            api_call_url = "https://steamspy.com/api.php?request=appdetails&appid=" + str(gameID)
+            sleep(0.2)
+            parsed_result = requests.get(api_call_url).json()
+            if parsed_result["name"] == None:
+                return False
+            self.app_data_cache[str(gameID)] = parsed_result
+            return True
+        except:
             return False
-        self.app_data_cache[str(gameID)] = parsed_result
-        return True
 
+    # Adds a tag and related list of tagged games from the Steam API to the cache
     def load_tagged_games(self, tag_name):
-        api_call_url = "https://steamspy.com/api.php?request=tag&tag=" + tag_name.replace(" ", "+")
-        sleep(0.2)
-        parsed_result = requests.get(api_call_url).json()
-        if len(parsed_result) == 0:
+        try:
+            api_call_url = "https://steamspy.com/api.php?request=tag&tag=" + tag_name.replace(" ", "+")
+            sleep(0.2)
+            parsed_result = requests.get(api_call_url).json()
+            if len(parsed_result) == 0:
+                return False
+            tag_entry = dict()
+            for game in parsed_result:
+                owned = parsed_result[game]['owners']
+                owned = [int(x.strip().replace(",", "")) for x in owned.split("..")]
+                if len(owned) > 0 and owned[0] >= 200000:
+                    tag_entry[game] = True
+            self.tag_data_cache[tag_name] = tag_entry
+            return True
+        except:
             return False
-        tag_entry = dict()
-        for game in parsed_result:
-            owned = parsed_result[game]['owners']
-            owned = [int(x.strip().replace(",", "")) for x in owned.split("..")]
-            if len(owned) > 0 and owned[0] >= 200000:
-                tag_entry[game] = True
-        self.tag_data_cache[tag_name] = tag_entry
-        return True
 
     def get_games_with_tag(self, tag_name):
         if tag_name not in self.tag_data_cache:
@@ -129,6 +141,8 @@ class SteamSpy_API_Caller:
         tag_list = list(tags.keys())
         return tag_list
 
+    # Modified tag access function includes the number of votes for each tag.
+    # Used internally for recommendation engine.
     def get_tags_and_values(self, gameID):
         if str(gameID) not in self.app_data_cache:
             isRealID = self.load_game_data(gameID)
@@ -139,7 +153,6 @@ class SteamSpy_API_Caller:
         tag_list = list(tags.items())
         return tag_list
     
-
     def get_rating(self, gameID):
         if str(gameID) not in self.app_data_cache:
             isRealID = self.load_game_data(gameID)
@@ -150,7 +163,10 @@ class SteamSpy_API_Caller:
         neg = self.app_data_cache[str(gameID)]['negative']
 
         # Returns [ (pos / total) , total ]
-        return [ pos/float(pos+neg), pos+neg ]
+        if pos+neg > 0:
+            return [ pos/float(pos+neg), pos+neg ]
+        else:
+            return [0,0]
 
     def get_playtime(self, gameID):
         if str(gameID) not in self.app_data_cache:
@@ -184,6 +200,7 @@ class SteamSpy_API_Caller:
 
         return [currentPrice, normalPrice, currentDiscount]
 
+    #Sorts and returns the entire cache by rating for ranking display.
     def get_ranked_by_rating(self, cut, with_conf=True):
         ranked = []
         if with_conf:
@@ -195,6 +212,7 @@ class SteamSpy_API_Caller:
             result.append([ranked[i][0], ranked[i][1]['name'], self.get_rating(ranked[i][0])])
         return result
 
+    #Sorts and returns the entire cache by hours played for ranking display.
     def get_ranked_by_hours(self, cut):
        
         ranked = sorted(self.app_data_cache.items(), key=lambda x: x[1]['average_2weeks'], reverse=True)
@@ -203,7 +221,8 @@ class SteamSpy_API_Caller:
             result.append([ranked[i][0], ranked[i][1]['name'], ranked[i][1]['median_2weeks']])
         return result
     
-    
+    # Helper function for the cross-recomendation engine. Retrieves similar games based on a single
+    # target game, by sorting for games with the most similar distribution of tags and votes. 
     def recommend_from_single_game(self, gameID, matchRate=0.5, cutoff=10, ratePower=1, confPower=1):
         if not str(gameID).isdigit():
             return []
@@ -268,7 +287,7 @@ class SteamSpy_API_Caller:
         
         return [ [r[0], r[1]] for r in results ]
 
-
+    # Calls the single-recommender on each provided game, then cross-references the results and returns the entire batch.
     def recommend_multi_input(self, gameIDs=[], required_genres=[], banned_genres=[], banned_games=[], showTop=5, cross_thresh=0.5, matchRate=0.5, cutoff=10, ratePower=1, confPower=1):
         all_results = []
         for gameID in gameIDs:

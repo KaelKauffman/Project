@@ -2,6 +2,12 @@ import requests
 import json
 
 
+# This class encapsulates the cache of all information on all Users of the steam application,
+# with individual users represented with Dictionary objects. While the data cache
+# represents all users, and is expanded when new users are logged in, only one user
+# is "active" in the object at a time, governed by the current steamID. Calls to access
+# functions will return data on the active user, until that state is changed with the
+# login function. User information is retrieved through embedded calls to the Steam Web API.
 class SteamUser:
     
     def __init__(self, steamID="00000", token='7C8A11057FBAB292E6E6B0AF1F6E9D19',userFile="",ITAD_key="d8afa81cf7dc8b756e919d557ce68ccadf5405eb"):

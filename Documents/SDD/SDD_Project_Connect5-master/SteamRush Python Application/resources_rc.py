@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-
-# Resource object code
-#
-# Created by: The Resource Compiler for PyQt5 (Qt v5.12.2)
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore
 
+
+# Embedded Image Data for Application Logo
 qt_resource_data = b"\
 \x00\x00\xd9\x0b\
 \x47\
