@@ -3,18 +3,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 # This class encapsulates the visible structure of the GUI, comprising the View Element.
-# The specific implementation is constrained by the graphical library that is utilized, and is
-# comprised of one very large function in which all the graphical objects must be
+# The specific implementation is constrained by the graphical library that is utilized,
+# and is comprised of one very large function in which all the graphical objects must be
 # instantiated, and their operations are called to position and format every visual
 # aspect of the GUI.
 class Main_GUI_Visuals(object):
-    # Comments in this function are sparse, and serve to loosely categorize the giant block of function calls into relevent areas of the GUI.
+    # Comments in this function are sparse, and serve to loosely categorize the giant
+    # block of function calls into relevent areas of the GUI.
     def setupUi(self, Widget):
 
         # Start of Graphics Objects for Main Program Window
         Widget.setObjectName("Widget")
         Widget.resize(1400, 900)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        								 QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Widget.sizePolicy().hasHeightForWidth())
@@ -29,7 +31,8 @@ class Main_GUI_Visuals(object):
 
         
         self.BottomBar = QtWidgets.QWidget(Widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,\
+        									QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.BottomBar.sizePolicy().hasHeightForWidth())
@@ -42,7 +45,8 @@ class Main_GUI_Visuals(object):
 
         
         self.MenuBar = QtWidgets.QWidget(Widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,\
+        									QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.MenuBar.sizePolicy().hasHeightForWidth())
@@ -58,12 +62,15 @@ class Main_GUI_Visuals(object):
         self.MenuBarLayout.setObjectName("MenuBarLayout")
 
         
-        spacerItem = QtWidgets.QSpacerItem(300, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(300, 20, \
+        									QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Minimum)
         self.MenuBarLayout.addItem(spacerItem, 0, 3, 1, 1)
 
         
         self.LoginButton = QtWidgets.QPushButton(self.MenuBar)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.LoginButton.sizePolicy().hasHeightForWidth())
@@ -76,13 +83,15 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.LoginButton.setFont(font)
-        self.LoginButton.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(30, 180, 175);")
+        self.LoginButton.setStyleSheet("color: rgb(255, 255, 255); \
+        								background-color: rgb(30, 180, 175);")
         self.LoginButton.setObjectName("LoginButton")
         self.MenuBarLayout.addWidget(self.LoginButton, 0, 4, 1, 1)
 
         
         self.SteamRushIcon = QtWidgets.QLabel(self.MenuBar)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,\
+        									QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SteamRushIcon.sizePolicy().hasHeightForWidth())
@@ -112,7 +121,8 @@ class Main_GUI_Visuals(object):
 
         # Start of Graphics Objects for GUI Page Stack
         self.Pages = QtWidgets.QStackedWidget(Widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Pages.sizePolicy().hasHeightForWidth())
@@ -139,7 +149,8 @@ class Main_GUI_Visuals(object):
 
         
         self.UserButton = QtWidgets.QPushButton(self.HomePage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,\
+        									QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.UserButton.sizePolicy().hasHeightForWidth())
@@ -151,7 +162,8 @@ class Main_GUI_Visuals(object):
         font.setPointSize(18)
         font.setBold(True)
         self.UserButton.setFont(font)
-        self.UserButton.setStyleSheet("color: rgb(254, 215, 102);background-color:rgb(105,105,105);")
+        self.UserButton.setStyleSheet("color: rgb(254, 215, 102);\
+        								background-color:rgb(105,105,105);")
         self.UserButton.setAutoDefault(False)
         self.UserButton.setDefault(False)
         self.UserButton.setFlat(False)
@@ -160,7 +172,8 @@ class Main_GUI_Visuals(object):
 
         
         self.PriceCheckButton = QtWidgets.QPushButton(self.HomePage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,\
+        									QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.PriceCheckButton.sizePolicy().hasHeightForWidth())
@@ -170,13 +183,15 @@ class Main_GUI_Visuals(object):
         font.setPointSize(18)
         font.setBold(True)
         self.PriceCheckButton.setFont(font)
-        self.PriceCheckButton.setStyleSheet("color: rgb(254, 215, 102);background-color:rgb(105,105,105);")
+        self.PriceCheckButton.setStyleSheet("color: rgb(254, 215, 102);\
+        										background-color:rgb(105,105,105);")
         self.PriceCheckButton.setObjectName("PriceCheckButton")
         self.HomePageLayout.addWidget(self.PriceCheckButton, 2, 1, 1, 2)
 
 
         self.RankingButton = QtWidgets.QPushButton(self.HomePage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,\
+        									QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.RankingButton.sizePolicy().hasHeightForWidth())
@@ -187,13 +202,15 @@ class Main_GUI_Visuals(object):
         font.setPointSize(18)
         font.setBold(True)
         self.RankingButton.setFont(font)
-        self.RankingButton.setStyleSheet("color: rgb(101, 203, 150); background-color:rgb(105,105,105);")
+        self.RankingButton.setStyleSheet("color: rgb(101, 203, 150);\
+        									background-color:rgb(105,105,105);")
         self.RankingButton.setObjectName("RankingButton")
         self.HomePageLayout.addWidget(self.RankingButton, 1, 1, 1, 1)
 
 
         self.GameRecommendationButton = QtWidgets.QPushButton(self.HomePage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,\
+        									QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.GameRecommendationButton.sizePolicy().hasHeightForWidth())
@@ -204,7 +221,8 @@ class Main_GUI_Visuals(object):
         font.setPointSize(18)
         font.setBold(True)
         self.GameRecommendationButton.setFont(font)
-        self.GameRecommendationButton.setStyleSheet("color:rgb(30, 180, 175); background-color:rgb(105,105,105);")
+        self.GameRecommendationButton.setStyleSheet("color:rgb(30, 180, 175);\
+        											background-color:rgb(105,105,105);")
         self.GameRecommendationButton.setIconSize(QtCore.QSize(14, 14))
         self.GameRecommendationButton.setObjectName("GameRecommendationButton")
         self.HomePageLayout.addWidget(self.GameRecommendationButton, 0, 2, 2, 1)
@@ -213,7 +231,8 @@ class Main_GUI_Visuals(object):
         ## Start of Graphics Objects for Search Panel in Home Page
         #Top grid layout. 
         self.SearchPanel = QtWidgets.QWidget(self.HomePage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SearchPanel.sizePolicy().hasHeightForWidth())
@@ -230,7 +249,8 @@ class Main_GUI_Visuals(object):
 
         #Game name
         self.GameTitle = QtWidgets.QLabel(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.GameTitle.sizePolicy().hasHeightForWidth())
@@ -250,7 +270,8 @@ class Main_GUI_Visuals(object):
 
         #Add to wishlist button
         self.addToWishlistButton = QtWidgets.QPushButton(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,\
+        									QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.addToWishlistButton.sizePolicy().hasHeightForWidth())
@@ -261,7 +282,8 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.addToWishlistButton.setFont(font)
-        self.addToWishlistButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
+        self.addToWishlistButton.setStyleSheet("background-color: rgb(101, 203, 150);\
+        										color: rgb(255, 255, 255);")
         self.addToWishlistButton.setObjectName("addToWishlistButton")
         self.gridLayout_4.addWidget(self.addToWishlistButton, 1, 0, 1, 1)
 
@@ -282,7 +304,8 @@ class Main_GUI_Visuals(object):
         self.SearchDisplayLayout.setVerticalSpacing(6)
         self.SearchDisplayLayout.setObjectName("SearchDisplayLayout")
         self.GenreInfo = QtWidgets.QLabel(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.GenreInfo.sizePolicy().hasHeightForWidth())
@@ -295,13 +318,15 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.AvgHrsLabel.setFont(font)
-        self.AvgHrsLabel.setStyleSheet("color: rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.AvgHrsLabel.setStyleSheet("color: rgb(254, 215, 102);\
+        								background-color: rgb(81, 81, 81);")
         self.AvgHrsLabel.setIndent(8)
         self.AvgHrsLabel.setObjectName("AvgHrsLabel")
         self.SearchDisplayLayout.addWidget(self.AvgHrsLabel, 1, 0, 1, 1)
         
         self.AvgHrsInfo = QtWidgets.QLabel(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.AvgHrsInfo.sizePolicy().hasHeightForWidth())
@@ -310,8 +335,10 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.AvgHrsInfo.setFont(font)
-        self.AvgHrsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.AvgHrsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.AvgHrsInfo.setStyleSheet("color:rgb(255, 255, 255);\
+        								background-color: rgb(81, 81, 81);")
+        self.AvgHrsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|\
+									QtCore.Qt.AlignVCenter)
         self.AvgHrsInfo.setIndent(10)
         self.AvgHrsInfo.setObjectName("AvgHrsInfo")
         self.SearchDisplayLayout.addWidget(self.AvgHrsInfo, 1, 1, 1, 2)
@@ -324,13 +351,15 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.PositiveReviewsLabel.setFont(font)
-        self.PositiveReviewsLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.PositiveReviewsLabel.setStyleSheet("color:rgb(254, 215, 102);\
+        										background-color: rgb(81, 81, 81);")
         self.PositiveReviewsLabel.setIndent(8)
         self.PositiveReviewsLabel.setObjectName("PositiveReviewsLabel")
         self.SearchDisplayLayout.addWidget(self.PositiveReviewsLabel, 2, 0, 1, 1)
 
         self.PositiveReviewsInfo = QtWidgets.QLabel(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+        									QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.PositiveReviewsInfo.sizePolicy().hasHeightForWidth())
@@ -339,8 +368,10 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.PositiveReviewsInfo.setFont(font)
-        self.PositiveReviewsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.PositiveReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.PositiveReviewsInfo.setStyleSheet("color:rgb(255, 255, 255);\
+        										background-color: rgb(81, 81, 81);")
+        self.PositiveReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|\
+    										QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.PositiveReviewsInfo.setIndent(10)
         self.PositiveReviewsInfo.setObjectName("PositiveReviewsInfo")
         self.SearchDisplayLayout.addWidget(self.PositiveReviewsInfo, 2, 1, 1, 2)      
