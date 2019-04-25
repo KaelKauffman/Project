@@ -1,25 +1,27 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
+import requests
+from io import BytesIO
+from PIL import Image
+from PIL.ImageQt import ImageQt
+from datetime import datetime
+
 from SteamSpy_API_Calls import SteamSpy_API_Caller
 from SteamRush_PyQT_Setup import Main_GUI_Visuals
 from ITAD_API_Calls import ITAD_API_Caller
 from User import SteamUser
-import requests
-from PIL import Image
-from io import BytesIO
-from PIL.ImageQt import ImageQt
-from datetime import datetime
 
 
 # This class encapsulates the "Model" component of our Model-View-Controller application pattern.
 # Attributes include instances of the API call objects with internal cache databases, the
 # User object with internal cache of user information, and several list structures, between which
 # the internal state of the GUI is represented. Operations allow for manulipation of the internal
-# state through the list contents and state of the User object. 
+# state through the list contents and state of the User object.
 class GUI_Content_Model():
-    
+
     def __init__(self):
         #API Call objects
-        self.steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt", tagFile="SteamSpy_Tags_Cache.txt")
+        self.steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt",\
+        									 tagFile="SteamSpy_Tags_Cache.txt")
         self.itad_api = ITAD_API_Caller()
 
         #User object
@@ -37,29 +39,29 @@ class GUI_Content_Model():
 
     # Sets wish list to that of the currently active User
     def loadWishlistItems(self, gamesList):
-        wishlist = [ self.steam_api.get_name(g_id) for g_id in gamesList ]
+        wishlist = [self.steam_api.get_name(g_id) for g_id in gamesList]
 
-        raw_prices = [ self.itad_api.get_prices(self.itad_api.get_plain(g_id)) for g_id in gamesList ]
+        raw_prices = [self.itad_api.get_prices(self.itad_api.get_plain(g_id)) for g_id in gamesList]
         revised_prices = []
         for item in raw_prices:
             if len(item) > 1:
-                    s_p = ("Steam", 9999)
-                    l_p = ("Steam", 9999)
-                    for i in range(1, len(item)):
-                            if item[i][0] == "Steam":
-                                    s_p = item[i]
-                            if (l_p[1] - item[i][1]) > 0.1:
-                                    l_p = item[i]
-                    revised_prices.append([s_p, l_p])
+                s_p = ("Steam", 9999)
+                l_p = ("Steam", 9999)
+                for i in range(1, len(item)):
+                    if item[i][0] == "Steam":
+                        s_p = item[i]
+                    if (l_p[1] - item[i][1]) > 0.1:
+                        l_p = item[i]
+                revised_prices.append([s_p, l_p])
             else:
-                    revised_prices.append([("Steam", -1), ("Steam", -1)])
-                    
+                revised_prices.append([("Steam", -1), ("Steam", -1)])
+
         for g in range(len(wishlist)):
             self.wishListContent.append([wishlist[g], revised_prices[g], gamesList[g]])
 
     # Sets recommend input list to that of the currently active User
     def loadRecommendItems(self, gamesList):
-        reclist = [ self.steam_api.get_name(g_id) for g_id in gamesList ]
+        reclist = [self.steam_api.get_name(g_id) for g_id in gamesList]
 
         for g in range(len(reclist)):
             self.recommendListContent.append([gamesList[g], reclist[g]])
@@ -73,10 +75,9 @@ class GUI_Content_Model():
                 if item[0] == name:
                     found = True
                     break
-            if not found:       
+            if not found:
                 self.loadWishlistItems([gameID])
                 self.steam_user.addDesiredGame(gameID)
-            
                 self.steam_user.save_user_data_to_cache()
 
     # Removes a game by ID from the wishlist and the active User
@@ -99,7 +100,6 @@ class GUI_Content_Model():
             if not found:
                 self.loadRecommendItems([gameID])
                 self.steam_user.addRecommendGame(gameID)
-            
                 self.steam_user.save_user_data_to_cache()
 
     # Removes a game by ID from the recommend input and the active User
@@ -112,7 +112,7 @@ class GUI_Content_Model():
             self.steam_user.save_user_data_to_cache()
 
     # Change the active user of the GUI. Switch the active dataset in
-    # the User object and reload GUI state data. 
+    # the User object and reload GUI state data.
     def switchToUser(self, userID):
         self.steam_user.loginSteamID(userID)
         self.wishListContent = []
@@ -127,18 +127,18 @@ class GUI_Content_Model():
 # This class extends the View component of the GUI, encapsulates the Model component,
 # and contains the methods that handle events, comprising the controller component.
 #
-# After instantiating all the visual objects and calling methods to connect functions to Events,
-# the operations include a series of Event handling functions. These functions are connected to signals
-# from graphical objects and are called in response to user input such as button presses or text entry. These
-# functions manipulate the previously declared graphical objects to change what is displayed, using
-# data sent and retrieved through the encapsulated GUI_Content_Model.
+# After instantiating all the visual objects and calling methods to connect functions to
+# Events, the operations include a series of Event handling functions. These functions 
+# are connected to signals from graphical objects and are called in response to user 
+# input such as button presses or text entry. These functions manipulate the previously
+# declared graphical objects to change what is displayed, using data sent and retrieved
+# through the encapsulated GUI_Content_Model.
 class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
 
     def __init__(self):
         super().__init__()
         self.model = GUI_Content_Model()
         self.setupUi(self)
-
 
         self.LoginButton.clicked.connect(self.setPageLogin)
         self.SteamRushText.clicked.connect(self.setPageHome)
@@ -159,7 +159,6 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         self.ConfirmButton.clicked.connect(self.newUserLogin)
         self.Entry_2.textEdited.connect(self.userLoading)
         self.Entry_2.editingFinished.connect(self.newUserLogin)
-        
 
         users = self.model.steam_user.getAllUsers()
         for i in range(len(self.userRadioButtons)):
@@ -167,7 +166,7 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
             self.userRadioButtons[i].clicked.connect(self.userSelect)
             if i < len(users):
                 self.userRadioButtons[i].setText(users[i][1])
-                if i==0:
+                if i == 0:
                     self.userRadioButtons[i].setChecked(True)
 
         self.Pages.setCurrentIndex(0)
