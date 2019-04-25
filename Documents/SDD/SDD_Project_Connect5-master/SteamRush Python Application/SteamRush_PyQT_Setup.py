@@ -704,7 +704,7 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.GaneLibraryLabel.setFont(font)
-        self.GaneLibraryLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.GaneLibraryLabel.setStyleSheet("color: rgb(101, 203, 150);")
         self.GaneLibraryLabel.setObjectName("GaneLibraryLabel")
         self.UserLayout.addWidget(self.GaneLibraryLabel, 4, 0, 1, 4)
 
@@ -834,7 +834,7 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.WishlistLabel.setFont(font)
-        self.WishlistLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.WishlistLabel.setStyleSheet("color: rgb(101, 203, 150);")
         self.WishlistLabel.setObjectName("WishlistLabel")
         self.UserLayout.addWidget(self.WishlistLabel, 1, 5, 1, 1, QtCore.Qt.AlignHCenter)
 
