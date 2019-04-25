@@ -33,6 +33,7 @@ class GUI_Content_Model():
         self.recommendListContent = []
         self.selectedRecItem = 0
         self.lastGameSearched = "999999999"
+        self.genreChecks = {'Action':False, 'Adventure':False, 'Casual':False, 'Indie':False, 'Racing':False, 'RPG':False, 'Simulation':False, 'Sports':False, 'Strategy':False}
 
         self.loadWishlistItems(self.steam_user.getDesiredGames())
 
@@ -170,6 +171,15 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         self.ConfirmButton.clicked.connect(self.newUserLogin)
         self.Entry_2.textEdited.connect(self.userLoading)
         self.Entry_2.editingFinished.connect(self.newUserLogin)
+        self.Action.toggled.connect(self.checkAction)
+        self.Adventure.toggled.connect(self.checkAdventure)
+        self.Casual.toggled.connect(self.checkCasual)
+        self.Indie.toggled.connect(self.checkIndie)
+        self.Racing.toggled.connect(self.checkRacing)
+        self.RPG.toggled.connect(self.checkRPG)
+        self.Simulation.toggled.connect(self.checkSimulation)
+        self.Sports.toggled.connect(self.checkSports)
+        self.Strategy.toggled.connect(self.checkStrategy)
 
         self.defaultPix = QtGui.QPixmap(":/icon/steam_icon.gif")
         self.activeUserPix = self.defaultPix
@@ -254,7 +264,37 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
 
     def setPageLogin(self):
         self.Pages.setCurrentIndex(5)
-        
+
+    # Checkbox toggles: Register genre specification checks on recommendation page.
+
+    def checkAction(self):
+        self.model.genreChecks['Action'] = self.Action.isChecked()
+
+    def checkAdventure(self):
+        self.model.genreChecks['Adventure'] = self.Adventure.isChecked()
+
+    def checkCasual(self):
+        self.model.genreChecks['Casual'] = self.Casual.isChecked()
+
+    def checkIndie(self):
+        self.model.genreChecks['Indie'] = self.Indie.isChecked()
+
+    def checkRacing(self):
+        self.model.genreChecks['Racing'] = self.Racing.isChecked()
+
+    def checkRPG(self):
+        self.model.genreChecks['RPG'] = self.RPG.isChecked()
+
+    def checkSimulation(self):
+        self.model.genreChecks['Simulation'] = self.Simulation.isChecked()
+
+    def checkSports(self):
+        self.model.genreChecks['Sports'] = self.Sports.isChecked()
+
+    def checkStrategy(self):
+        self.model.genreChecks['Strategy'] = self.Strategy.isChecked()
+
+
     # Updates model for selected wishlist item
     def onWishlistClick(self):
         self.model.selectedWishItem = self.Wishlist.currentRow()
@@ -297,9 +337,12 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         for game in self.model.recommendListContent:
             game_ids.append(game[0])
 
+        required = []
+        for genre,check in self.model.genreChecks.items():
+            if check:
+                required.append(genre)
 
-
-        all_results = self.model.steam_api.recommend_multi_input(gameIDs=game_ids, required_genres=[], banned_genres=[], banned_games=[], showTop=10, cross_thresh=max(2, int(len(game_ids)/5)), matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
+        all_results = self.model.steam_api.recommend_multi_input(gameIDs=game_ids, required_genres=required, banned_genres=[], banned_games=[], showTop=10, cross_thresh=max(2, int(len(game_ids)/5)), matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
         
 
         resultString = ""
