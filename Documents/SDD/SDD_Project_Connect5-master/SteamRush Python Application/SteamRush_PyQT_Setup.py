@@ -1016,7 +1016,8 @@ class Main_GUI_Visuals(object):
 
         self.userRadioButtons = []
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
         for i in range(7):
             self.userRadioButtons.append(QtWidgets.QRadioButton(self.ActiveUsers))
             self.userRadioButtons[-1].setGeometry(QtCore.QRect(25, 20+40*(i+1), 250, 20))
