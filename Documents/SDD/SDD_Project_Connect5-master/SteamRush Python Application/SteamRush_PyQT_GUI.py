@@ -148,7 +148,7 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         self.GameRecommendationButton.clicked.connect(self.setPageRec)
         self.SearchBar.textEdited.connect(self.searchLoading)
         self.SearchBar.returnPressed.connect(self.processSearchBar)
-        self.pushButton.clicked.connect(self.addWishlistButton)
+        self.addToWishlistButton.clicked.connect(self.addWishlistButton)
         self.removeSelectedWishlist.clicked.connect(self.removeFromWishlist)
         self.Wishlist.currentItemChanged.connect(self.onWishlistClick)
         self.GenerateButton.clicked.connect(self.processRecommendRequest)
@@ -275,12 +275,12 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         resultString = ""
         resultString += "Cross-Recommendation Results:\n"
         for r in all_results[0]:
-            resultString += str(r[1]) + "\n"
+            resultString += "    " + str(r[1]) + "\n"
         resultString += "\n"
         for results in all_results[1]:
             resultString += "Recommendations from " + results[1] + " (" + results[0] + "):\n"
             for r in results[2]:
-                resultString += str(r[1]) + "\n"
+                resultString += "    " + str(r[1]) + "\n"
             resultString += "\n"
             
         self.RecommendationResults.setText(resultString)
@@ -310,10 +310,11 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
                      
 
     def searchLoading(self):
+        self.GameTitle.setStyleSheet("color:rgb(254, 215, 102);")
         self.GameTitle.setText("Loading...")
         self.GamePic.setPixmap(QtGui.QPixmap(":/icon/steam_icon.gif"))
         self.AvgHrsInfo.setText("{0:.2f}".format(0))
-        self.PositiveReviewsInfo_2.setText("{0:.2f}%".format(0))
+        self.PositiveReviewsInfo.setText("{0:.2f}%".format(0))
         self.TotalReviewsInfo.setText(str(0))
         self.GenreInfo.setText(str(""))
         self.TopVotedTagsInfo.setText(str(""))
@@ -348,11 +349,11 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
                 pix = QtGui.QPixmap.fromImage(qim)
             except:
                 pass
-
+        self.GameTitle.setStyleSheet("color:rgb(255, 255, 255);")
         self.GameTitle.setText(name)
         self.GamePic.setPixmap(pix)
         self.AvgHrsInfo.setText("{0:.2f}".format(hours))
-        self.PositiveReviewsInfo_2.setText("{0:.2f}%".format(100*reviews[0]))
+        self.PositiveReviewsInfo.setText("{0:.2f}%".format(100*reviews[0]))
         self.TotalReviewsInfo.setText(str(reviews[1]))
         self.GenreInfo.setText(str(genres))
         self.TopVotedTagsInfo.setText(str(tags))
@@ -385,7 +386,7 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
             uName = self.model.steam_user.getName()
             
             for button in self.userRadioButtons:
-                if button.text() == "<Unregistered>":
+                if button.text() == "< Unregistered >":
                     button.setText(uName)
                     button.setChecked(True)
                     break
@@ -425,7 +426,7 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
 
         self.GameLibraryInfo.clear()
         for g in range(len(played)):
-            lineString = played[g][0] + "\n    Hours Played: {0:.2f}".format(played[g][1])
+            lineString = played[g][0] + "\n    Hours Played: {0:.2f}\n".format(played[g][1])
             self.GameLibraryInfo.addItem(lineString)
             
 
