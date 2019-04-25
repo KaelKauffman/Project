@@ -128,8 +128,8 @@ class GUI_Content_Model():
 # and contains the methods that handle events, comprising the controller component.
 #
 # After instantiating all the visual objects and calling methods to connect functions to
-# Events, the operations include a series of Event handling functions. These functions 
-# are connected to signals from graphical objects and are called in response to user 
+# Events, the operations include a series of Event handling functions. These functions
+# are connected to signals from graphical objects and are called in response to user
 # input such as button presses or text entry. These functions manipulate the previously
 # declared graphical objects to change what is displayed, using data sent and retrieved
 # through the encapsulated GUI_Content_Model.
@@ -184,9 +184,10 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         for g in range(len(self.model.wishListContent)):
             lineString = ""
             lineString += self.model.wishListContent[g][0] + "\n"
-            lineString += "Current Steam Price: " + str(self.model.wishListContent[g][1][0][1]) + "\n"
-            lineString += "Lowest Price: " + str(self.model.wishListContent[g][1][1][1]) + "\n"
-            lineString += "Vendor: " + self.model.wishListContent[g][1][1][0] + "\n"
+            lineString += "Current Steam Price: " +\
+            			   str(self.model.wishListContent[g][1][0][1]) + "\n"
+            lineString += "Lowest Price: " + str(self.model.wishListContent[g][1][1][1])
+            lineString += "\nVendor: " + self.model.wishListContent[g][1][1][0] + "\n"
             self.Wishlist.addItem(lineString)
 
     def refreshReclist(self):
@@ -203,30 +204,31 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         hourString = ""
 
         self.MostPositiveList.clear()
-        for i,game in enumerate(ratings):
-            rateString += str(i+1) + ". " + game[1] + "\n   " + "{0:.3f}% Positive, ".format(game[2][0]*100) + str(game[2][1]) + " Total.\n"
+        for i, game in enumerate(ratings):
+            rateString += str(i+1) + ". " + game[1] + "\n   " + "{0:.3f}% Positive, ".\
+            			  format(game[2][0]*100) + str(game[2][1]) + " Total.\n"
         self.MostPositiveList.setText(rateString)
 
         self.MostPlayedList.clear()
-        for i,game in enumerate(hours):
-            hourString += str(i+1) + ". " + game[1] + "\n   " + "{0:.2f} Hours, ".format(game[2]/float(60)) + "\n"
+        for i, game in enumerate(hours):
+            hourString += str(i+1) + ". " + game[1] + "\n   " + "{0:.2f} Hours, ".\
+            			  format(game[2]/float(60)) + "\n"
         self.MostPlayedList.setText(hourString)
-        
-    
+
     def setPageHome(self):
         self.Pages.setCurrentIndex(0)
-        
+
     def setPageRanked(self):
         self.Pages.setCurrentIndex(1)
-        
+
     def setPageUser(self):
         self.Pages.setCurrentIndex(2)
         self.refreshWishlist()
-            
+
     def setPageRec(self):
         self.Pages.setCurrentIndex(3)
         self.refreshReclist()
-    
+
     def setPagePrice(self):
         self.Pages.setCurrentIndex(4)
 
@@ -261,7 +263,6 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
                 self.RecommendationResults.clear()
         self.GameRecommendationEntry.clear()
         self.refreshReclist()
-        
 
     def processRecommendRequest(self):
         
@@ -269,8 +270,10 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         for game in self.model.recommendListContent:
             game_ids.append(game[0])
 
-        all_results = self.model.steam_api.recommend_multi_input(gameIDs=game_ids, required_genres=[], banned_genres=[], banned_games=[], showTop=10, cross_thresh=2, matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
-        
+        all_results = self.model.steam_api.recommend_multi_input(gameIDs=game_ids,\
+        			  required_genres=[], banned_genres=[], banned_games=[], showTop=10,\
+        			  cross_thresh=2, matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
+
         resultString = ""
         resultString += "Cross-Recommendation Results:\n"
         for r in all_results[0]:
@@ -281,10 +284,9 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
             for r in results[2]:
                 resultString += "    " + str(r[1]) + "\n"
             resultString += "\n"
-            
+
         self.RecommendationResults.setText(resultString)
 
-        
     def processPriceCheck(self):
         text = self.PriceCheckEntry.text()
         self.PriceCheckEntry.clear()
@@ -427,11 +429,8 @@ class Main_GUI_Window(QtWidgets.QWidget, Main_GUI_Visuals):
         for g in range(len(played)):
             lineString = played[g][0] + "\n    Hours Played: {0:.2f}\n".format(played[g][1])
             self.GameLibraryInfo.addItem(lineString)
-            
 
-        
 
-            
 import resources_rc
 
 if __name__ == "__main__":
