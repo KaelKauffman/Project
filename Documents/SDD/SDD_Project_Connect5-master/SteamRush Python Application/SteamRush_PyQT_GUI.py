@@ -1,10 +1,10 @@
-from PyQt5 import QtGui, QtWidgets
-import requests
+from datetime import datetime
 from io import BytesIO
 from PIL import Image
 from PIL.ImageQt import ImageQt
-from datetime import datetime
+import requests
 
+from PyQt5 import QtGui, QtWidgets
 from SteamSpy_API_Calls import SteamSpy_API_Caller
 from SteamRush_PyQT_Setup import Main_GUI_Visuals
 from ITAD_API_Calls import ITAD_API_Caller
@@ -17,7 +17,6 @@ from User import SteamUser
 # the internal state of the GUI is represented. Operations allow for manulipation of the internal
 # state through the list contents and state of the User object.
 class GUI_Content_Model():
-
     def __init__(self):
         #API Call objects
         self.steam_api = SteamSpy_API_Caller(appFile="SteamSpy_App_Cache.txt",\
@@ -294,10 +293,10 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
     # Invokes the recomendation engine from the model's API handlers, then
     # updates the display with the results.
     def processRecommendRequest(self):
-        
         game_ids = []
         for game in self.model.recommendListContent:
             game_ids.append(game[0])
+
 
 
         all_results = self.model.steam_api.recommend_multi_input(gameIDs=game_ids, required_genres=[], banned_genres=[], banned_games=[], showTop=10, cross_thresh=max(2, int(len(game_ids)/5)), matchRate=0.5, cutoff=10, ratePower=1, confPower=3)
@@ -309,7 +308,8 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
             resultString += "    " + str(r[1]) + "\n"
         resultString += "\n"
         for results in all_results[1]:
-            resultString += "Recommendations from " + results[1] + " (" + results[0] + "):\n"
+            resultString += "Recommendations from " + results[1]
+            resultString += " (" + results[0] + "):\n"
             for r in results[2]:
                 resultString += "    " + str(r[1]) + "\n"
             resultString += "\n"
@@ -329,17 +329,22 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
             app_id = app_parse[0]
             if app_id != "999999999":
                 prices = self.model.itad_api.get_prices(self.model.itad_api.get_plain(app_id))
-                
                 if len(prices) == 0:
                     resultString = "Game not found."
-                else:            
-                    resultString = "Prices for: " + self.model.steam_api.get_name(app_id) + "\n\n"
+                else:
+                    resultString = "Prices for: " + self.model.steam_api.get_name(app_id)
+                    resultString += "\n\n"
                     resultString += "Lowest Price in History:\n"
-                    resultString += "Vendor: " + str(prices[0][0]) + ", Price: $" + str(prices[0][1]) + "\n\n"
+                    resultString += "Vendor: " + str(prices[0][0]) + ", "
+                    resultString ++ "Price: $" + str(prices[0][1]) + "\n\n"
                     resultString += "Current Prices: \n"
                     for p in prices[1:]:
-                         resultString += "Vendor: " + str(p[0]) + "\n   Price: $" + str(p[1]) + ",    Sale Running at Vendor: " + str(p[2]) + "% off." + "\n"
+                        resultString += "Vendor: " + str(p[0]) + "\n   "
+                        resultString += "Price: $" + str(p[1]) + ",    "
+                        resultString += "Sale Running at Vendor: " + str(p[2]) +\
+                        				"% off." + "\n"
         self.PriceCheckResults.setText(resultString)
+
                      
     # Updates the display with a "Loading..." message while a search is not yet complete.
     def searchLoading(self):
@@ -352,6 +357,7 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         self.GenreInfo.setText(str(""))
         self.TopVotedTagsInfo.setText(str(""))
         self.model.lastGameSearched = "999999999"
+
 
     # Uses model API handlers to lookup typed game entry, then
     # updates the display with the results.
@@ -366,7 +372,7 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         name = "Game not found"
         self.activeSearchPix = self.defaultPix
         hours = 0
-        reviews = [0,0]
+        reviews = [0, 0]
         genres = []
         tags = []
 
@@ -392,6 +398,7 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         self.TopVotedTagsInfo.setText(str(tags))
         self.model.lastGameSearched = app_id
         
+
         
     # Updates the model when a different user profile is selected
     def userSelect(self):
@@ -399,16 +406,15 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         for i in range(len(self.userRadioButtons)):
             if self.userRadioButtons[i].isChecked():
                 users = self.model.steam_user.getAllUsers()
-                
                 if len(users) > i:
                     selectedID = users[i][0]
                 break
-        
         if selectedID != "":
             self.model.switchToUser(selectedID)
             self.updateUserInfo()
-            
+
         self.loginLoadingLabel.clear()
+
 
     # Uses the model API handlers to lookup a new Steam user ID entry,
     # then updates the model and view to log in the new user
@@ -419,7 +425,7 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
             self.model.switchToUser(userID)
             self.updateUserInfo()
             uName = self.model.steam_user.getName()
-            
+
             for button in self.userRadioButtons:
                 if button.text() == "< Unregistered >":
                     button.setText(uName)
@@ -468,6 +474,7 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
         for g in range(len(played)):
             lineString = played[g][0] + "\n    Hours Played: {0:.2f}\n".format(played[g][1])
             self.GameLibraryInfo.addItem(lineString)
+
 
 
 import resources_rc
