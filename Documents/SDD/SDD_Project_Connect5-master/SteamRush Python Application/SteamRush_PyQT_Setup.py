@@ -384,13 +384,15 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.TotalReviewsLabel.setFont(font)
-        self.TotalReviewsLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.TotalReviewsLabel.setStyleSheet("color:rgb(254, 215, 102);\
+                                            background-color: rgb(81, 81, 81);")
         self.TotalReviewsLabel.setIndent(8)
         self.TotalReviewsLabel.setObjectName("TotalReviewsLabel")
         self.SearchDisplayLayout.addWidget(self.TotalReviewsLabel, 3, 0, 1, 1)
 
         self.TotalReviewsInfo = QtWidgets.QLabel(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+                                            QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.TotalReviewsInfo.sizePolicy().hasHeightForWidth())
@@ -399,8 +401,10 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.TotalReviewsInfo.setFont(font)
-        self.TotalReviewsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.TotalReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.TotalReviewsInfo.setStyleSheet("color:rgb(255, 255, 255);\
+                                            background-color: rgb(81, 81, 81);")
+        self.TotalReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|\
+                                            QtCore.Qt.AlignVCenter)
         self.TotalReviewsInfo.setIndent(10)
         self.TotalReviewsInfo.setObjectName("TotalReviewsInfo")
         self.SearchDisplayLayout.addWidget(self.TotalReviewsInfo, 3, 1, 1, 2)
@@ -413,7 +417,8 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.GenreLabel.setFont(font)
-        self.GenreLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.GenreLabel.setStyleSheet("color:rgb(254, 215, 102);\
+                                        background-color: rgb(81, 81, 81);")
         self.GenreLabel.setIndent(8)
         self.GenreLabel.setObjectName("GenreLabel")
         self.SearchDisplayLayout.addWidget(self.GenreLabel, 4, 0, 1, 1)
@@ -423,8 +428,10 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.GenreInfo.setFont(font)
-        self.GenreInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.GenreInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.GenreInfo.setStyleSheet("color:rgb(255, 255, 255);\
+                                    background-color: rgb(81, 81, 81);")
+        self.GenreInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|\
+                                    QtCore.Qt.AlignVCenter)
         self.GenreInfo.setIndent(10)
         self.GenreInfo.setObjectName("GenreInfo")
         self.SearchDisplayLayout.addWidget(self.GenreInfo, 4, 1, 1, 2)     
@@ -437,13 +444,15 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.TopVotedTagsLabel.setFont(font)
-        self.TopVotedTagsLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.TopVotedTagsLabel.setStyleSheet("color:rgb(254, 215, 102);\
+                                            background-color: rgb(81, 81, 81);")
         self.TopVotedTagsLabel.setIndent(8)
         self.TopVotedTagsLabel.setObjectName("TopVotedTagsLabel")
         self.SearchDisplayLayout.addWidget(self.TopVotedTagsLabel, 5, 0, 1, 1)
         
         self.TopVotedTagsInfo = QtWidgets.QLabel(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+                                            QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.TopVotedTagsInfo.sizePolicy().hasHeightForWidth())
@@ -452,8 +461,10 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.TopVotedTagsInfo.setFont(font)
-        self.TopVotedTagsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.TopVotedTagsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.TopVotedTagsInfo.setStyleSheet("color:rgb(255, 255, 255);\
+                                            background-color: rgb(81, 81, 81);")
+        self.TopVotedTagsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|\
+                                            QtCore.Qt.AlignVCenter)
         self.TopVotedTagsInfo.setIndent(10)
         self.TopVotedTagsInfo.setObjectName("TopVotedTagsInfo")
         self.SearchDisplayLayout.addWidget(self.TopVotedTagsInfo, 5, 1, 1, 2)
@@ -468,12 +479,14 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.SearchButton.setFont(font)
-        self.SearchButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
+        self.SearchButton.setStyleSheet("background-color: rgb(101, 203, 150);\
+                                        color: rgb(255, 255, 255);")
         self.SearchButton.setObjectName("SearchButton")
         self.gridLayout_4.addWidget(self.SearchButton, 3, 1, 1, 1)
 
         self.SearchBar = QtWidgets.QLineEdit(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+                                            QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SearchBar.sizePolicy().hasHeightForWidth())
@@ -512,7 +525,8 @@ class Main_GUI_Visuals(object):
 
         
         self.Title_3 = QtWidgets.QLabel(self.RankingPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,\
+                                            QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Title_3.sizePolicy().hasHeightForWidth())
@@ -526,7 +540,8 @@ class Main_GUI_Visuals(object):
         self.Title_3.setFont(font)
         self.Title_3.setStyleSheet("color: rgb(255, 255, 255);")
         self.Title_3.setObjectName("Title_3")
-        self.GameRecommendationLayout_3.addWidget(self.Title_3, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.GameRecommendationLayout_3.addWidget(self.Title_3, 0, 0, 1, 1,\
+                                                    QtCore.Qt.AlignHCenter)
         self.RankingPageLayout.addLayout(self.GameRecommendationLayout_3, 0, 0, 1, 2)
         self.RankingLayout = QtWidgets.QGridLayout()
         self.RankingLayout.setContentsMargins(20, -1, 10, -1)
@@ -544,11 +559,13 @@ class Main_GUI_Visuals(object):
         self.MostPlayedLabel.setFont(font)
         self.MostPlayedLabel.setStyleSheet("color: rgb(101, 203, 150);")
         self.MostPlayedLabel.setObjectName("MostPlayedLabel")
-        self.RankingLayout.addWidget(self.MostPlayedLabel, 0, 1, 1, 1, QtCore.Qt.AlignHCenter)
+        self.RankingLayout.addWidget(self.MostPlayedLabel, 0, 1, 1, 1,\
+                                    QtCore.Qt.AlignHCenter)
 
         
         self.MostPlayedList = QtWidgets.QTextBrowser(self.RankingPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+                                            QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.MostPlayedList.sizePolicy().hasHeightForWidth())
@@ -559,7 +576,8 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(16)
         self.MostPlayedList.setFont(font)
-        self.MostPlayedList.setStyleSheet("color:rgb(255, 255, 255); background-color:rgb(105,105,105);")
+        self.MostPlayedList.setStyleSheet("color:rgb(255, 255, 255);\
+                                            background-color:rgb(105,105,105);")
         self.MostPlayedList.setObjectName("MostPlayedList")
         self.RankingLayout.addWidget(self.MostPlayedList, 1, 1, 1, 1)
 
@@ -573,11 +591,13 @@ class Main_GUI_Visuals(object):
         self.MostPositiveLabel.setFont(font)
         self.MostPositiveLabel.setStyleSheet("color: rgb(30, 180, 175);")
         self.MostPositiveLabel.setObjectName("MostPositiveLabel")
-        self.RankingLayout.addWidget(self.MostPositiveLabel, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.RankingLayout.addWidget(self.MostPositiveLabel, 0, 0, 1, 1,\
+                                    QtCore.Qt.AlignHCenter)
 
         
         self.MostPositiveList = QtWidgets.QTextBrowser(self.RankingPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,\
+                                            QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.MostPositiveList.sizePolicy().hasHeightForWidth())
@@ -588,7 +608,8 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(16)
         self.MostPositiveList.setFont(font)
-        self.MostPositiveList.setStyleSheet("color:rgb(255, 255, 255); background-color:rgb(105,105,105);")
+        self.MostPositiveList.setStyleSheet("color:rgb(255, 255, 255);\
+                                            background-color:rgb(105,105,105);")
         self.MostPositiveList.setObjectName("MostPositiveList")
         self.RankingLayout.addWidget(self.MostPositiveList, 1, 0, 1, 1)
 

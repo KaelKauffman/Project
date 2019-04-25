@@ -1,15 +1,15 @@
-from lxml import html
-import requests
 import json
 import math
 from time import sleep
+from lxml import html
+import requests
 
 
 # This class encapsulates the information on avaliable Steam games and provides an access point
 # for the SteamSpy API. Games are encoded using python Dictionary objects, keyed to retrieve
 # parameters such as ID, name, genres, tags, ratings, price, etc. The access functions
-# dynamically update this data cache behind the scenes, and write it to a file for persistance between runtimes.
-# Operation names are explanitory of function.
+# dynamically update this data cache behind the scenes, and write it to a file for 
+# persistance between runtimes Operation names are explanitory of function.
 class SteamSpy_API_Caller:
 
     def __init__(self, appFile="", tagFile=""):
@@ -19,7 +19,6 @@ class SteamSpy_API_Caller:
         self.requiredGenres = []
         self.app_data_cache = dict()
         self.tag_data_cache = dict()
-        
         if appFile != "":
             try:
                 appCache = open(self.appFileName)
@@ -164,9 +163,9 @@ class SteamSpy_API_Caller:
 
         # Returns [ (pos / total) , total ]
         if pos+neg > 0:
-            return [ pos/float(pos+neg), pos+neg ]
+            return [pos/float(pos+neg), pos+neg]
         else:
-            return [0,0]
+            return [0, 0]
 
     def get_playtime(self, gameID):
         if str(gameID) not in self.app_data_cache:
