@@ -8,25 +8,25 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 # instantiated, and their operations are called to position and format every visual
 # aspect of the GUI.
 class Main_GUI_Visuals(object):
-
-    # Comments in this function are sparse, and serve to loosely categorize the giant block of function calls into relevent areas of the GUI. 
+    # Comments in this function are sparse, and serve to loosely categorize the giant block of function calls into relevent areas of the GUI.
     def setupUi(self, Widget):
 
         # Start of Graphics Objects for Main Program Window
         Widget.setObjectName("Widget")
-        Widget.resize(1200, 900)
+        Widget.resize(1400, 900)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Widget.sizePolicy().hasHeightForWidth())
         Widget.setSizePolicy(sizePolicy)
-        Widget.setMinimumSize(QtCore.QSize(1200, 900))
+        Widget.setMinimumSize(QtCore.QSize(1400, 900))
         Widget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.gridLayout = QtWidgets.QGridLayout(Widget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setHorizontalSpacing(6)
         self.gridLayout.setVerticalSpacing(2)
         self.gridLayout.setObjectName("gridLayout")
+
         
         self.BottomBar = QtWidgets.QWidget(Widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -39,6 +39,7 @@ class Main_GUI_Visuals(object):
         self.BottomBar.setStyleSheet("background-color: rgb(55, 55, 55);")
         self.BottomBar.setObjectName("BottomBar")
         self.gridLayout.addWidget(self.BottomBar, 2, 0, 1, 1)
+
         
         self.MenuBar = QtWidgets.QWidget(Widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -55,9 +56,11 @@ class Main_GUI_Visuals(object):
         self.MenuBarLayout.setContentsMargins(20, 11, 11, 11)
         self.MenuBarLayout.setSpacing(6)
         self.MenuBarLayout.setObjectName("MenuBarLayout")
+
         
         spacerItem = QtWidgets.QSpacerItem(300, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.MenuBarLayout.addItem(spacerItem, 0, 3, 1, 1)
+
         
         self.LoginButton = QtWidgets.QPushButton(self.MenuBar)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
@@ -76,6 +79,7 @@ class Main_GUI_Visuals(object):
         self.LoginButton.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(30, 180, 175);")
         self.LoginButton.setObjectName("LoginButton")
         self.MenuBarLayout.addWidget(self.LoginButton, 0, 4, 1, 1)
+
         
         self.SteamRushIcon = QtWidgets.QLabel(self.MenuBar)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -83,25 +87,28 @@ class Main_GUI_Visuals(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SteamRushIcon.sizePolicy().hasHeightForWidth())
         self.SteamRushIcon.setSizePolicy(sizePolicy)
-        self.SteamRushIcon.setMinimumSize(QtCore.QSize(70, 40))
-        self.SteamRushIcon.setMaximumSize(QtCore.QSize(70, 40))
+        self.SteamRushIcon.setMinimumSize(QtCore.QSize(64, 64))
+        self.SteamRushIcon.setMaximumSize(QtCore.QSize(64, 64))
         self.SteamRushIcon.setBaseSize(QtCore.QSize(70, 40))
+        self.SteamRushIcon.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.SteamRushIcon.setText("")
         self.SteamRushIcon.setPixmap(QtGui.QPixmap(":/icon/steam_icon.gif"))
         self.SteamRushIcon.setScaledContents(True)
         self.SteamRushIcon.setObjectName("SteamRushIcon")
         self.MenuBarLayout.addWidget(self.SteamRushIcon, 0, 0, 1, 1)
+
         
         self.SteamRushText = QtWidgets.QPushButton(self.MenuBar)
         font = QtGui.QFont()
         font.setFamily("Bauhaus 93")
         font.setPointSize(26)
         self.SteamRushText.setFont(font)
-        self.SteamRushText.setStyleSheet("color: rgb(255, 255, 255);")
+        self.SteamRushText.setStyleSheet("color: rgb(30, 180, 175);")
         self.SteamRushText.setFlat(True)
         self.SteamRushText.setObjectName("SteamRushText")
         self.MenuBarLayout.addWidget(self.SteamRushText, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.MenuBar, 0, 0, 1, 1)
+
 
         # Start of Graphics Objects for GUI Page Stack
         self.Pages = QtWidgets.QStackedWidget(Widget)
@@ -116,7 +123,8 @@ class Main_GUI_Visuals(object):
         self.Pages.setStyleSheet("background-color: rgb(83, 83, 83);")
         self.Pages.setObjectName("Pages")
 
-        # Start of Graphics Objects for Home Page
+
+        # Start of Graphics Ojbects for Home page
         self.HomePage = QtWidgets.QWidget()
         self.HomePage.setStyleSheet("background-color: rgb(83, 83, 83);")
         self.HomePage.setObjectName("HomePage")
@@ -129,6 +137,7 @@ class Main_GUI_Visuals(object):
         self.HomePageLayout.setSpacing(20)
         self.HomePageLayout.setObjectName("HomePageLayout")
 
+        
         self.UserButton = QtWidgets.QPushButton(self.HomePage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -139,15 +148,17 @@ class Main_GUI_Visuals(object):
         self.UserButton.setMaximumSize(QtCore.QSize(800, 800))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(15)
+        font.setPointSize(18)
+        font.setBold(True)
         self.UserButton.setFont(font)
-        self.UserButton.setStyleSheet("color: rgb(255, 255, 255);")
+        self.UserButton.setStyleSheet("color: rgb(254, 215, 102);background-color:rgb(105,105,105);")
         self.UserButton.setAutoDefault(False)
         self.UserButton.setDefault(False)
         self.UserButton.setFlat(False)
         self.UserButton.setObjectName("UserButton")
         self.HomePageLayout.addWidget(self.UserButton, 0, 1, 1, 1)
 
+        
         self.PriceCheckButton = QtWidgets.QPushButton(self.HomePage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -156,12 +167,14 @@ class Main_GUI_Visuals(object):
         self.PriceCheckButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(15)
+        font.setPointSize(18)
+        font.setBold(True)
         self.PriceCheckButton.setFont(font)
-        self.PriceCheckButton.setStyleSheet("color: rgb(255, 255, 255);")
+        self.PriceCheckButton.setStyleSheet("color: rgb(254, 215, 102);background-color:rgb(105,105,105);")
         self.PriceCheckButton.setObjectName("PriceCheckButton")
         self.HomePageLayout.addWidget(self.PriceCheckButton, 2, 1, 1, 2)
- 
+
+
         self.RankingButton = QtWidgets.QPushButton(self.HomePage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -171,12 +184,14 @@ class Main_GUI_Visuals(object):
         self.RankingButton.setMinimumSize(QtCore.QSize(150, 0))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(15)
+        font.setPointSize(18)
+        font.setBold(True)
         self.RankingButton.setFont(font)
-        self.RankingButton.setStyleSheet("color: rgb(255, 255, 255);")
+        self.RankingButton.setStyleSheet("color: rgb(101, 203, 150); background-color:rgb(105,105,105);")
         self.RankingButton.setObjectName("RankingButton")
         self.HomePageLayout.addWidget(self.RankingButton, 1, 1, 1, 1)
- 
+
+
         self.GameRecommendationButton = QtWidgets.QPushButton(self.HomePage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -186,182 +201,40 @@ class Main_GUI_Visuals(object):
         self.GameRecommendationButton.setMinimumSize(QtCore.QSize(250, 0))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(15)
+        font.setPointSize(18)
+        font.setBold(True)
         self.GameRecommendationButton.setFont(font)
-        self.GameRecommendationButton.setStyleSheet("color: rgb(255, 255, 255);")
+        self.GameRecommendationButton.setStyleSheet("color:rgb(30, 180, 175); background-color:rgb(105,105,105);")
         self.GameRecommendationButton.setIconSize(QtCore.QSize(14, 14))
         self.GameRecommendationButton.setObjectName("GameRecommendationButton")
         self.HomePageLayout.addWidget(self.GameRecommendationButton, 0, 2, 2, 1)
-        
-        # Start of Graphics Objects for Search Panel in Home Page
+
+
+        ## Start of Graphics Objects for Search Panel in Home Page
+        #Top grid layout. 
         self.SearchPanel = QtWidgets.QWidget(self.HomePage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SearchPanel.sizePolicy().hasHeightForWidth())
         self.SearchPanel.setSizePolicy(sizePolicy)
-        self.SearchPanel.setMinimumSize(QtCore.QSize(500, 0))
+        self.SearchPanel.setMinimumSize(QtCore.QSize(400, 0))
         self.SearchPanel.setMaximumSize(QtCore.QSize(1000, 16777215))
         self.SearchPanel.setStyleSheet("background-color: rgb(68, 68, 68);")
         self.SearchPanel.setObjectName("SearchPanel")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.SearchPanel)
-        self.gridLayout_4.setContentsMargins(15, 20, 15, 20)
-        self.gridLayout_4.setSpacing(6)
+        self.gridLayout_4.setContentsMargins(11, 11, 11, 11)
+        self.gridLayout_4.setHorizontalSpacing(10)
+        self.gridLayout_4.setVerticalSpacing(6)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.SearchLayout = QtWidgets.QGridLayout()
-        self.SearchLayout.setHorizontalSpacing(6)
-        self.SearchLayout.setVerticalSpacing(15)
-        self.SearchLayout.setObjectName("SearchLayout")
-        
-        self.SearchBar = QtWidgets.QLineEdit(self.SearchPanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+
+        #Game name
+        self.GameTitle = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.SearchBar.sizePolicy().hasHeightForWidth())
-        self.SearchBar.setSizePolicy(sizePolicy)
-        self.SearchBar.setMinimumSize(QtCore.QSize(400, 20))
-        self.SearchBar.setMaximumSize(QtCore.QSize(450, 30))
-        self.SearchBar.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.SearchBar.setInputMethodHints(QtCore.Qt.ImhNoAutoUppercase)
-        self.SearchBar.setEchoMode(QtWidgets.QLineEdit.Normal)
-        self.SearchBar.setObjectName("SearchBar")
-        self.SearchLayout.addWidget(self.SearchBar, 2, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        
-        self.SearchInnerLayout = QtWidgets.QGridLayout()
-        self.SearchInnerLayout.setContentsMargins(-1, 0, -1, 0)
-        self.SearchInnerLayout.setHorizontalSpacing(7)
-        self.SearchInnerLayout.setVerticalSpacing(6)
-        self.SearchInnerLayout.setObjectName("SearchInnerLayout")
-        self.SearchDisplayLayout = QtWidgets.QGridLayout()
-        self.SearchDisplayLayout.setSpacing(6)
-        self.SearchDisplayLayout.setObjectName("SearchDisplayLayout")
-        
-        self.GenreInfo = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(9)
-        self.GenreInfo.setFont(font)
-        self.GenreInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.GenreInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.GenreInfo.setIndent(10)
-        self.GenreInfo.setObjectName("GenreInfo")
-        self.SearchDisplayLayout.addWidget(self.GenreInfo, 4, 1, 1, 2)
-        
-        self.GenreLabel = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.GenreLabel.setFont(font)
-        self.GenreLabel.setStyleSheet("color:rgb(30, 180, 175); background-color: rgb(81, 81, 81);")
-        self.GenreLabel.setIndent(8)
-        self.GenreLabel.setObjectName("GenreLabel")
-        self.SearchDisplayLayout.addWidget(self.GenreLabel, 4, 0, 1, 1)
-
-        self.TopVotedTagsInfo = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(9)
-        self.TopVotedTagsInfo.setFont(font)
-        self.TopVotedTagsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.TopVotedTagsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.TopVotedTagsInfo.setIndent(10)
-        self.TopVotedTagsInfo.setObjectName("TopVotedTagsInfo")
-        self.SearchDisplayLayout.addWidget(self.TopVotedTagsInfo, 5, 1, 1, 2)
-
-        self.AvgHrsInfo = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(9)
-        self.AvgHrsInfo.setFont(font)
-        self.AvgHrsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.AvgHrsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.AvgHrsInfo.setIndent(10)
-        self.AvgHrsInfo.setObjectName("AvgHrsInfo")
-        self.SearchDisplayLayout.addWidget(self.AvgHrsInfo, 1, 1, 1, 2)
-
-        self.AvgHrsLabel = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.AvgHrsLabel.setFont(font)
-        self.AvgHrsLabel.setStyleSheet("color:rgb(30, 180, 175); background-color: rgb(81, 81, 81);")
-        self.AvgHrsLabel.setIndent(8)
-        self.AvgHrsLabel.setObjectName("AvgHrsLabel")
-        self.SearchDisplayLayout.addWidget(self.AvgHrsLabel, 1, 0, 1, 1)
-        
-        self.TopVotedTagsLabel = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.TopVotedTagsLabel.setFont(font)
-        self.TopVotedTagsLabel.setStyleSheet("color:rgb(30, 180, 175); background-color: rgb(81, 81, 81);")
-        self.TopVotedTagsLabel.setIndent(8)
-        self.TopVotedTagsLabel.setObjectName("TopVotedTagsLabel")
-        self.SearchDisplayLayout.addWidget(self.TopVotedTagsLabel, 5, 0, 1, 1)
-        
-        self.TotalReviewsLabel = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.TotalReviewsLabel.setFont(font)
-        self.TotalReviewsLabel.setStyleSheet("color:rgb(30, 180, 175); background-color: rgb(81, 81, 81);")
-        self.TotalReviewsLabel.setIndent(8)
-        self.TotalReviewsLabel.setObjectName("TotalReviewsLabel")
-        self.SearchDisplayLayout.addWidget(self.TotalReviewsLabel, 3, 0, 1, 1)
-        
-        self.PositiveReviewsInfo_2 = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(9)
-        self.PositiveReviewsInfo_2.setFont(font)
-        self.PositiveReviewsInfo_2.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.PositiveReviewsInfo_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.PositiveReviewsInfo_2.setIndent(10)
-        self.PositiveReviewsInfo_2.setObjectName("PositiveReviewsInfo_2")
-        self.SearchDisplayLayout.addWidget(self.PositiveReviewsInfo_2, 2, 1, 1, 2)
-        
-        self.TotalReviewsInfo = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(9)
-        self.TotalReviewsInfo.setFont(font)
-        self.TotalReviewsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
-        self.TotalReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.TotalReviewsInfo.setIndent(10)
-        self.TotalReviewsInfo.setObjectName("TotalReviewsInfo")
-        self.SearchDisplayLayout.addWidget(self.TotalReviewsInfo, 3, 1, 1, 2)
-        
-        self.PositiveReviewsInfo = QtWidgets.QLabel(self.SearchPanel)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.PositiveReviewsInfo.setFont(font)
-        self.PositiveReviewsInfo.setStyleSheet("color:rgb(30, 180, 175); background-color: rgb(81, 81, 81);")
-        self.PositiveReviewsInfo.setIndent(8)
-        self.PositiveReviewsInfo.setObjectName("PositiveReviewsInfo")
-        self.SearchDisplayLayout.addWidget(self.PositiveReviewsInfo, 2, 0, 1, 1)
-        self.SearchInnerLayout.addLayout(self.SearchDisplayLayout, 3, 0, 1, 2)
-        
-        self.GamePic = QtWidgets.QLabel(self.SearchPanel)
-        self.GamePic.setMinimumSize(QtCore.QSize(192, 72))
-        self.GamePic.setMaximumSize(QtCore.QSize(192, 72))
-        self.GamePic.setText("")
-        self.GamePic.setPixmap(QtGui.QPixmap(":/icon/steam_icon.gif"))
-        self.GamePic.setScaledContents(True)
-        self.GamePic.setObjectName("GamePic")
-        self.SearchInnerLayout.addWidget(self.GamePic, 1, 1, 1, 1)
-        
-        self.GameTitle = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy.setHeightForWidth(self.GameTitle.sizePolicy().hasHeightForWidth())
+        self.GameTitle.setSizePolicy(sizePolicy)
         self.GameTitle.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
@@ -373,35 +246,220 @@ class Main_GUI_Visuals(object):
         self.GameTitle.setStyleSheet("color:rgb(255, 255, 255)")
         self.GameTitle.setAlignment(QtCore.Qt.AlignCenter)
         self.GameTitle.setObjectName("GameTitle")
-        self.SearchInnerLayout.addWidget(self.GameTitle, 1, 0, 1, 1)
-        
-        self.pushButton = QtWidgets.QPushButton(self.SearchPanel)
+        self.gridLayout_4.addWidget(self.GameTitle, 0, 0, 1, 1)
+
+        #Add to wishlist button
+        self.addToWishlistButton = QtWidgets.QPushButton(self.SearchPanel)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-        self.pushButton.setSizePolicy(sizePolicy)
-        self.pushButton.setMinimumSize(QtCore.QSize(100, 10))
-        self.pushButton.setMaximumSize(QtCore.QSize(200, 30))
+        sizePolicy.setHeightForWidth(self.addToWishlistButton.sizePolicy().hasHeightForWidth())
+        self.addToWishlistButton.setSizePolicy(sizePolicy)
+        self.addToWishlistButton.setMinimumSize(QtCore.QSize(100, 10))
+        self.addToWishlistButton.setMaximumSize(QtCore.QSize(200, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
         font.setPointSize(14)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
-        self.pushButton.setObjectName("pushButton")
-        self.SearchInnerLayout.addWidget(self.pushButton, 2, 0, 1, 1)
+        self.addToWishlistButton.setFont(font)
+        self.addToWishlistButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
+        self.addToWishlistButton.setObjectName("addToWishlistButton")
+        self.gridLayout_4.addWidget(self.addToWishlistButton, 1, 0, 1, 1)
 
-        self.SearchLayout.addLayout(self.SearchInnerLayout, 0, 0, 1, 1)
-        self.gridLayout_4.addLayout(self.SearchLayout, 0, 0, 1, 1)
+        #Game picture
+        self.GamePic = QtWidgets.QLabel(self.SearchPanel)
+        self.GamePic.setMinimumSize(QtCore.QSize(192, 72))
+        self.GamePic.setMaximumSize(QtCore.QSize(192, 72))
+        self.GamePic.setText("")
+        self.GamePic.setPixmap(QtGui.QPixmap(":/icon/steam_icon.gif"))
+        self.GamePic.setScaledContents(True)
+        self.GamePic.setObjectName("GamePic")
+        self.gridLayout_4.addWidget(self.GamePic, 0, 1, 1, 1)
+
+
+        #Grid layout for display information
+        self.SearchDisplayLayout = QtWidgets.QGridLayout()
+        self.SearchDisplayLayout.setHorizontalSpacing(10)
+        self.SearchDisplayLayout.setVerticalSpacing(6)
+        self.SearchDisplayLayout.setObjectName("SearchDisplayLayout")
+        self.GenreInfo = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.GenreInfo.sizePolicy().hasHeightForWidth())
+
+        #Avg hours played 
+        self.AvgHrsLabel = QtWidgets.QLabel(self.SearchPanel)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.AvgHrsLabel.setFont(font)
+        self.AvgHrsLabel.setStyleSheet("color: rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.AvgHrsLabel.setIndent(8)
+        self.AvgHrsLabel.setObjectName("AvgHrsLabel")
+        self.SearchDisplayLayout.addWidget(self.AvgHrsLabel, 1, 0, 1, 1)
+        
+        self.AvgHrsInfo = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.AvgHrsInfo.sizePolicy().hasHeightForWidth())
+        self.AvgHrsInfo.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        self.AvgHrsInfo.setFont(font)
+        self.AvgHrsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
+        self.AvgHrsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.AvgHrsInfo.setIndent(10)
+        self.AvgHrsInfo.setObjectName("AvgHrsInfo")
+        self.SearchDisplayLayout.addWidget(self.AvgHrsInfo, 1, 1, 1, 2)
+
+        #% positive reviews
+        self.PositiveReviewsLabel = QtWidgets.QLabel(self.SearchPanel)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.PositiveReviewsLabel.setFont(font)
+        self.PositiveReviewsLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.PositiveReviewsLabel.setIndent(8)
+        self.PositiveReviewsLabel.setObjectName("PositiveReviewsLabel")
+        self.SearchDisplayLayout.addWidget(self.PositiveReviewsLabel, 2, 0, 1, 1)
+
+        self.PositiveReviewsInfo = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.PositiveReviewsInfo.sizePolicy().hasHeightForWidth())
+        self.PositiveReviewsInfo.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        self.PositiveReviewsInfo.setFont(font)
+        self.PositiveReviewsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
+        self.PositiveReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.PositiveReviewsInfo.setIndent(10)
+        self.PositiveReviewsInfo.setObjectName("PositiveReviewsInfo")
+        self.SearchDisplayLayout.addWidget(self.PositiveReviewsInfo, 2, 1, 1, 2)      
+
+        #Total number of reviews
+        self.TotalReviewsLabel = QtWidgets.QLabel(self.SearchPanel)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.TotalReviewsLabel.setFont(font)
+        self.TotalReviewsLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.TotalReviewsLabel.setIndent(8)
+        self.TotalReviewsLabel.setObjectName("TotalReviewsLabel")
+        self.SearchDisplayLayout.addWidget(self.TotalReviewsLabel, 3, 0, 1, 1)
+
+        self.TotalReviewsInfo = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.TotalReviewsInfo.sizePolicy().hasHeightForWidth())
+        self.TotalReviewsInfo.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        self.TotalReviewsInfo.setFont(font)
+        self.TotalReviewsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
+        self.TotalReviewsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.TotalReviewsInfo.setIndent(10)
+        self.TotalReviewsInfo.setObjectName("TotalReviewsInfo")
+        self.SearchDisplayLayout.addWidget(self.TotalReviewsInfo, 3, 1, 1, 2)
+
+        #Game genres
+        self.GenreLabel = QtWidgets.QLabel(self.SearchPanel)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.GenreLabel.setFont(font)
+        self.GenreLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.GenreLabel.setIndent(8)
+        self.GenreLabel.setObjectName("GenreLabel")
+        self.SearchDisplayLayout.addWidget(self.GenreLabel, 4, 0, 1, 1)
+
+        self.GenreInfo.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        self.GenreInfo.setFont(font)
+        self.GenreInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
+        self.GenreInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.GenreInfo.setIndent(10)
+        self.GenreInfo.setObjectName("GenreInfo")
+        self.SearchDisplayLayout.addWidget(self.GenreInfo, 4, 1, 1, 2)     
+
+        #Top voted tags
+        self.TopVotedTagsLabel = QtWidgets.QLabel(self.SearchPanel)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.TopVotedTagsLabel.setFont(font)
+        self.TopVotedTagsLabel.setStyleSheet("color:rgb(254, 215, 102); background-color: rgb(81, 81, 81);")
+        self.TopVotedTagsLabel.setIndent(8)
+        self.TopVotedTagsLabel.setObjectName("TopVotedTagsLabel")
+        self.SearchDisplayLayout.addWidget(self.TopVotedTagsLabel, 5, 0, 1, 1)
+        
+        self.TopVotedTagsInfo = QtWidgets.QLabel(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.TopVotedTagsInfo.sizePolicy().hasHeightForWidth())
+        self.TopVotedTagsInfo.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        self.TopVotedTagsInfo.setFont(font)
+        self.TopVotedTagsInfo.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(81, 81, 81);")
+        self.TopVotedTagsInfo.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.TopVotedTagsInfo.setIndent(10)
+        self.TopVotedTagsInfo.setObjectName("TopVotedTagsInfo")
+        self.SearchDisplayLayout.addWidget(self.TopVotedTagsInfo, 5, 1, 1, 2)
+        self.gridLayout_4.addLayout(self.SearchDisplayLayout, 2, 0, 1, 2)
+
+        #Search bar + search button
+        self.SearchButton = QtWidgets.QPushButton(self.SearchPanel)
+        self.SearchButton.setMinimumSize(QtCore.QSize(30, 30))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.SearchButton.setFont(font)
+        self.SearchButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
+        self.SearchButton.setObjectName("SearchButton")
+        self.gridLayout_4.addWidget(self.SearchButton, 3, 1, 1, 1)
+
+        self.SearchBar = QtWidgets.QLineEdit(self.SearchPanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.SearchBar.sizePolicy().hasHeightForWidth())
+        self.SearchBar.setSizePolicy(sizePolicy)
+        self.SearchBar.setMinimumSize(QtCore.QSize(400, 30))
+        self.SearchBar.setMaximumSize(QtCore.QSize(5000, 30))
+        self.SearchBar.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.SearchBar.setInputMethodHints(QtCore.Qt.ImhNoAutoUppercase)
+        self.SearchBar.setEchoMode(QtWidgets.QLineEdit.Normal)
+        self.SearchBar.setObjectName("SearchBar")
+        self.gridLayout_4.addWidget(self.SearchBar, 3, 0, 1, 1)
         self.HomePageLayout.addWidget(self.SearchPanel, 0, 3, 3, 1)
-        # End of Graphics Objects for Search Panel
-
         self.gridLayout_2.addLayout(self.HomePageLayout, 1, 0, 1, 2)
         self.Pages.addWidget(self.HomePage)
-        # End of Graphics Objects for Home Page
         
 
-        # Start of Graphics Objects for Rankings Page
+        # Start of Graphics Objects for Ranking page
         self.RankingPage = QtWidgets.QWidget()
         self.RankingPage.setStyleSheet("background-color: rgb(83, 83, 83);")
         self.RankingPage.setObjectName("RankingPage")
@@ -409,15 +467,18 @@ class Main_GUI_Visuals(object):
         self.gridLayout_7.setContentsMargins(11, 11, 11, 11)
         self.gridLayout_7.setSpacing(6)
         self.gridLayout_7.setObjectName("gridLayout_7")
+
         
         self.RankingPageLayout = QtWidgets.QGridLayout()
         self.RankingPageLayout.setSpacing(6)
         self.RankingPageLayout.setObjectName("RankingPageLayout")
+
         
         self.GameRecommendationLayout_3 = QtWidgets.QGridLayout()
         self.GameRecommendationLayout_3.setContentsMargins(5, -1, -1, 1)
         self.GameRecommendationLayout_3.setSpacing(6)
         self.GameRecommendationLayout_3.setObjectName("GameRecommendationLayout_3")
+
         
         self.Title_3 = QtWidgets.QLabel(self.RankingPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -441,6 +502,19 @@ class Main_GUI_Visuals(object):
         self.RankingLayout.setHorizontalSpacing(30)
         self.RankingLayout.setVerticalSpacing(20)
         self.RankingLayout.setObjectName("RankingLayout")
+
+
+        self.MostPlayedLabel = QtWidgets.QLabel(self.RankingPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.MostPlayedLabel.setFont(font)
+        self.MostPlayedLabel.setStyleSheet("color: rgb(101, 203, 150);")
+        self.MostPlayedLabel.setObjectName("MostPlayedLabel")
+        self.RankingLayout.addWidget(self.MostPlayedLabel, 0, 1, 1, 1, QtCore.Qt.AlignHCenter)
+
         
         self.MostPlayedList = QtWidgets.QTextBrowser(self.RankingPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -452,11 +526,24 @@ class Main_GUI_Visuals(object):
         self.MostPlayedList.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(18)
+        font.setPointSize(16)
         self.MostPlayedList.setFont(font)
-        self.MostPlayedList.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(140, 140, 140);")
+        self.MostPlayedList.setStyleSheet("color:rgb(255, 255, 255); background-color:rgb(105,105,105);")
         self.MostPlayedList.setObjectName("MostPlayedList")
         self.RankingLayout.addWidget(self.MostPlayedList, 1, 1, 1, 1)
+
+
+        self.MostPositiveLabel = QtWidgets.QLabel(self.RankingPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.MostPositiveLabel.setFont(font)
+        self.MostPositiveLabel.setStyleSheet("color: rgb(30, 180, 175);")
+        self.MostPositiveLabel.setObjectName("MostPositiveLabel")
+        self.RankingLayout.addWidget(self.MostPositiveLabel, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+
         
         self.MostPositiveList = QtWidgets.QTextBrowser(self.RankingPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -468,41 +555,19 @@ class Main_GUI_Visuals(object):
         self.MostPositiveList.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(18)
+        font.setPointSize(16)
         self.MostPositiveList.setFont(font)
-        self.MostPositiveList.setStyleSheet("color:rgb(255, 255, 255); background-color: rgb(140, 140, 140);")
+        self.MostPositiveList.setStyleSheet("color:rgb(255, 255, 255); background-color:rgb(105,105,105);")
         self.MostPositiveList.setObjectName("MostPositiveList")
         self.RankingLayout.addWidget(self.MostPositiveList, 1, 0, 1, 1)
-        
-        self.MostPlayedLabel = QtWidgets.QLabel(self.RankingPage)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(20)
-        font.setBold(True)
-        font.setWeight(75)
-        self.MostPlayedLabel.setFont(font)
-        self.MostPlayedLabel.setStyleSheet("color: rgb(101, 203, 150);")
-        self.MostPlayedLabel.setObjectName("MostPlayedLabel")
-        self.RankingLayout.addWidget(self.MostPlayedLabel, 0, 1, 1, 1, QtCore.Qt.AlignHCenter)
-        
-        self.MostPositiveLabel = QtWidgets.QLabel(self.RankingPage)
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(20)
-        font.setBold(True)
-        font.setWeight(75)
-        self.MostPositiveLabel.setFont(font)
-        self.MostPositiveLabel.setStyleSheet("color: rgb(30, 180, 175);")
-        self.MostPositiveLabel.setObjectName("MostPositiveLabel")
-        self.RankingLayout.addWidget(self.MostPositiveLabel, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.RankingPageLayout.addLayout(self.RankingLayout, 4, 0, 1, 1)
         self.gridLayout_7.addLayout(self.RankingPageLayout, 0, 0, 1, 1)
         self.Pages.addWidget(self.RankingPage)
-        # End of Graphics Objects for Rankings Page
 
 
-        # Start of Graphics Objects for User Page
+        # Start of Graphics objects for User page
         self.UserPage = QtWidgets.QWidget()
         self.UserPage.setStyleSheet("background-color: rgb(83, 83, 83);")
         self.UserPage.setObjectName("UserPage")
@@ -515,6 +580,7 @@ class Main_GUI_Visuals(object):
         self.UserLayout.setHorizontalSpacing(25)
         self.UserLayout.setVerticalSpacing(15)
         self.UserLayout.setObjectName("UserLayout")
+
         
         self.HoursPlayedLabel = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
@@ -525,13 +591,14 @@ class Main_GUI_Visuals(object):
         self.HoursPlayedLabel.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.HoursPlayedLabel.setFont(font)
         self.HoursPlayedLabel.setStyleSheet("color: rgb(255, 255, 255);")
         self.HoursPlayedLabel.setObjectName("HoursPlayedLabel")
         self.UserLayout.addWidget(self.HoursPlayedLabel, 2, 2, 1, 1, QtCore.Qt.AlignRight)
+
 
         self.AccountCreationLabel = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
@@ -543,14 +610,15 @@ class Main_GUI_Visuals(object):
         self.AccountCreationLabel.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.AccountCreationLabel.setFont(font)
         self.AccountCreationLabel.setStyleSheet("color: rgb(255, 255, 255);")
         self.AccountCreationLabel.setObjectName("AccountCreationLabel")
         self.UserLayout.addWidget(self.AccountCreationLabel, 2, 0, 1, 1, QtCore.Qt.AlignRight)
-        
+
+
         self.GamesOwnedLabel = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -561,32 +629,34 @@ class Main_GUI_Visuals(object):
         self.GamesOwnedLabel.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.GamesOwnedLabel.setFont(font)
         self.GamesOwnedLabel.setStyleSheet("color: rgb(255, 255, 255);")
         self.GamesOwnedLabel.setObjectName("GamesOwnedLabel")
         self.UserLayout.addWidget(self.GamesOwnedLabel, 3, 0, 1, 1, QtCore.Qt.AlignRight)
-        
-        self.GameLibraryLabel = QtWidgets.QLabel(self.UserPage)
+
+
+        self.GaneLibraryLabel = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.GameLibraryLabel.sizePolicy().hasHeightForWidth())
-        self.GameLibraryLabel.setSizePolicy(sizePolicy)
-        self.GameLibraryLabel.setMinimumSize(QtCore.QSize(0, 30))
-        self.GameLibraryLabel.setMaximumSize(QtCore.QSize(16777215, 30))
+        sizePolicy.setHeightForWidth(self.GaneLibraryLabel.sizePolicy().hasHeightForWidth())
+        self.GaneLibraryLabel.setSizePolicy(sizePolicy)
+        self.GaneLibraryLabel.setMinimumSize(QtCore.QSize(0, 30))
+        self.GaneLibraryLabel.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(14)
+        font.setPointSize(18)
         font.setBold(True)
         font.setWeight(75)
-        self.GameLibraryLabel.setFont(font)
-        self.GameLibraryLabel.setStyleSheet("color: rgb(255, 255, 255);")
-        self.GameLibraryLabel.setObjectName("GameLibraryLabel")
-        self.UserLayout.addWidget(self.GameLibraryLabel, 4, 0, 1, 4)
-        
+        self.GaneLibraryLabel.setFont(font)
+        self.GaneLibraryLabel.setStyleSheet("color: rgb(255, 255, 255);")
+        self.GaneLibraryLabel.setObjectName("GaneLibraryLabel")
+        self.UserLayout.addWidget(self.GaneLibraryLabel, 4, 0, 1, 4)
+
+
         self.AccountCreationInfo = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -597,14 +667,15 @@ class Main_GUI_Visuals(object):
         self.AccountCreationInfo.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(14)
         font.setBold(False)
         font.setWeight(50)
         self.AccountCreationInfo.setFont(font)
         self.AccountCreationInfo.setStyleSheet("color: rgb(255, 255, 255);")
         self.AccountCreationInfo.setObjectName("AccountCreationInfo")
         self.UserLayout.addWidget(self.AccountCreationInfo, 2, 1, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.GamesOwnedInfo = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -615,22 +686,24 @@ class Main_GUI_Visuals(object):
         self.GamesOwnedInfo.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(14)
         self.GamesOwnedInfo.setFont(font)
         self.GamesOwnedInfo.setStyleSheet("color: rgb(255, 255, 255);")
         self.GamesOwnedInfo.setObjectName("GamesOwnedInfo")
         self.UserLayout.addWidget(self.GamesOwnedInfo, 3, 1, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.HoursPlayedInfo = QtWidgets.QLabel(self.UserPage)
         self.HoursPlayedInfo.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(14)
         self.HoursPlayedInfo.setFont(font)
         self.HoursPlayedInfo.setStyleSheet("color: rgb(255, 255, 255);")
         self.HoursPlayedInfo.setObjectName("HoursPlayedInfo")
         self.UserLayout.addWidget(self.HoursPlayedInfo, 2, 3, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.AccountWorthInfo = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -641,12 +714,13 @@ class Main_GUI_Visuals(object):
         self.AccountWorthInfo.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(14)
         self.AccountWorthInfo.setFont(font)
         self.AccountWorthInfo.setStyleSheet("color: rgb(255, 255, 255);")
         self.AccountWorthInfo.setObjectName("AccountWorthInfo")
         self.UserLayout.addWidget(self.AccountWorthInfo, 3, 3, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.AccountWorthLabel = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -657,14 +731,15 @@ class Main_GUI_Visuals(object):
         self.AccountWorthLabel.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(12)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.AccountWorthLabel.setFont(font)
         self.AccountWorthLabel.setStyleSheet("color: rgb(255, 255, 255);")
         self.AccountWorthLabel.setObjectName("AccountWorthLabel")
         self.UserLayout.addWidget(self.AccountWorthLabel, 3, 2, 1, 1, QtCore.Qt.AlignRight)
-        
+
+
         self.removeSelectedWishlist = QtWidgets.QPushButton(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -673,10 +748,17 @@ class Main_GUI_Visuals(object):
         self.removeSelectedWishlist.setSizePolicy(sizePolicy)
         self.removeSelectedWishlist.setMinimumSize(QtCore.QSize(175, 40))
         self.removeSelectedWishlist.setMaximumSize(QtCore.QSize(250, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.removeSelectedWishlist.setFont(font)
         self.removeSelectedWishlist.setStyleSheet("background-color: rgb(244, 140, 164); color: rgb(255, 255, 255);")
         self.removeSelectedWishlist.setObjectName("removeSelectedWishlist")
         self.UserLayout.addWidget(self.removeSelectedWishlist, 7, 5, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.Wishlist = QtWidgets.QListWidget(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
@@ -687,12 +769,11 @@ class Main_GUI_Visuals(object):
         self.Wishlist.setMaximumSize(QtCore.QSize(600, 600))
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(16)
+        font.setPointSize(14)
         self.Wishlist.setFont(font)
-        self.Wishlist.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Wishlist.setStyleSheet("color: rgb(255, 255, 255);background-color:rgb(105,105,105);")
         self.Wishlist.setObjectName("Wishlist")
         self.UserLayout.addWidget(self.Wishlist, 2, 5, 5, 1)
-        
         self.WishlistLabel = QtWidgets.QLabel(self.UserPage)
         self.WishlistLabel.setMaximumSize(QtCore.QSize(16777215, 36))
         font = QtGui.QFont()
@@ -704,7 +785,8 @@ class Main_GUI_Visuals(object):
         self.WishlistLabel.setStyleSheet("color: rgb(255, 255, 255);")
         self.WishlistLabel.setObjectName("WishlistLabel")
         self.UserLayout.addWidget(self.WishlistLabel, 1, 5, 1, 1, QtCore.Qt.AlignHCenter)
-        
+
+
         self.UsernameLabel = QtWidgets.QLabel(self.UserPage)
         self.UsernameLabel.setMaximumSize(QtCore.QSize(16777215, 180))
         font = QtGui.QFont()
@@ -713,10 +795,11 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.UsernameLabel.setFont(font)
-        self.UsernameLabel.setStyleSheet("color: rgb(30, 180, 175);")
+        self.UsernameLabel.setStyleSheet("color: rgb(252, 215, 102);")
         self.UsernameLabel.setWordWrap(False)
         self.UsernameLabel.setObjectName("UsernameLabel")
         self.UserLayout.addWidget(self.UsernameLabel, 0, 1, 2, 3)
+
 
         self.ProfilePicture = QtWidgets.QLabel(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -731,7 +814,8 @@ class Main_GUI_Visuals(object):
         self.ProfilePicture.setScaledContents(True)
         self.ProfilePicture.setObjectName("ProfilePicture")
         self.UserLayout.addWidget(self.ProfilePicture, 0, 0, 2, 1)
-        
+
+
         self.GameLibraryInfo = QtWidgets.QListWidget(self.UserPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -743,97 +827,27 @@ class Main_GUI_Visuals(object):
         font.setFamily("Agency FB")
         font.setPointSize(14)
         self.GameLibraryInfo.setFont(font)
-        self.GameLibraryInfo.setStyleSheet("color: rgb(255, 255, 255);")
+        self.GameLibraryInfo.setStyleSheet("color: rgb(255, 255, 255);background-color:rgb(105,105,105);")
         self.GameLibraryInfo.setObjectName("GameLibraryInfo")
         self.UserLayout.addWidget(self.GameLibraryInfo, 5, 0, 2, 4)
-
         self.gridLayout_6.addLayout(self.UserLayout, 0, 0, 1, 1)
         self.Pages.addWidget(self.UserPage)
-        # End of Graphics Objects for User Page
 
 
-        # Start of Graphics Objects for Recommend Page
+        # Start of Graphics Objects for Recommendation page
         self.GameRecommendationPage = QtWidgets.QWidget()
         self.GameRecommendationPage.setStyleSheet("background-color: rgb(83, 83, 83);")
         self.GameRecommendationPage.setObjectName("GameRecommendationPage")
-        self.GameRecommendationLayout_2 = QtWidgets.QGridLayout(self.GameRecommendationPage)
-        self.GameRecommendationLayout_2.setContentsMargins(11, 11, 11, 11)
-        self.GameRecommendationLayout_2.setHorizontalSpacing(0)
-        self.GameRecommendationLayout_2.setVerticalSpacing(15)
-        self.GameRecommendationLayout_2.setObjectName("GameRecommendationLayout_2")
-        self.TextViewLayout = QtWidgets.QGridLayout()
-        self.TextViewLayout.setContentsMargins(20, -1, 10, -1)
-        self.TextViewLayout.setHorizontalSpacing(30)
-        self.TextViewLayout.setVerticalSpacing(20)
-        self.TextViewLayout.setObjectName("TextViewLayout")
-        
-        self.GenerateButton = QtWidgets.QPushButton(self.GameRecommendationPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.GenerateButton.sizePolicy().hasHeightForWidth())
-        self.GenerateButton.setSizePolicy(sizePolicy)
-        self.GenerateButton.setMinimumSize(QtCore.QSize(200, 40))
-        self.GenerateButton.setMaximumSize(QtCore.QSize(300, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.GenerateButton.setFont(font)
-        self.GenerateButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
-        self.GenerateButton.setObjectName("GenerateButton")
-        self.TextViewLayout.addWidget(self.GenerateButton, 1, 1, 1, 1)
-        
-        self.RecommendationInput = QtWidgets.QListWidget(self.GameRecommendationPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.RecommendationInput.sizePolicy().hasHeightForWidth())
-        self.RecommendationInput.setSizePolicy(sizePolicy)
-        self.RecommendationInput.setMinimumSize(QtCore.QSize(500, 0))
-        self.RecommendationInput.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(24)
-        self.RecommendationInput.setFont(font)
-        self.RecommendationInput.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(140, 140, 140);")
-        self.RecommendationInput.setObjectName("RecommendationInput")
-        self.TextViewLayout.addWidget(self.RecommendationInput, 0, 0, 1, 1)
-        
-        self.pushButton_2 = QtWidgets.QPushButton(self.GameRecommendationPage)
-        self.pushButton_2.setMaximumSize(QtCore.QSize(300, 40))
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setStyleSheet("background-color: rgb(244, 140, 164); color: rgb(255, 255, 255);")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.TextViewLayout.addWidget(self.pushButton_2, 1, 0, 1, 1)
-        
-        self.RecommendationResults = QtWidgets.QTextBrowser(self.GameRecommendationPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.RecommendationResults.sizePolicy().hasHeightForWidth())
-        self.RecommendationResults.setSizePolicy(sizePolicy)
-        self.RecommendationResults.setMinimumSize(QtCore.QSize(500, 0))
-        self.RecommendationResults.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(16)
-        self.RecommendationResults.setFont(font)
-        self.RecommendationResults.setStyleSheet("color: rgb(0, 0, 0); background-color: rgb(193, 193, 193);")
-        self.RecommendationResults.setObjectName("RecommendationResults")
-        self.TextViewLayout.addWidget(self.RecommendationResults, 0, 1, 1, 1)
-        self.GameRecommendationLayout_2.addLayout(self.TextViewLayout, 2, 0, 1, 1)
-        
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.GameRecommendationPage)
+        self.gridLayout_3.setContentsMargins(11, 11, 11, 11)
+        self.gridLayout_3.setSpacing(6)
+        self.gridLayout_3.setObjectName("gridLayout_3")
         self.GameRecommendationLayout = QtWidgets.QGridLayout()
         self.GameRecommendationLayout.setContentsMargins(5, -1, -1, 1)
-        self.GameRecommendationLayout.setSpacing(6)
+        self.GameRecommendationLayout.setHorizontalSpacing(6)
+        self.GameRecommendationLayout.setVerticalSpacing(2)
         self.GameRecommendationLayout.setObjectName("GameRecommendationLayout")
+
         
         self.Title = QtWidgets.QLabel(self.GameRecommendationPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -851,24 +865,30 @@ class Main_GUI_Visuals(object):
         self.Title.setStyleSheet("color: rgb(255, 255, 255);")
         self.Title.setObjectName("Title")
         self.GameRecommendationLayout.addWidget(self.Title, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+
         
         self.Instructions = QtWidgets.QLabel(self.GameRecommendationPage)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Instructions.sizePolicy().hasHeightForWidth())
+        self.Instructions.setSizePolicy(sizePolicy)
         self.Instructions.setMinimumSize(QtCore.QSize(1050, 30))
-        self.Instructions.setMaximumSize(QtCore.QSize(800, 30))
+        self.Instructions.setMaximumSize(QtCore.QSize(800, 45))
         font = QtGui.QFont()
-        font.setPointSize(8)
+        font.setPointSize(10)
         self.Instructions.setFont(font)
         self.Instructions.setStyleSheet("color: rgb(255, 255, 255);")
         self.Instructions.setWordWrap(True)
         self.Instructions.setObjectName("Instructions")
         self.GameRecommendationLayout.addWidget(self.Instructions, 1, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        self.GameRecommendationLayout_2.addLayout(self.GameRecommendationLayout, 0, 0, 1, 1)
+        self.gridLayout_3.addLayout(self.GameRecommendationLayout, 0, 0, 1, 1)
+
         
         self.AddGameLayout = QtWidgets.QGridLayout()
         self.AddGameLayout.setContentsMargins(20, -1, 10, -1)
         self.AddGameLayout.setSpacing(6)
         self.AddGameLayout.setObjectName("AddGameLayout")
-        
         self.GameRecommendationEntry = QtWidgets.QLineEdit(self.GameRecommendationPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -876,10 +896,13 @@ class Main_GUI_Visuals(object):
         sizePolicy.setHeightForWidth(self.GameRecommendationEntry.sizePolicy().hasHeightForWidth())
         self.GameRecommendationEntry.setSizePolicy(sizePolicy)
         self.GameRecommendationEntry.setMinimumSize(QtCore.QSize(400, 40))
+        self.GameRecommendationEntry.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.GameRecommendationEntry.setMouseTracking(True)
         self.GameRecommendationEntry.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.GameRecommendationEntry.setObjectName("GameRecommendationEntry")
         self.AddGameLayout.addWidget(self.GameRecommendationEntry, 0, 0, 1, 1)
-        
+
+
         self.AddGame = QtWidgets.QPushButton(self.GameRecommendationPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -897,13 +920,205 @@ class Main_GUI_Visuals(object):
         self.AddGame.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
         self.AddGame.setObjectName("AddGame")
         self.AddGameLayout.addWidget(self.AddGame, 0, 1, 1, 1)
+        self.gridLayout_3.addLayout(self.AddGameLayout, 1, 0, 1, 1)
+
+
+        self.GenreLayout = QtWidgets.QHBoxLayout()
+        self.GenreLayout.setContentsMargins(20, -1, 10, -1)
+        self.GenreLayout.setSpacing(6)
+        self.GenreLayout.setObjectName("GenreLayout")
+
+
+        self.Action = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Action.setFont(font)
+        self.Action.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Action.setTristate(False)
+        self.Action.setObjectName("Action")
+        self.GenreLayout.addWidget(self.Action)
+
+
+        self.Adventure = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Adventure.setFont(font)
+        self.Adventure.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Adventure.setObjectName("Adventure")
+        self.GenreLayout.addWidget(self.Adventure)
+
+
+        self.Casual = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Casual.setFont(font)
+        self.Casual.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Casual.setObjectName("Casual")
+        self.GenreLayout.addWidget(self.Casual)
+
+
+        self.Indie = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Indie.setFont(font)
+        self.Indie.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Indie.setObjectName("Indie")
+        self.GenreLayout.addWidget(self.Indie)
+
+
+        self.Racing = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Racing.setFont(font)
+        self.Racing.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Racing.setObjectName("Racing")
+        self.GenreLayout.addWidget(self.Racing)
+
+
+        self.RPG = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.RPG.setFont(font)
+        self.RPG.setStyleSheet("color: rgb(255, 255, 255);")
+        self.RPG.setObjectName("RPG")
+        self.GenreLayout.addWidget(self.RPG)
+
+
+        self.Simulation = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Simulation.setFont(font)
+        self.Simulation.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Simulation.setObjectName("Simulation")
+        self.GenreLayout.addWidget(self.Simulation)
+
+
+        self.Sports = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Sports.setFont(font)
+        self.Sports.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Sports.setObjectName("Sports")
+        self.GenreLayout.addWidget(self.Sports)
+
+
+        self.Strategy = QtWidgets.QCheckBox(self.GameRecommendationPage)
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Strategy.setFont(font)
+        self.Strategy.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Strategy.setObjectName("Strategy")
+        self.GenreLayout.addWidget(self.Strategy)
+
+        self.gridLayout_3.addLayout(self.GenreLayout, 2, 0, 1, 1)
+
+
+        self.TextViewLayout = QtWidgets.QGridLayout()
+        self.TextViewLayout.setContentsMargins(20, -1, 10, -1)
+        self.TextViewLayout.setHorizontalSpacing(30)
+        self.TextViewLayout.setVerticalSpacing(20)
+        self.TextViewLayout.setObjectName("TextViewLayout")
+
+
+        self.GenerateButton = QtWidgets.QPushButton(self.GameRecommendationPage)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.GenerateButton.sizePolicy().hasHeightForWidth())
+        self.GenerateButton.setSizePolicy(sizePolicy)
+        self.GenerateButton.setMinimumSize(QtCore.QSize(200, 40))
+        self.GenerateButton.setMaximumSize(QtCore.QSize(300, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.GenerateButton.setFont(font)
+        self.GenerateButton.setStyleSheet("background-color: rgb(101, 203, 150); color: rgb(255, 255, 255);")
+        self.GenerateButton.setObjectName("GenerateButton")
+        self.TextViewLayout.addWidget(self.GenerateButton, 1, 1, 1, 1)
+
+        self.RecommendationInput = QtWidgets.QListWidget(self.GameRecommendationPage)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.RecommendationInput.sizePolicy().hasHeightForWidth())
+        self.RecommendationInput.setSizePolicy(sizePolicy)
+        self.RecommendationInput.setMinimumSize(QtCore.QSize(500, 0))
+        self.RecommendationInput.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.RecommendationInput.setFont(font)
+        self.RecommendationInput.setStyleSheet("color: rgb(255, 255, 255); background-color:rgb(105,105,105);")
+        self.RecommendationInput.setObjectName("RecommendationInput")
+        self.TextViewLayout.addWidget(self.RecommendationInput, 0, 0, 1, 1)
+
         
-        self.GameRecommendationLayout_2.addLayout(self.AddGameLayout, 1, 0, 1, 1)
+        self.RecommendationResults = QtWidgets.QTextBrowser(self.GameRecommendationPage)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.RecommendationResults.sizePolicy().hasHeightForWidth())
+        self.RecommendationResults.setSizePolicy(sizePolicy)
+        self.RecommendationResults.setMinimumSize(QtCore.QSize(500, 0))
+        self.RecommendationResults.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        self.RecommendationResults.setFont(font)
+        self.RecommendationResults.setStyleSheet("color: rgb(0, 0, 0); background-color: rgb(193, 193, 193);")
+        self.RecommendationResults.setObjectName("RecommendationResults")
+        self.TextViewLayout.addWidget(self.RecommendationResults, 0, 1, 1, 1)
+
+        #Remove from recommendation list button
+        self.pushButton_2 = QtWidgets.QPushButton(self.GameRecommendationPage)
+        self.pushButton_2.setMaximumSize(QtCore.QSize(300, 40))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_2.setFont(font)
+        self.pushButton_2.setStyleSheet("background-color: rgb(244, 140, 164); color: rgb(255, 255, 255);")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.TextViewLayout.addWidget(self.pushButton_2, 1, 0, 1, 1)
+
+        self.gridLayout_3.addLayout(self.TextViewLayout, 3, 0, 1, 1)
         self.Pages.addWidget(self.GameRecommendationPage)
-        # End of Graphics Objects for Recommend Page
 
 
-        # Start of Graphics Objects for Price Page
+        # Start of Graphics Objects for Price Checking page
         self.PriceCheckPage = QtWidgets.QWidget()
         self.PriceCheckPage.setObjectName("PriceCheckPage")
         self.PriceCheckPageLayout = QtWidgets.QGridLayout(self.PriceCheckPage)
@@ -914,6 +1129,7 @@ class Main_GUI_Visuals(object):
         self.PriceCheckTitleLayout.setContentsMargins(5, -1, -1, 1)
         self.PriceCheckTitleLayout.setSpacing(6)
         self.PriceCheckTitleLayout.setObjectName("PriceCheckTitleLayout")
+
         
         self.PriceCheckTitle = QtWidgets.QLabel(self.PriceCheckPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -928,15 +1144,17 @@ class Main_GUI_Visuals(object):
         font.setBold(True)
         font.setWeight(75)
         self.PriceCheckTitle.setFont(font)
-        self.PriceCheckTitle.setStyleSheet("color: rgb(255, 255, 255);")
+        self.PriceCheckTitle.setStyleSheet("color: rgb(255, 255, 255); ")
         self.PriceCheckTitle.setObjectName("PriceCheckTitle")
         self.PriceCheckTitleLayout.addWidget(self.PriceCheckTitle, 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
         self.PriceCheckPageLayout.addLayout(self.PriceCheckTitleLayout, 0, 0, 1, 1)
+
         
         self.PriceCheckLayout = QtWidgets.QGridLayout()
         self.PriceCheckLayout.setContentsMargins(20, -1, 10, -1)
         self.PriceCheckLayout.setSpacing(6)
         self.PriceCheckLayout.setObjectName("PriceCheckLayout")
+
         
         self.PriceCheckEntry = QtWidgets.QLineEdit(self.PriceCheckPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
@@ -951,6 +1169,7 @@ class Main_GUI_Visuals(object):
         self.PriceCheckEntry.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.PriceCheckEntry.setObjectName("PriceCheckEntry")
         self.PriceCheckLayout.addWidget(self.PriceCheckEntry, 0, 0, 1, 1)
+
         
         self.GetPriceButton = QtWidgets.QPushButton(self.PriceCheckPage)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
@@ -970,28 +1189,28 @@ class Main_GUI_Visuals(object):
         self.GetPriceButton.setObjectName("GetPriceButton")
         self.PriceCheckLayout.addWidget(self.GetPriceButton, 0, 1, 1, 1)
         self.PriceCheckPageLayout.addLayout(self.PriceCheckLayout, 1, 0, 1, 1)
+
         
         self.PriceViewLayout = QtWidgets.QGridLayout()
         self.PriceViewLayout.setContentsMargins(20, -1, 10, -1)
         self.PriceViewLayout.setHorizontalSpacing(30)
         self.PriceViewLayout.setVerticalSpacing(20)
         self.PriceViewLayout.setObjectName("PriceViewLayout")
+
         
         self.PriceCheckResults = QtWidgets.QTextBrowser(self.PriceCheckPage)
         font = QtGui.QFont()
         font.setFamily("Agency FB")
-        font.setPointSize(18)
+        font.setPointSize(16)
         self.PriceCheckResults.setFont(font)
-        self.PriceCheckResults.setStyleSheet("color: rgb(0, 0, 0); background-color: rgb(193, 193, 193);")
+        self.PriceCheckResults.setStyleSheet("color: rgb(255, 255, 255); background-color:rgb(105,105,105);")
         self.PriceCheckResults.setObjectName("listWidget")
         self.PriceViewLayout.addWidget(self.PriceCheckResults, 0, 0, 1, 1)
-        
         self.PriceCheckPageLayout.addLayout(self.PriceViewLayout, 2, 0, 1, 1)
         self.Pages.addWidget(self.PriceCheckPage)
-        # End of Graphics Objects for Price Page
 
 
-        # Start of Graphics Objects for Login Page
+        # Start of Graphics Objects for Login page
         self.LogInPage = QtWidgets.QWidget()
         self.LogInPage.setObjectName("LogInPage")
         self.LoginPageLayout = QtWidgets.QGridLayout(self.LogInPage)
@@ -1001,6 +1220,58 @@ class Main_GUI_Visuals(object):
         self.LoginLayout = QtWidgets.QGridLayout()
         self.LoginLayout.setSpacing(6)
         self.LoginLayout.setObjectName("LoginLayout")
+        spacerItem1 = QtWidgets.QSpacerItem(20, 30, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.LoginLayout.addItem(spacerItem1, 3, 0, 1, 1)
+
+        
+        self.Instructions_2 = QtWidgets.QLabel(self.LogInPage)
+        self.Instructions_2.setMaximumSize(QtCore.QSize(16777215, 60))
+        self.Instructions_2.setStyleSheet("color: rgb(255, 255, 255)")
+        self.Instructions_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Instructions_2.setObjectName("Instructions_2")
+        self.LoginLayout.addWidget(self.Instructions_2, 1, 0, 1, 1)
+
+        
+        self.Entry_2 = QtWidgets.QLineEdit(self.LogInPage)
+        self.Entry_2.setMinimumSize(QtCore.QSize(200, 30))
+        self.Entry_2.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.Entry_2.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.Entry_2.setObjectName("Entry_2")
+        self.LoginLayout.addWidget(self.Entry_2, 5, 0, 1, 1, QtCore.Qt.AlignHCenter)
+
+        
+        self.ConfirmButton = QtWidgets.QPushButton(self.LogInPage)
+        self.ConfirmButton.setMinimumSize(QtCore.QSize(200, 30))
+        self.ConfirmButton.setMaximumSize(QtCore.QSize(300, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ConfirmButton.setFont(font)
+        self.ConfirmButton.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(30, 180, 175);")
+        self.ConfirmButton.setObjectName("ConfirmButton")
+        self.LoginLayout.addWidget(self.ConfirmButton, 6, 0, 1, 1, QtCore.Qt.AlignHCenter)
+
+        
+        self.Title_2 = QtWidgets.QLabel(self.LogInPage)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Title_2.sizePolicy().hasHeightForWidth())
+        self.Title_2.setSizePolicy(sizePolicy)
+        self.Title_2.setMaximumSize(QtCore.QSize(16777215, 75))
+        font = QtGui.QFont()
+        font.setFamily("Agency FB")
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
+        self.Title_2.setFont(font)
+        self.Title_2.setStyleSheet("color: rgb(255, 255, 255);")
+        self.Title_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.Title_2.setObjectName("Title_2")
+        self.LoginLayout.addWidget(self.Title_2, 0, 0, 1, 1)
+
         
         self.ActiveUsers = QtWidgets.QGroupBox(self.LogInPage)
         self.ActiveUsers.setMinimumSize(QtCore.QSize(800, 0))
@@ -1016,121 +1287,89 @@ class Main_GUI_Visuals(object):
 
         self.userRadioButtons = []
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setFamily("Agency FB")
+        font.setPointSize(14)
         for i in range(7):
             self.userRadioButtons.append(QtWidgets.QRadioButton(self.ActiveUsers))
             self.userRadioButtons[-1].setGeometry(QtCore.QRect(25, 20+40*(i+1), 250, 20))
             self.userRadioButtons[-1].setFont(font)
             self.userRadioButtons[-1].setObjectName("radioButton"+str(i+1))
-            self.userRadioButtons[-1].setText("<Unregistered>")
+            self.userRadioButtons[-1].setText("< Unregistered >")
 
-        
         self.loginLoadingLabel = QtWidgets.QLabel(self.ActiveUsers)
-        self.loginLoadingLabel.setGeometry(QtCore.QRect(250, 50, 450, 200))
-        font.setPointSize(28)
+        self.loginLoadingLabel.setGeometry(QtCore.QRect(325, 75, 450, 200))
+        font.setPointSize(20)
         self.loginLoadingLabel.setFont(font)
+        self.loginLoadingLabel.setStyleSheet("color: rgb(254, 215, 102);")
         self.loginLoadingLabel.setObjectName("loadingLabel")
         self.loginLoadingLabel.setText("Loading User Data...\n    Please Wait.")
-        
+
         self.LoginLayout.addWidget(self.ActiveUsers, 2, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        
-        self.ConfirmButton = QtWidgets.QPushButton(self.LogInPage)
-        self.ConfirmButton.setMinimumSize(QtCore.QSize(200, 50))
-        self.ConfirmButton.setMaximumSize(QtCore.QSize(300, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.ConfirmButton.setFont(font)
-        self.ConfirmButton.setStyleSheet("color: rgb(255, 255, 255); background-color: rgb(30, 180, 175);")
-        self.ConfirmButton.setObjectName("ConfirmButton")
-        self.LoginLayout.addWidget(self.ConfirmButton, 5, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        
-        self.Entry_2 = QtWidgets.QLineEdit(self.LogInPage)
-        self.Entry_2.setMinimumSize(QtCore.QSize(200, 30))
-        self.Entry_2.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.Entry_2.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.Entry_2.setObjectName("Entry_2")
-        self.LoginLayout.addWidget(self.Entry_2, 4, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        
-        self.Title_2 = QtWidgets.QLabel(self.LogInPage)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Title_2.sizePolicy().hasHeightForWidth())
-        self.Title_2.setSizePolicy(sizePolicy)
-        self.Title_2.setMaximumSize(QtCore.QSize(16777215, 75))
-        font = QtGui.QFont()
-        font.setFamily("Agency FB")
-        font.setPointSize(24)
-        font.setBold(True)
-        font.setWeight(75)
-        self.Title_2.setFont(font)
-        self.Title_2.setStyleSheet("color: rgb(255, 255, 255);")
-        self.Title_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.Title_2.setObjectName("Title_2")
-        self.LoginLayout.addWidget(self.Title_2, 0, 0, 1, 1)
-        
-        self.Instructions_2 = QtWidgets.QLabel(self.LogInPage)
-        self.Instructions_2.setMaximumSize(QtCore.QSize(16777215, 60))
-        self.Instructions_2.setStyleSheet("color: rgb(255, 255, 255)")
-        self.Instructions_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.Instructions_2.setObjectName("Instructions_2")
-        self.LoginLayout.addWidget(self.Instructions_2, 1, 0, 1, 1)
-        
-        spacerItem1 = QtWidgets.QSpacerItem(20, 30, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.LoginLayout.addItem(spacerItem1, 3, 0, 1, 1)
         self.LoginPageLayout.addLayout(self.LoginLayout, 0, 0, 1, 1)
         self.Pages.addWidget(self.LogInPage)
-        # End of Graphics Objects for Login Page
-        
-        self.gridLayout.addWidget(self.Pages, 1, 0, 1, 1)
-        # End of Graphics Objects for GUI Page Stack
 
+
+        # End of Graphics Objects for GUI Page Stack
+        self.gridLayout.addWidget(self.Pages, 1, 0, 1, 1)
+        # End of Graphics Objects for Main Program Window
         self.retranslateUi(Widget)
         QtCore.QMetaObject.connectSlotsByName(Widget)
-        # End of Graphics Objects for Main Program Window
 
     def retranslateUi(self, Widget):
         _translate = QtCore.QCoreApplication.translate
         Widget.setWindowTitle(_translate("Widget", "Widget"))
         self.LoginButton.setText(_translate("Widget", "Change User"))
         self.SteamRushText.setText(_translate("Widget", "SteamRush"))
+
+
+        self.Instructions_2.setText(_translate("Widget", "Choose one of the active users below or connect to a new Steam ID. \nNote: This feature only works for public Steam IDs."))
+        self.Entry_2.setPlaceholderText(_translate("Widget", "Enter your Steam ID here."))
+        self.ConfirmButton.setText(_translate("Widget", "Connect to Steam!"))
+        self.Title_2.setText(_translate("Widget", "Welcome to SteamRush!"))
+        self.ActiveUsers.setTitle(_translate("Widget", "Users"))
+
+        
         self.UserButton.setText(_translate("Widget", "User"))
         self.PriceCheckButton.setText(_translate("Widget", "Price Check"))
         self.RankingButton.setText(_translate("Widget", "Ranking"))
-        self.GameRecommendationButton.setText(_translate("Widget", "Game Recommendation"))
-        self.SearchBar.setPlaceholderText(_translate("Widget", "Input game name. Press Enter to search."))
-        self.GenreInfo.setText(_translate("Widget", "TextLabel"))
+        self.GameRecommendationButton.setText(_translate("Widget", "Game\nRecommendation"))
+
+        self.GameTitle.setText(_translate("Widget", "Search for a game here!"))
+        self.addToWishlistButton.setText(_translate("Widget", "Add to Wishlist"))
+        self.GenreInfo.setText(_translate("Widget", "N/A"))
         self.GenreLabel.setText(_translate("Widget", "Genres:"))
-        self.TopVotedTagsInfo.setText(_translate("Widget", "TextLabel"))
-        self.AvgHrsInfo.setText(_translate("Widget", "TextLabel"))
+        self.TopVotedTagsInfo.setText(_translate("Widget", "N/A"))
+        self.AvgHrsInfo.setText(_translate("Widget", "N/A"))
         self.AvgHrsLabel.setText(_translate("Widget", "Average Hours Played:"))
         self.TopVotedTagsLabel.setText(_translate("Widget", "Top-Voted Tags:"))
         self.TotalReviewsLabel.setText(_translate("Widget", "Total Reviews:"))
-        self.PositiveReviewsInfo_2.setText(_translate("Widget", "TextLabel"))
-        self.TotalReviewsInfo.setText(_translate("Widget", "TextLabel"))
-        self.PositiveReviewsInfo.setText(_translate("Widget", "Percentage Positive Reviews:"))
-        self.GameTitle.setText(_translate("Widget", "Welcome to SteamRush!"))
-        self.pushButton.setText(_translate("Widget", "Add to Wishlist"))
-        self.Title_3.setText(_translate("Widget", "Rankings"))
+        self.PositiveReviewsInfo.setText(_translate("Widget", "N/A"))
+        self.TotalReviewsInfo.setText(_translate("Widget", "N/A"))
+        self.PositiveReviewsLabel.setText(_translate("Widget", "Percentage Positive Reviews:"))
+        self.SearchButton.setText(_translate("Widget", "Search!"))
+        self.SearchBar.setPlaceholderText(_translate("Widget", "Input game name. Press Enter to search."))
+
+
+        self.Title_3.setText(_translate("Widget", "Top 100 Game Rankings"))
         self.MostPlayedList.setHtml(_translate("Widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-        "p, li { white-space: pre-wrap; }\n"
-        "</style></head><body style=\" font-family:\'Dubai Light\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Dubai Light\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.MostPositiveList.setHtml(_translate("Widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-        "p, li { white-space: pre-wrap; }\n"
-        "</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.MostPlayedLabel.setText(_translate("Widget", "    Most Hours Played  \n(Average, Past 2 Weeks)"))
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Consolas\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.MostPlayedLabel.setText(_translate("Widget", "Most Hours Played in Past 2 Weeks"))
         self.MostPositiveLabel.setText(_translate("Widget", "Strongest Positive Ratings"))
+
+
+        self.UsernameLabel.setText(_translate("Widget", "Username"))
         self.HoursPlayedLabel.setText(_translate("Widget", "Total Hours Played"))
         self.AccountCreationLabel.setText(_translate("Widget", "Account Created On:"))
         self.GamesOwnedLabel.setText(_translate("Widget", "Total Games Owned"))
-        self.GameLibraryLabel.setText(_translate("Widget", "Your Games:"))
+        self.GaneLibraryLabel.setText(_translate("Widget", "Your Steam Games:"))
         self.AccountCreationInfo.setText(_translate("Widget", "TextLabel"))
         self.GamesOwnedInfo.setText(_translate("Widget", "TextLabel"))
         self.HoursPlayedInfo.setText(_translate("Widget", "TextLabel"))
@@ -1138,24 +1377,32 @@ class Main_GUI_Visuals(object):
         self.AccountWorthLabel.setText(_translate("Widget", "Total Account Worth"))
         self.removeSelectedWishlist.setText(_translate("Widget", "Remove Selected"))
         self.WishlistLabel.setText(_translate("Widget", "Wishlist"))
-        self.UsernameLabel.setText(_translate("Widget", "Username"))
-        self.GenerateButton.setText(_translate("Widget", "Generate!"))
-        self.pushButton_2.setText(_translate("Widget", "Remove Selected"))
-        self.RecommendationResults.setHtml(_translate("Widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-        "p, li { white-space: pre-wrap; }\n"
-        "</style></head><body style=\" font-family:\'Agency FB\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-        "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        
+
         self.Title.setText(_translate("Widget", "Game Recommendation"))
-        self.Instructions.setText(_translate("Widget", "<html><head/><body><p>To use the game recommendation engine, search for and add any games you would like to be factored into the algorithm. When you\'re finished, click the Generate button below!</p></body></html>"))
+        self.Instructions.setText(_translate("Widget", "<html><head/><body><p>To use the game recommendation engine, search for and add any games you would like to be factored into the algorithm. If you would like to include specific genre filters in your results, select the genres you would like to see in your game recommendation results. When you\'re finished, click the Generate button below!</p></body></html>"))
         self.GameRecommendationEntry.setPlaceholderText(_translate("Widget", "Add a game."))
         self.AddGame.setText(_translate("Widget", "Add Game"))
-        self.PriceCheckTitle.setText(_translate("Widget", "Price Check"))
+        self.Action.setText(_translate("Widget", "Action"))
+        self.Adventure.setText(_translate("Widget", "Adventure"))
+        self.Casual.setText(_translate("Widget", "Casual"))
+        self.Indie.setText(_translate("Widget", "Indie"))
+        self.Racing.setText(_translate("Widget", "Racing"))
+        self.RPG.setText(_translate("Widget", "RPG"))
+        self.Simulation.setText(_translate("Widget", "Simulation"))
+        self.Sports.setText(_translate("Widget", "Sports"))
+        self.Strategy.setText(_translate("Widget", "Strategy"))
+        self.GenerateButton.setText(_translate("Widget", "Generate!"))
+        self.RecommendationResults.setHtml(_translate("Widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Agency FB\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p></body></html>"))
+        self.pushButton_2.setText(_translate("Widget", "Remove Selected"))
+
+
+        self.PriceCheckTitle.setText(_translate("Widget", "Price Checking"))
         self.PriceCheckEntry.setPlaceholderText(_translate("Widget", "Enter the name of a game you would like to check the price of"))
         self.GetPriceButton.setText(_translate("Widget", "Get Price!"))
-        self.ActiveUsers.setTitle(_translate("Widget", "Users"))
-        self.ConfirmButton.setText(_translate("Widget", "Connect to Steam!"))
-        self.Entry_2.setPlaceholderText(_translate("Widget", "Enter your Steam ID here."))
-        self.Title_2.setText(_translate("Widget", "Welcome to SteamRush!"))
-        self.Instructions_2.setText(_translate("Widget", "Choose one of the active users below or connect to a new Steam ID. Note: This feature only works for public Steam IDs."))
+        
 
