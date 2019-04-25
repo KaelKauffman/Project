@@ -379,7 +379,7 @@ class Main_GUI_Controller(QtWidgets.QWidget, Main_GUI_Visuals):
                     resultString += "\n\n"
                     resultString += "Lowest Price in History:\n"
                     resultString += "Vendor: " + str(prices[0][0]) + ", "
-                    resultString ++ "Price: $" + str(prices[0][1]) + "\n\n"
+                    resultString += "Price: $" + str(prices[0][1]) + "\n\n"
                     resultString += "Current Prices: \n"
                     for p in prices[1:]:
                         resultString += "Vendor: " + str(p[0]) + "\n   "
